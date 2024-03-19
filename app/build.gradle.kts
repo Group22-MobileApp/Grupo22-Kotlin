@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("com.google.dagger.hilt.android")
-    kotlin("kapt")
+    id("kotlin-kapt")
 }
 
 android {
@@ -68,6 +68,7 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")
     // Arrow
     implementation("io.arrow-kt:arrow-core:1.2.0")
     implementation("io.arrow-kt:arrow-fx-coroutines:1.2.0")
@@ -77,7 +78,7 @@ dependencies {
     //Coil
     implementation("io.coil-kt:coil-compose:2.5.0")
     //dagger hilt
-    implementation("com.google.dagger:hilt-android:2.44")
-    kapt("com.google.dagger:hilt-android-compiler:2.44")
+    implementation("com.google.dagger:hilt-android:2.48")
+    kapt("com.google.dagger:hilt-android-compiler:2.48")
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
 }

@@ -2,6 +2,7 @@ package com.example.grupo22_kotlin
 
 import androidx.compose.ui.graphics.Color
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
@@ -22,65 +23,52 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.grupo22_kotlin.ui.theme.Grupo22KotlinTheme
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.repeatOnLifecycle
+import com.example.grupo22_kotlin.store.presentation.products_screen.ProductsScreen
+import com.example.grupo22_kotlin.util.Event
+import com.example.grupo22_kotlin.util.EventBus
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             Grupo22KotlinTheme {
-                var name by remember {
-                    mutableStateOf("")
-                }
-
-                var names by remember {
-                    mutableStateOf(listOf<String>())
-                }
-
-                Column (modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp)
-                ){
-                    Row(
-                        modifier = Modifier.fillMaxWidth()
-                    ){
-                        OutlinedTextField(
-                            value = name,
-                            onValueChange ={ text ->
-                                name = text
-                            } )
-                        Spacer(modifier = Modifier.width(16.dp))
-                        Button(onClick = {
-                            if(name.isNotBlank()){
-                                names = names + name
-                                name = ""
+                val lifecycle = LocalLifecycleOwner.current.lifecycle
+                LaunchedEffect(key1 = lifecycle) {
+                    repeatOnLifecycle(state = Lifecycle.State.STARTED){
+                        EventBus.events.collect{event ->
+                            if(event is Event.Toast){
+                                Toast.makeText(this@MainActivity, event.message, Toast.LENGTH_SHORT)
+                                    .show()
                             }
 
-                        }) {
-                            Text(text = "Add")
                         }
                     }
-
-                    LazyColumn {
-                       items(names){currentName ->
-                           Text(text = currentName,
-                               modifier = Modifier
-                                   .fillMaxWidth()
-                                   .padding(16.dp))
-                           Divider()
-                       }
-                    }
-
                 }
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+
+                ) {
+                    ProductsScreen()
+                }
+
 
             }
         }
