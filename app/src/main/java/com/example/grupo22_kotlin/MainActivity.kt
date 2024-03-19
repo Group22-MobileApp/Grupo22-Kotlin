@@ -6,11 +6,18 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Email
+import androidx.compose.material.icons.outlined.Favorite
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
@@ -30,6 +37,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
+import androidx.navigation.NavHost
 import com.example.grupo22_kotlin.ui.theme.Grupo22KotlinTheme
 
 data class BottomNavigationItem(
@@ -54,16 +63,28 @@ class MainActivity : ComponentActivity() {
                         hasNews = false,
                     ),
                     BottomNavigationItem(
+                        title = "Favorites",
+                        selectedIcon = Icons.Filled.Favorite,
+                        unselectedIcon = Icons.Outlined.FavoriteBorder,
+                        hasNews = false,
+                    ),
+                    BottomNavigationItem(
+                        title = "Add",
+                        selectedIcon = Icons.Filled.Add,
+                        unselectedIcon = Icons.Outlined.Add,
+                        hasNews = false,
+                    ),
+                    BottomNavigationItem(
                         title = "Chat",
                         selectedIcon = Icons.Filled.Email,
                         unselectedIcon = Icons.Outlined.Email,
                         hasNews = false,
-                        badgeCount = 45
+                        badgeCount = 45,
                     ),
                     BottomNavigationItem(
-                        title = "Settings",
-                        selectedIcon = Icons.Filled.Settings,
-                        unselectedIcon = Icons.Outlined.Settings,
+                        title = "Profile",
+                        selectedIcon = Icons.Filled.Person,
+                        unselectedIcon = Icons.Outlined.Person,
                         hasNews = true,
                     ),
                 )
@@ -82,7 +103,10 @@ class MainActivity : ComponentActivity() {
                                         selected = selectedItemIndex == index,
                                         onClick = {
                                             selectedItemIndex = index
-                                            // navController.navigate(item.title)
+                                            /*navController.navigate(item.title) {
+                                            //    popUpTo(navController.graph.startDestinationId)
+                                            //    launchSingleTop = true*/
+                                            //}
                                         },
                                         label = {
                                             Text(text = item.title)
@@ -120,6 +144,15 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
+/*@Composable
+fun NavigationHost(navController: NavController) {
+    NavHost(navController, startDestination = NavigationBarItem.Home.route) {
+        composable(BottomNavItem.Home.route) { /* Home Screen UI */ }
+        composable(BottomNavItem.Search.route) { /* Search Screen UI */ }
+        composable(BottomNavItem.Profile.route) { /* Profile Screen UI */ }
+    }
+}*/
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
