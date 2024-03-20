@@ -8,6 +8,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.grupo22_kotlin.presentation.screens.login.components.LoginBottomBar
 import com.example.grupo22_kotlin.presentation.screens.login.components.LoginContent
 import com.example.grupo22_kotlin.presentation.ui.theme.Grupo22KotlinTheme
@@ -15,14 +18,14 @@ import com.example.grupo22_kotlin.presentation.ui.theme.Grupo22KotlinTheme
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun LoginScreen(){
+fun LoginScreen(navController: NavHostController){
     Scaffold(
         topBar = {},
         content = {
                   LoginContent()
         },
         bottomBar = {
-            LoginBottomBar()
+            LoginBottomBar(navController)
 
         }
     )
@@ -36,7 +39,7 @@ fun GreetingPreview() {
             modifier = Modifier.fillMaxWidth(),
             color = MaterialTheme.colorScheme.background
         ) {
-            LoginScreen()
+            LoginScreen(rememberNavController())
         }
 
     }

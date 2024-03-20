@@ -1,5 +1,6 @@
 package com.example.grupo22_kotlin.presentation.screens.login.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,9 +14,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import com.example.grupo22_kotlin.presentation.navigation.AppScreen
 
 @Composable
-fun LoginBottomBar(){
+fun LoginBottomBar(navController: NavHostController){
 
     Row(
         modifier = Modifier
@@ -30,6 +34,8 @@ fun LoginBottomBar(){
         )
         Spacer(modifier = Modifier.width(7.dp))
         Text(
+            modifier = Modifier
+                .clickable { navController.navigate(route = AppScreen.Signup.route) },
             text = "REGISTRATE AQUI",
             fontSize = 16.sp,
             color = Color.Red,
