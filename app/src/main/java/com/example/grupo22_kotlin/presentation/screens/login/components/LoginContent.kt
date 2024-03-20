@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.grupo22_kotlin.R
 import com.example.grupo22_kotlin.presentation.components.DefaultButton
@@ -27,7 +28,7 @@ import com.example.grupo22_kotlin.presentation.navigation.AppScreen
 import com.example.grupo22_kotlin.presentation.screens.login.LoginViewModel
 
 @Composable
-fun LoginContent(navController: NavHostController, viewModel: LoginViewModel){
+fun LoginContent(navController: NavHostController, viewModel: LoginViewModel = hiltViewModel()){
 
 
 

@@ -15,12 +15,12 @@ import com.example.grupo22_kotlin.presentation.screens.signup.SignupScreen
 @Composable
 fun LoginScreen(navController: NavHostController) {
 
-    val viewModel = LoginViewModel()
+
     Scaffold(
         topBar = {},
         content = {
             Text(text = "Login Screen")
-            LoginContent(navController,viewModel)
+            LoginContent(navController)
         },
         bottomBar = {}
 
