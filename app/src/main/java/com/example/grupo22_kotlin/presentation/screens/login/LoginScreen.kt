@@ -14,11 +14,13 @@ import com.example.grupo22_kotlin.presentation.screens.signup.SignupScreen
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun LoginScreen(navController: NavHostController) {
+
+    val viewModel = LoginViewModel()
     Scaffold(
         topBar = {},
         content = {
             Text(text = "Login Screen")
-            LoginContent(navController)
+            LoginContent(navController,viewModel)
         },
         bottomBar = {}
 
