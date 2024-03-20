@@ -1,4 +1,4 @@
-package com.example.grupo22_kotlin.ui.theme
+package com.example.grupo22_kotlin.presentation.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
