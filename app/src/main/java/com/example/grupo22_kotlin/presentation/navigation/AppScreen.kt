@@ -1,8 +1,8 @@
 package com.example.grupo22_kotlin.presentation.navigation
 
 sealed class AppScreen(val route: String){
-    object Login: AppScreen("login")
+    object Start: AppScreen("start")
     object Signup: AppScreen("signup")
 
-    object Register: AppScreen("register")
+    object Login: AppScreen("login")
 }
