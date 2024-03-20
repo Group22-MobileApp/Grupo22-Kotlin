@@ -2,6 +2,7 @@ package com.example.grupo22_kotlin.presentation.screens.login
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -13,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.grupo22_kotlin.presentation.navigation.AppScreen
+import com.example.grupo22_kotlin.presentation.screens.login.components.LoginContent
 import com.example.grupo22_kotlin.presentation.ui.theme.Grupo22KotlinTheme
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -21,10 +23,10 @@ fun LoginScreen(navController: NavHostController){
     Scaffold(
         topBar = {},
         content = {
-            Text(
-                modifier = Modifier
-                    .clickable { navController.navigate(route = AppScreen.Signup.route) },
-                text = "hola")
+            Column {
+                LoginContent(navController)
+            }
+
         },
         bottomBar = {}
     )
