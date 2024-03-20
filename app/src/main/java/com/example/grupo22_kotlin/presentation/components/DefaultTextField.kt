@@ -2,6 +2,8 @@ package com.example.grupo22_kotlin.presentation.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -12,6 +14,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun DefaultTextField(
@@ -19,7 +22,6 @@ fun DefaultTextField(
     value: String,
     onValueChange: (value: String) -> Unit,
     label: String,
-    icon: ImageVector,
     keyboardType: KeyboardType = KeyboardType.Text,
     hideText: Boolean = false,
 
@@ -34,19 +36,21 @@ fun DefaultTextField(
             label = {
                 Text(label)
             },
-            leadingIcon = {
-                Icon(
-                    imageVector = icon ,
-                    contentDescription ="",
-                    tint = Color.Green
-                )
-            },
             visualTransformation = if (hideText) PasswordVisualTransformation() else VisualTransformation.None
-
         )
-
     }
+}
 
-
-
+@Preview
+@Composable
+fun DefaultTextFieldPreview() {
+    DefaultTextField(
+        modifier = Modifier, // Add appropriate modifier if needed
+        value = "", // Pass initial value for preview
+        onValueChange = {}, // Pass empty lambda for onValueChange for preview
+        label = "Email",
+        // Pass label text for preview
+        keyboardType = KeyboardType.Email, // Pass appropriate keyboardType for preview
+        hideText = false // Pass hideText parameter for preview
+    )
 }

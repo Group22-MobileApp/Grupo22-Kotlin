@@ -20,7 +20,7 @@ fun DefaultButton(
     modifier: Modifier,
     text: String,
     onClick: () -> Unit,
-    color: Color = Color.Blue,
+    color: Color = Color.Yellow,
     icon: ImageVector = Icons.Default.ArrowForward,
     enabled: Boolean = true
 ){
@@ -36,7 +36,7 @@ fun DefaultButton(
             contentDescription = ""
         )
         Spacer(modifier = Modifier.width(10.dp))
-        Text(text = text)
+        Text(text = text, color = Color.Black)
     }
 
 }

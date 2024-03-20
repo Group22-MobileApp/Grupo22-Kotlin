@@ -15,7 +15,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.grupo22_kotlin.presentation.navigation.AppNavigation
 import com.example.grupo22_kotlin.presentation.ui.theme.Grupo22KotlinTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     private lateinit var navController: NavHostController
