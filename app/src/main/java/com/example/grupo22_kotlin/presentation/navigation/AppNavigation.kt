@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.grupo22_kotlin.presentation.screens.login.LoginScreen
+import com.example.grupo22_kotlin.presentation.screens.register.RegisterScreen
 import com.example.grupo22_kotlin.presentation.screens.signup.SignupScreen
 
 @Composable
@@ -18,6 +19,9 @@ fun AppNavigation(navController: NavHostController){
         }
         composable(route = AppScreen.Signup.route){
             SignupScreen()
+        }
+        composable(route= AppScreen.Register.route){
+            RegisterScreen()
         }
     }
 

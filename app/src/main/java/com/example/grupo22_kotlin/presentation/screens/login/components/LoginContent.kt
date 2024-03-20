@@ -1,6 +1,7 @@
 package com.example.grupo22_kotlin.presentation.screens.login.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -37,7 +38,10 @@ fun LoginContent(navController: NavHostController){
         Spacer(modifier = Modifier.height(25.dp))
         DefaultButton(modifier = Modifier, text = "Lets get startet", onClick = { navController.navigate(route = AppScreen.Signup.route) })
         Spacer(modifier = Modifier.height(15.dp))
-        Text(text = "I alredy have an account")
+        Text(
+            modifier = Modifier
+                .clickable { navController.navigate(route = AppScreen.Register.route) },
+            text = "I alredy have an account")
 
     }
 }

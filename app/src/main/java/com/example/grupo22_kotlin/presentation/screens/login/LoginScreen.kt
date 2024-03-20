@@ -25,6 +25,7 @@ fun LoginScreen(navController: NavHostController){
         content = {
             Column {
                 LoginContent(navController)
+
             }
 
         },
