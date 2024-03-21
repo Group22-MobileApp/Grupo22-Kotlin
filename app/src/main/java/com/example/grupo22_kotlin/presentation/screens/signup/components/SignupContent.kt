@@ -221,11 +221,11 @@ fun SignupBody(
                     CircularProgressIndicator(modifier = Modifier.size(80.dp))
                 }
             }
-
-            is Response.Success -> {
-                LaunchedEffect(Unit) {
-                    navController.navigate(route = Graph.HOME) {
-                        popUpTo(Graph.AUTHENTICATION) { inclusive = true }
+            is Response.Success ->{
+                LaunchedEffect( Unit ) {
+                    viewModel.createUser()
+                    navController.navigate(route = Graph.HOME){
+                        popUpTo(Graph.AUTHENTICATION){inclusive= true}
                     }
                 }
                 Toast.makeText(LocalContext.current, "Usuario creado", Toast.LENGTH_SHORT).show()
