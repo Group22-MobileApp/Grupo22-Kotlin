@@ -60,15 +60,14 @@ fun SignupContent(navController: NavHostController) {
             contentScale = ContentScale.FillWidth
         )
     )
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(20.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+    Box(
+        modifier = Modifier.padding(start = 20.dp, end = 20.dp, bottom = 20.dp, top = 70.dp), contentAlignment = Alignment.Center
     ) {
-        SignupHeader(modifier = Modifier.weight(1f))
-        SignupBody(modifier = Modifier.weight(1.1f), navController = navController)
+        Column {
+            SignupHeader(modifier = Modifier)
+            SignupBody(modifier = Modifier, navController = navController)
+        }
+
     }
 
 
@@ -81,7 +80,7 @@ fun SignupHeader(modifier: Modifier) {
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.padding(32.dp))
+
         Logo(modifier = Modifier, width = 115.dp, height = 115.dp)
         Spacer(modifier = Modifier.padding(10.dp))
         Text(
@@ -102,6 +101,8 @@ fun SignupHeader(modifier: Modifier) {
                 contentDescription = "Add a photo"
             )
         }
+        Spacer(modifier = Modifier.size(20.dp))
+
     }
 }
 
@@ -209,7 +210,7 @@ fun SignupBody(
                 navController.navigate(route = AuthScreen.Start.route)
             }
         )
-        Spacer(modifier = Modifier.size(64.dp))
+        Spacer(modifier = Modifier.size(40.dp))
 
 
     }
@@ -221,11 +222,12 @@ fun SignupBody(
                     CircularProgressIndicator(modifier = Modifier.size(80.dp))
                 }
             }
-            is Response.Success ->{
-                LaunchedEffect( Unit ) {
+
+            is Response.Success -> {
+                LaunchedEffect(Unit) {
                     viewModel.createUser()
-                    navController.navigate(route = Graph.HOME){
-                        popUpTo(Graph.AUTHENTICATION){inclusive= true}
+                    navController.navigate(route = Graph.HOME) {
+                        popUpTo(Graph.AUTHENTICATION) { inclusive = true }
                     }
                 }
                 Toast.makeText(LocalContext.current, "Usuario creado", Toast.LENGTH_SHORT).show()
