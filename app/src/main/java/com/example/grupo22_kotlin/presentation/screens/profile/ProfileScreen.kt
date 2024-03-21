@@ -16,25 +16,21 @@ import com.example.grupo22_kotlin.presentation.components.DefaultButton
 import com.example.grupo22_kotlin.presentation.navigation.AuthScreen
 import com.example.grupo22_kotlin.presentation.navigation.BottomBarScreen
 import com.example.grupo22_kotlin.presentation.navigation.Graph
+import com.example.grupo22_kotlin.presentation.screens.profile.components.ProfileContent
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ProfileScreen(navController: NavHostController, viewModel: ProfileViewModel= hiltViewModel()){
 
-    val activity = LocalContext.current as? Activity
 
     Scaffold (
         topBar={},
         content={
             Column {
-                Text(text = "Profile Screen")
-                DefaultButton(modifier = Modifier,
-                    text = "Log Out",
-                    onClick = {
-                        viewModel.logout()
-                        activity?.finish()
-                        activity?.startActivity(Intent(activity, MainActivity::class.java))
-                    })
+                ProfileContent(navController)
+
+
+
             }
             
         }
