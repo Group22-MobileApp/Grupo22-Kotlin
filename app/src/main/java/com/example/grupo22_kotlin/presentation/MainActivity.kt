@@ -11,10 +11,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.grupo22_kotlin.presentation.navigation.AppNavigation
+import com.example.grupo22_kotlin.presentation.navigation.RootNavGraph
 import com.example.grupo22_kotlin.presentation.ui.theme.Grupo22KotlinTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,7 +32,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     navController= rememberNavController()
-                    AppNavigation(navController = navController)
+                    RootNavGraph(navController = navController)
 
                 }
             }
