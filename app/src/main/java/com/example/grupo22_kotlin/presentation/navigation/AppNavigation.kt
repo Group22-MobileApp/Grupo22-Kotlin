@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.grupo22_kotlin.presentation.screens.login.LoginScreen
+import com.example.grupo22_kotlin.presentation.screens.profile.ProfileScreen
 
 import com.example.grupo22_kotlin.presentation.screens.signup.SignupScreen
 import com.example.grupo22_kotlin.presentation.screens.start.StartScreen
@@ -23,6 +24,11 @@ fun AppNavigation(navController: NavHostController){
         composable(route= AppScreen.Login.route){
             LoginScreen(navController)
         }
+
+        composable(route= AppScreen.Profile.route){
+            ProfileScreen(navController)
+        }
+
     }
 
 
