@@ -2,6 +2,7 @@ package com.example.grupo22_kotlin.presentation.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
@@ -34,7 +35,9 @@ fun DefaultTextField(
     label: String,
     keyboardType: KeyboardType = KeyboardType.Text,
     hideText: Boolean = false,
-    errorMsg: String = ""
+    errorMsg: String = "",
+    enabled: Boolean = true,
+    readOnly: Boolean = false
 
 ) {
     OutlinedTextField(
@@ -58,7 +61,9 @@ fun DefaultTextField(
             focusedLabelColor = darkBlue,
             cursorColor = darkBlue,
             unfocusedContainerColor = Color(0xFFF5F5F5)
-        )
+        ),
+        enabled = enabled,
+        readOnly = readOnly
     )
     Text(
         modifier = Modifier.padding(top = 5.dp),

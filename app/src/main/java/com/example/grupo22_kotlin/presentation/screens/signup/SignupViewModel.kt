@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SignupViewModel @Inject constructor(private val authUseCases: AuthUseCases): ViewModel() {
+class SignupViewModel @Inject constructor(private val authUseCases: AuthUseCases) : ViewModel() {
     var username: MutableState<String> = mutableStateOf("")
     var isUsernameValid: MutableState<Boolean> = mutableStateOf(false)
     var usernameErrMsg: MutableState<String> = mutableStateOf("")
@@ -47,10 +47,10 @@ class SignupViewModel @Inject constructor(private val authUseCases: AuthUseCases
 
     var isEnabledLoginButton = false
 
-    private  val _signupFlow = MutableStateFlow<Response<FirebaseUser>?>(null)
+    private val _signupFlow = MutableStateFlow<Response<FirebaseUser>?>(null)
     val signupFlow: StateFlow<Response<FirebaseUser>?> = _signupFlow
-    
-    fun onSignup(){
+
+    fun onSignup() {
         val user = User(
             username = username.value,
             email = email.value,
@@ -63,16 +63,17 @@ class SignupViewModel @Inject constructor(private val authUseCases: AuthUseCases
         signup(user)
 
     }
+
     fun signup(user: User) = viewModelScope.launch {
-        _signupFlow.value= Response.Loading
+        _signupFlow.value = Response.Loading
         val result = authUseCases.signup(user)
-        _signupFlow.value= result
+        _signupFlow.value = result
     }
 
 
-
-    fun enabledLoginButton(){
-        isEnabledLoginButton = isEmailValid.value &&
+    fun enabledLoginButton() {
+        isEnabledLoginButton =
+                isEmailValid.value &&
                 isPasswordValid.value &&
                 isUsernameValid.value &&
                 isconfirmPasswordValid.value &&
@@ -81,88 +82,79 @@ class SignupViewModel @Inject constructor(private val authUseCases: AuthUseCases
     }
 
 
-
-    fun validateEmail(){
-        if (Patterns.EMAIL_ADDRESS.matcher(email.value).matches()){
-            isEmailValid.value=true
-            emailErrMsg.value =""
-        }
-        else{
-            isEmailValid.value=false
-            emailErrMsg.value ="That email is not valid"
+    fun validateEmail() {
+        if (Patterns.EMAIL_ADDRESS.matcher(email.value).matches()) {
+            isEmailValid.value = true
+            emailErrMsg.value = ""
+        } else {
+            isEmailValid.value = false
+            emailErrMsg.value = "That email is not valid"
         }
         enabledLoginButton()
     }
 
 
-    fun validateUsername(){
-        if (username.value.length >= 5){
-            isUsernameValid.value=true
-            usernameErrMsg.value =""
-        }
-        else{
-            isUsernameValid.value=false
-            usernameErrMsg.value ="At least 5 caracters"
-        }
-
-        enabledLoginButton()
-    }
-
-
-    fun validatePassword(){
-        if (password.value.length >= 6){
-            isPasswordValid.value=true
-            passwordErrMsg.value =""
-        }
-        else{
-            isPasswordValid.value=false
-            passwordErrMsg.value ="That Password is not valid"
-        }
-
-        enabledLoginButton()
-    }
-
-    fun validateConfirmPasword(){
-        if (password.value == confirmPassword.value){
-            isconfirmPasswordValid.value=true
-            confirmPasswordErrMsg.value =""
-        }
-        else{
-            isconfirmPasswordValid.value=false
-            confirmPasswordErrMsg.value ="That Password are not equal"
+    fun validateUsername() {
+        if (username.value.length >= 5) {
+            isUsernameValid.value = true
+            usernameErrMsg.value = ""
+        } else {
+            isUsernameValid.value = false
+            usernameErrMsg.value = "At least 5 caracters"
         }
 
         enabledLoginButton()
     }
 
 
-    fun validateNumber(){
-        if (number.value.length >= 10){
-            isnumberValid.value=true
-            numberErrMsg.value =""
-        }
-        else{
-            isnumberValid.value=false
-            numberErrMsg.value ="That number is not valid"
-        }
-
-        enabledLoginButton()
-    }
-
-    fun validateCareer(){
-        if (career.value.length >= 0){
-            iscareerValid.value=true
-            careerErrMsg.value =""
-        }
-        else{
-            iscareerValid.value=false
-            careerErrMsg.value ="That career must not be null"
+    fun validatePassword() {
+        if (password.value.length >= 6) {
+            isPasswordValid.value = true
+            passwordErrMsg.value = ""
+        } else {
+            isPasswordValid.value = false
+            passwordErrMsg.value = "That Password is not valid"
         }
 
         enabledLoginButton()
     }
 
+    fun validateConfirmPasword() {
+        if (password.value == confirmPassword.value) {
+            isconfirmPasswordValid.value = true
+            confirmPasswordErrMsg.value = ""
+        } else {
+            isconfirmPasswordValid.value = false
+            confirmPasswordErrMsg.value = "That Password are not equal"
+        }
 
+        enabledLoginButton()
+    }
+
+
+    fun validateNumber() {
+        if (number.value.length >= 10) {
+            isnumberValid.value = true
+            numberErrMsg.value = ""
+        } else {
+            isnumberValid.value = false
+            numberErrMsg.value = "That number is not valid"
+        }
+
+        enabledLoginButton()
+    }
+
+    fun validateCareer() {
+        if (career.value.length >= 1) {
+            iscareerValid.value = true
+            careerErrMsg.value = ""
+        } else {
+            iscareerValid.value = false
+            careerErrMsg.value = "That career must not be empty"
+        }
+
+        enabledLoginButton()
+    }
 
 
 }

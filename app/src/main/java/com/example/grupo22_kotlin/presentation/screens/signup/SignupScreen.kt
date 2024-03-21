@@ -20,18 +20,11 @@ import com.example.grupo22_kotlin.presentation.screens.signup.components.SignupC
 fun SignupScreen(navController: NavHostController) {
     Scaffold(
         topBar = {
-                 DefaultTopBar(
-                     title = "New User",
-                     upAvailable = true,
-                     navController = navController)
 
         },
         content = {
-            Column(modifier = Modifier.padding(top=55.dp)) {
-                SignupContent(navController = navController)
-            }
 
-
+            SignupContent(navController = navController)
 
         },
         bottomBar = {}
@@ -41,6 +34,6 @@ fun SignupScreen(navController: NavHostController) {
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun PreviewSigunScreen(){
+fun PreviewSigunScreen() {
     SignupScreen(rememberNavController())
 }
