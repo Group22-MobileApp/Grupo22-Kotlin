@@ -20,28 +20,13 @@ fun StartScreen(navController: NavHostController){
     Scaffold(
         topBar = {},
         content = {
-            Column {
+
                 StartContent(navController)
-
-            }
-
         },
         bottomBar = {}
     )
 }
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun GreetPreview(){
-    Grupo22KotlinTheme(darkTheme = false){
-        Surface(
-            modifier = Modifier.fillMaxWidth(),
-            color = MaterialTheme.colorScheme.background
-        ) {
-            StartScreen(rememberNavController() )
-        }
 
-    }
-    }
 
 
