@@ -11,8 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.example.grupo22_kotlin.presentation.components.ImportantButton
 import com.example.grupo22_kotlin.presentation.MainActivity
-import com.example.grupo22_kotlin.presentation.components.DefaultButton
 import com.example.grupo22_kotlin.presentation.navigation.AuthScreen
 import com.example.grupo22_kotlin.presentation.navigation.BottomBarScreen
 import com.example.grupo22_kotlin.presentation.navigation.Graph

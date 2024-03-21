@@ -23,10 +23,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.grupo22_kotlin.R
+import com.example.grupo22_kotlin.presentation.components.ImportantButton
 import com.example.grupo22_kotlin.domain.model.Response
-import com.example.grupo22_kotlin.presentation.components.DefaultButton
 import com.example.grupo22_kotlin.presentation.components.DefaultTextField
-import com.example.grupo22_kotlin.presentation.navigation.AuthScreen
 import com.example.grupo22_kotlin.presentation.navigation.Graph
 import com.example.grupo22_kotlin.presentation.screens.signup.SignupViewModel
 
@@ -106,7 +105,7 @@ fun SignupContent(navController: NavHostController, viewModel: SignupViewModel= 
             errorMsg = viewModel.careerErrMsg.value,
             validateField = {viewModel.validateCareer()}
         )
-        DefaultButton(modifier = Modifier,
+        ImportantButton(modifier = Modifier,
             text = "DONE",
             onClick = { viewModel.onSignup() },
             enabled = viewModel.isEnabledLoginButton)
