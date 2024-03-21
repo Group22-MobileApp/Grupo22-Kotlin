@@ -17,7 +17,7 @@ fun RootNavGraph(navController: NavHostController){
     NavHost(
         navController = navController,
         route = Graph.ROOT,
-        startDestination = Graph.HOME
+        startDestination = Graph.AUTHENTICATION
     ) {
 
         authNavGraph(navController = navController)

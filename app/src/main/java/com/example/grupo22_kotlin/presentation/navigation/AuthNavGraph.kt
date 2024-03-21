@@ -11,7 +11,7 @@ import com.example.grupo22_kotlin.presentation.screens.start.StartScreen
 fun NavGraphBuilder.authNavGraph(navController: NavHostController) {
     navigation(
         route = Graph.AUTHENTICATION,
-        startDestination = AuthScreen.Login.route
+        startDestination = AuthScreen.Start.route
     ) {
 
         composable(route = AuthScreen.Start.route) {
@@ -31,7 +31,7 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController) {
 
 sealed class AuthScreen(val route: String) {
 
-    object Start: AppScreen("start")
+    object Start: AuthScreen("start")
     object Login: AuthScreen("login")
     object Signup: AuthScreen("signup")
 

@@ -1,6 +1,5 @@
 package com.example.grupo22_kotlin.presentation.screens.addPost.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,25 +8,21 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.CheckboxColors
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.grupo22_kotlin.R
 import com.example.grupo22_kotlin.presentation.components.DefaultButton
 import com.example.grupo22_kotlin.presentation.components.DefaultTextField
-import com.example.grupo22_kotlin.presentation.navigation.AppScreen
+import com.example.grupo22_kotlin.presentation.navigation.AuthScreen
 import com.example.grupo22_kotlin.presentation.screens.signup.SignupViewModel
 import com.example.grupo22_kotlin.presentation.ui.theme.Raleway
 import com.example.grupo22_kotlin.presentation.ui.theme.darkBlue
@@ -102,7 +97,7 @@ fun AddPostContent(navController: NavHostController, viewModel: SignupViewModel 
 
         DefaultButton(modifier = Modifier,
             text = "POST",
-            onClick = { navController.navigate(route = AppScreen.Login.route) },
+            onClick = { navController.navigate(route = AuthScreen.Login.route) },
             enabled = viewModel.isEnabledLoginButton)
 
 

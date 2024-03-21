@@ -28,12 +28,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.grupo22_kotlin.R
-import com.example.grupo22_kotlin.presentation.navigation.AppScreen
+import com.example.grupo22_kotlin.presentation.navigation.AuthScreen
 import com.example.grupo22_kotlin.presentation.ui.theme.Montserrat
 import com.example.grupo22_kotlin.presentation.ui.theme.Raleway
 import com.example.grupo22_kotlin.presentation.ui.theme.darkBlue
@@ -106,7 +105,7 @@ fun LandingFooter(modifier: Modifier, navController: NavHostController) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Button(
-            onClick = { navController.navigate(route = AppScreen.Signup.route) },
+            onClick = { navController.navigate(route = AuthScreen.Signup.route) },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(52.dp)
@@ -127,7 +126,7 @@ fun LandingFooter(modifier: Modifier, navController: NavHostController) {
             Spacer(modifier = Modifier.padding(4.dp))
 
             FilledIconButton(
-                onClick = { navController.navigate(route = AppScreen.Login.route) },
+                onClick = { navController.navigate(route = AuthScreen.Login.route) },
                 modifier = Modifier.size(32.dp)
             ) {
                 Icon(

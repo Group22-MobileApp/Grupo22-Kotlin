@@ -1,7 +1,6 @@
 package com.example.grupo22_kotlin.presentation.screens.signup.components
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,12 +14,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
 import com.example.grupo22_kotlin.R
 import com.example.grupo22_kotlin.presentation.components.DefaultButton
 import com.example.grupo22_kotlin.presentation.components.DefaultTextField
-import com.example.grupo22_kotlin.presentation.navigation.AppScreen
+import com.example.grupo22_kotlin.presentation.navigation.AuthScreen
 import com.example.grupo22_kotlin.presentation.screens.signup.SignupViewModel
 
 @Composable
@@ -97,7 +95,7 @@ fun SignupContent(navController: NavHostController, viewModel: SignupViewModel= 
         )
         DefaultButton(modifier = Modifier,
             text = "DONE",
-            onClick = { navController.navigate(route = AppScreen.Login.route) },
+            onClick = { navController.navigate(route = AuthScreen.Login.route) },
             enabled = viewModel.isEnabledLoginButton)
 
 
