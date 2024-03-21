@@ -19,7 +19,6 @@ fun LoginScreen(navController: NavHostController) {
     Scaffold(
         topBar = {},
         content = {
-            Text(text = "Login Screen")
             LoginContent(navController)
         },
         bottomBar = {}
@@ -27,9 +26,3 @@ fun LoginScreen(navController: NavHostController) {
     )
 }
 
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun PreviewLoginScreen(){
-    LoginScreen(rememberNavController())
-}

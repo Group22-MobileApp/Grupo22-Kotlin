@@ -33,6 +33,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.grupo22_kotlin.R
+import com.example.grupo22_kotlin.presentation.components.ForwardButton
+import com.example.grupo22_kotlin.presentation.components.ImportantButton
+import com.example.grupo22_kotlin.presentation.components.Logo
 import com.example.grupo22_kotlin.presentation.navigation.AppScreen
 import com.example.grupo22_kotlin.presentation.ui.theme.Montserrat
 import com.example.grupo22_kotlin.presentation.ui.theme.Raleway
@@ -60,24 +63,8 @@ fun LandingBody(modifier: Modifier) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Card(
-            shape = CircleShape,
-            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-            colors = CardDefaults.cardColors(containerColor = Color.White),
-            modifier = Modifier
-                .width(165.dp)
-                .height(165.dp)
-        ) {
 
-            Image(
-                painter = painterResource(id = R.drawable.ic_brandlogo),
-                contentDescription = "Logo",
-                modifier = Modifier
-                    .fillMaxSize()
-                    .scale(1.225f)
-            )
-
-        }
+        Logo(modifier = Modifier, width = 165.dp, height = 165.dp )
         Spacer(modifier = Modifier.padding(4.dp))
         Text(
             text = "Goat's Mart".uppercase(),
@@ -105,15 +92,10 @@ fun LandingFooter(modifier: Modifier, navController: NavHostController) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Button(
-            onClick = { navController.navigate(route = AppScreen.Signup.route) },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(52.dp)
-                .padding(horizontal = 8.dp)
-        ) {
-            Text(text = "Let's get started", fontSize = 22.sp, fontFamily = Montserrat, fontWeight = FontWeight.Normal)
-        }
+        ImportantButton(
+            modifier = Modifier,
+            text = "Let's get started",
+            onClick = { navController.navigate(route = AppScreen.Signup.route) })
 
         Spacer(modifier = Modifier.padding(10.dp))
 
@@ -126,16 +108,9 @@ fun LandingFooter(modifier: Modifier, navController: NavHostController) {
 
             Spacer(modifier = Modifier.padding(4.dp))
 
-            FilledIconButton(
-                onClick = { navController.navigate(route = AppScreen.Login.route) },
-                modifier = Modifier.size(32.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.ArrowForward,
-                    contentDescription = "Forward arrow",
-                    modifier = Modifier.size(20.dp)
-                )
-            }
+            ForwardButton(
+                modifier = Modifier,
+                onClick = { navController.navigate(route = AppScreen.Login.route) })
         }
     }
 }
