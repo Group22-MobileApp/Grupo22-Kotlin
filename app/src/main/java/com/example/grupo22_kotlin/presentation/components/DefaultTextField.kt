@@ -1,6 +1,7 @@
 package com.example.grupo22_kotlin.presentation.components
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
@@ -15,15 +16,19 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun DefaultTextField(
     modifier: Modifier,
     value: String,
     onValueChange: (value: String) -> Unit,
+    validateField: () -> Unit={},
     label: String,
     keyboardType: KeyboardType = KeyboardType.Text,
     hideText: Boolean = false,
+    errorMsg: String =""
 
     ) {
 
@@ -31,26 +36,19 @@ fun DefaultTextField(
         OutlinedTextField(
             modifier  = modifier,
             value = value,
-            onValueChange = {onValueChange(it)},
+            onValueChange = {onValueChange(it)
+                            validateField()},
             keyboardOptions = KeyboardOptions(keyboardType= keyboardType),
             label = {
                 Text(label)
             },
             visualTransformation = if (hideText) PasswordVisualTransformation() else VisualTransformation.None
         )
+        Text(
+            modifier= Modifier.padding(top = 5.dp),
+            fontSize = 11.sp,
+            text = errorMsg,
+            color = Color.Red)
     }
 }
 
-@Preview
-@Composable
-fun DefaultTextFieldPreview() {
-    DefaultTextField(
-        modifier = Modifier, // Add appropriate modifier if needed
-        value = "", // Pass initial value for preview
-        onValueChange = {}, // Pass empty lambda for onValueChange for preview
-        label = "Email",
-        // Pass label text for preview
-        keyboardType = KeyboardType.Email, // Pass appropriate keyboardType for preview
-        hideText = false // Pass hideText parameter for preview
-    )
-}

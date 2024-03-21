@@ -47,28 +47,36 @@ fun LoginContent(navController: NavHostController, viewModel: LoginViewModel = h
             text = "Login"
         )
         Text(text = "Good to see you back")
-        Spacer(modifier = Modifier.height(15.dp))
+        Spacer(modifier = Modifier.height(10.dp))
         DefaultTextField(
             modifier = Modifier,
             value = viewModel.email.value,
             onValueChange ={viewModel.email.value = it} ,
             label = "Email",
-            keyboardType = KeyboardType.Email
+            keyboardType = KeyboardType.Email,
+            errorMsg = viewModel.emailErrMsg.value,
+            validateField = {
+                viewModel.validateEmail()
+            }
         )
-        Spacer(modifier = Modifier.height(15.dp))
+        Spacer(modifier = Modifier.height(10.dp))
         DefaultTextField(
             modifier = Modifier,
             value = viewModel.password.value,
             onValueChange ={viewModel.password.value = it} ,
             label = "Password",
-            hideText = true
+            hideText = true,
+            errorMsg = viewModel.passwordErrMsg.value,
+            validateField = {
+                viewModel.validatePassword()
+            }
         )
-        Spacer(modifier = Modifier.height(15.dp))
-
-        DefaultButton(modifier = Modifier, text = "Next", onClick = {
-            Log.d("Logincontent", "Email: ${viewModel.email.value}")
-        })
-        Spacer(modifier = Modifier.height(15.dp))
+        Spacer(modifier = Modifier.height(10.dp))
+        DefaultButton(modifier = Modifier,
+            text = "Next",
+            onClick = { /*TODO*/ },
+            enabled = viewModel.isEnabledLoginButton)
+        Spacer(modifier = Modifier.height(10.dp))
         Text(text = "Cancel")
 
     }
