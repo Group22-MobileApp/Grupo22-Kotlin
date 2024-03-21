@@ -48,6 +48,8 @@ fun DefaultTextField(
         label = {
             Text(label, fontSize = 14.sp)
         },
+        maxLines = 1,
+        singleLine = true,
         visualTransformation = if (hideText) PasswordVisualTransformation() else VisualTransformation.None,
         colors = OutlinedTextFieldDefaults.colors(
             unfocusedBorderColor = Color.LightGray,
@@ -56,7 +58,6 @@ fun DefaultTextField(
             focusedLabelColor = darkBlue,
             cursorColor = darkBlue,
             unfocusedContainerColor = Color(0xFFF5F5F5)
-
         )
     )
     Text(
