@@ -63,6 +63,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.firebase.auth)
+    implementation(libs.firebase.auth.ktx)
     testImplementation(libs.junit)
     implementation("androidx.navigation:navigation-compose:2.5.3")
     implementation("com.google.dagger:hilt-android:2.48")
