@@ -1,4 +1,4 @@
-package com.example.grupo22_kotlin.presentation.screens.mainHome.components
+package com.example.grupo22_kotlin.presentation.screens.favorites.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -17,7 +17,7 @@ import com.example.grupo22_kotlin.R
 import com.example.grupo22_kotlin.presentation.screens.signup.SignupViewModel
 
 @Composable
-fun MainHomeContent(navController: NavHostController, viewModel: SignupViewModel = hiltViewModel()) {
+fun FavoritesContent(navController: NavHostController, viewModel: SignupViewModel = hiltViewModel()) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -29,7 +29,7 @@ fun MainHomeContent(navController: NavHostController, viewModel: SignupViewModel
         )
         Text(
             modifier = Modifier.padding(15.dp),
-            text = "Main Home Page"
+            text = "List of Favorites"
         )
     }
 }
