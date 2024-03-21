@@ -17,7 +17,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SignupViewModel @Inject constructor(private val authUseCases: AuthUseCases, private val userUseCases: UserUseCases): ViewModel() {
+class SignupViewModel @Inject constructor(
+    private val authUseCases: AuthUseCases,
+    private val userUseCases: UserUseCases
+) : ViewModel() {
     var username: MutableState<String> = mutableStateOf("")
     var isUsernameValid: MutableState<Boolean> = mutableStateOf(false)
     var usernameErrMsg: MutableState<String> = mutableStateOf("")
@@ -53,7 +56,7 @@ class SignupViewModel @Inject constructor(private val authUseCases: AuthUseCases
 
 
     var user = User()
-    fun onSignup(){
+    fun onSignup() {
         user.username = username.value
         user.email = email.value
         user.password = password.value
@@ -72,13 +75,12 @@ class SignupViewModel @Inject constructor(private val authUseCases: AuthUseCases
 
 
     fun createUser() = viewModelScope.launch {
-    user.id = authUseCases.getCurrentUser()!!.uid
+        user.id = authUseCases.getCurrentUser()!!.uid
         userUseCases.create(user)
     }
 
 
-
-    fun enabledLoginButton(){
+    fun enabledLoginButton() {
         isEnabledLoginButton = isEmailValid.value &&
                 isPasswordValid.value &&
                 isUsernameValid.value &&
