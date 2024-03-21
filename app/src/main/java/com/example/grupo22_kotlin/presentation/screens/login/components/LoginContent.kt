@@ -1,5 +1,6 @@
 package com.example.grupo22_kotlin.presentation.screens.login.components
 
+import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -32,6 +33,7 @@ import com.example.grupo22_kotlin.presentation.navigation.BottomBarScreen
 import com.example.grupo22_kotlin.presentation.navigation.Graph
 import com.example.grupo22_kotlin.presentation.screens.login.LoginViewModel
 
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun LoginContent(navController: NavHostController, viewModel: LoginViewModel = hiltViewModel()){
 
