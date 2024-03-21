@@ -87,7 +87,11 @@ fun LoginContent(navController: NavHostController, viewModel: LoginViewModel = h
             },
             enabled = viewModel.isEnabledLoginButton)
         Spacer(modifier = Modifier.height(10.dp))
-        Text(text = "Cancel")
+        Text(text = "Cancel",
+            modifier= Modifier.clickable {
+                navController.navigate(route = AppScreen.Start.route)
+            }
+            )
 
     }
     loginFlow.value.let { 
@@ -101,7 +105,9 @@ fun LoginContent(navController: NavHostController, viewModel: LoginViewModel = h
             }
             is Response.Success ->{
                 LaunchedEffect( Unit ) {
-                    navController.navigate(route = AppScreen.Profile.route)
+                    navController.navigate(route = AppScreen.Profile.route){
+                        popUpTo(AppScreen.Login.route){inclusive= true}
+                    }
                 }
                 Toast.makeText(LocalContext.current, "Usuario logeado", Toast.LENGTH_LONG).show()
             }
