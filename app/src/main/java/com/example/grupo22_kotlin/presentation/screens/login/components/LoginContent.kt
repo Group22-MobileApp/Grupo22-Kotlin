@@ -101,7 +101,7 @@ fun LoginHeader(modifier: Modifier) {
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.padding(20.dp))
+        Spacer(modifier = Modifier.padding(32.dp))
         Logo(modifier = Modifier, width = 115.dp, height = 115.dp)
     }
 }
@@ -110,7 +110,7 @@ fun LoginHeader(modifier: Modifier) {
 fun LoginBody(modifier: Modifier, navController: NavHostController, viewModel: LoginViewModel) {
     Column(
         modifier = modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.Top,
+        verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
@@ -161,7 +161,7 @@ fun LoginBody(modifier: Modifier, navController: NavHostController, viewModel: L
                 navController.navigate(route = AppScreen.Start.route)
             }
         )
-        Spacer(modifier = Modifier.padding(20.dp))
+        Spacer(modifier = Modifier.padding(42.dp))
     }
 }
 

@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -45,7 +46,7 @@ fun DefaultTextField(
         },
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
         label = {
-            Text(label)
+            Text(label, fontSize = 14.sp)
         },
         visualTransformation = if (hideText) PasswordVisualTransformation() else VisualTransformation.None,
         colors = OutlinedTextFieldDefaults.colors(
@@ -61,6 +62,7 @@ fun DefaultTextField(
     Text(
         modifier = Modifier.padding(top = 5.dp),
         fontSize = 11.sp,
+        fontWeight = FontWeight.SemiBold,
         text = errorMsg,
         color = Color.Red
     )
