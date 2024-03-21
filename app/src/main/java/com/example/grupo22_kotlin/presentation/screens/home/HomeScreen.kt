@@ -33,7 +33,9 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
 fun BottomBar(navController: NavHostController) {
     val screens = listOf(
         BottomBarScreen.Home,
+        BottomBarScreen.Favorites,
         BottomBarScreen.AddPosts,
+        BottomBarScreen.Chat,
         BottomBarScreen.Profile,
     )
 
