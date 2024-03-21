@@ -20,11 +20,14 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.grupo22_kotlin.R
 import com.example.grupo22_kotlin.presentation.MainActivity
-import com.example.grupo22_kotlin.presentation.components.DefaultButton
+import com.example.grupo22_kotlin.presentation.components.ImportantButton
 import com.example.grupo22_kotlin.presentation.screens.profile.ProfileViewModel
 
 @Composable
-fun ProfileContent(navController: NavHostController, viewModel:ProfileViewModel = hiltViewModel()){
+fun ProfileContent(
+    navController: NavHostController,
+    viewModel: ProfileViewModel = hiltViewModel()
+) {
     val activity = LocalContext.current as? Activity
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -34,16 +37,18 @@ fun ProfileContent(navController: NavHostController, viewModel:ProfileViewModel 
         Text(text = "Profile")
         Spacer(modifier = Modifier.height(30.dp))
         Image(
-            painter = painterResource(id = R.drawable.ic_brandlogo) ,
-            contentDescription = "User_Login")
+            painter = painterResource(id = R.drawable.ic_brandlogo),
+            contentDescription = "User_Login"
+        )
         Spacer(modifier = Modifier.height(30.dp))
         Text(text = "Nombre del usuario")
         Text(text = "Email del usuario")
-        DefaultButton(modifier = Modifier,
+        ImportantButton(
+            modifier = Modifier,
             text = "Editar Datos",
-            onClick = {},
-            color = Color.Blue)
-        DefaultButton(modifier = Modifier,
+            onClick = {}
+        )
+        ImportantButton(modifier = Modifier,
             text = "Log Out",
             onClick = {
                 viewModel.logout()
