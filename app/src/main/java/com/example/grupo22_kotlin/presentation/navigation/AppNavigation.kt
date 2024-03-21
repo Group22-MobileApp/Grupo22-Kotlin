@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.grupo22_kotlin.presentation.screens.addPost.AddPostScreen
 import com.example.grupo22_kotlin.presentation.screens.login.LoginScreen
 import com.example.grupo22_kotlin.presentation.screens.profile.ProfileScreen
 
@@ -14,7 +15,8 @@ import com.example.grupo22_kotlin.presentation.screens.start.StartScreen
 fun AppNavigation(navController: NavHostController){
     NavHost(
         navController = navController,
-        startDestination = AppScreen.Start.route){
+        startDestination = AppScreen.Post.route){
+
         composable(route= AppScreen.Start.route) {
             StartScreen(navController)
         }
@@ -27,6 +29,10 @@ fun AppNavigation(navController: NavHostController){
 
         composable(route= AppScreen.Profile.route){
             ProfileScreen(navController)
+        }
+
+        composable(route= AppScreen.Post.route){
+            AddPostScreen(navController)
         }
 
     }
