@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -41,13 +42,16 @@ fun ProfileContent(
             contentDescription = "User_Login"
         )
         Spacer(modifier = Modifier.height(30.dp))
-        Text(text = "Nombre del usuario")
-        Text(text = "Email del usuario")
+        Text(text = viewModel.userData.username, fontSize = 25.sp)
+        Spacer(modifier = Modifier.height(30.dp))
+        Text(text = viewModel.userData.email, fontSize = 18.sp)
+        Spacer(modifier = Modifier.height(30.dp))
         ImportantButton(
             modifier = Modifier,
             text = "Editar Datos",
             onClick = {}
         )
+        Spacer(modifier = Modifier.height(30.dp))
         ImportantButton(modifier = Modifier,
             text = "Log Out",
             onClick = {

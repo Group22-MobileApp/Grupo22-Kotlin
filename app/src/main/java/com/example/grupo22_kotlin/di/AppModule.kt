@@ -12,6 +12,7 @@ import com.example.grupo22_kotlin.domain.use_case.auth.LogOut
 import com.example.grupo22_kotlin.domain.use_case.auth.Login
 import com.example.grupo22_kotlin.domain.use_case.auth.Signup
 import com.example.grupo22_kotlin.domain.use_case.users.Create
+import com.example.grupo22_kotlin.domain.use_case.users.GetUserById
 import com.example.grupo22_kotlin.domain.use_case.users.UserUseCases
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -51,6 +52,7 @@ object AppModule {
 
     @Provides
     fun provideUsersUseCases(repository: UserRepository) = UserUseCases(
-        create = Create(repository)
+        create = Create(repository),
+        getUserById = GetUserById(repository)
     )
 }
