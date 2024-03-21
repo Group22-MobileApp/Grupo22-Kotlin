@@ -1,6 +1,7 @@
 package com.example.grupo22_kotlin.data.repository
 
 import com.example.grupo22_kotlin.domain.model.Response
+import com.example.grupo22_kotlin.domain.model.User
 import com.example.grupo22_kotlin.domain.repository.AuthRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -24,5 +25,15 @@ class AuthRepositoryImpl @Inject constructor(private val firebaseAuth: FirebaseA
 
     override fun logout() {
         firebaseAuth.signOut()
+    }
+
+    override suspend fun signUp(user: User): Response<FirebaseUser> {
+        return try {
+                val result = firebaseAuth.createUserWithEmailAndPassword(user.email, user.password).await()
+                Response.Success(result.user!!)
+        }catch (e: Exception){
+            e.printStackTrace()
+            Response.Failure(e)
+        }
     }
 }

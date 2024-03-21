@@ -4,5 +4,6 @@ data class AuthUseCases (
 
     val getCurrentUser: GetCurrentUser,
     val login: Login,
-    val logOut: LogOut
+    val logOut: LogOut,
+    val signup: Signup
 )

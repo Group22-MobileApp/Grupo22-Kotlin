@@ -1,5 +1,6 @@
 package com.example.grupo22_kotlin.presentation.screens.login.components
 
+import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -35,17 +36,23 @@ import com.example.grupo22_kotlin.domain.model.Response
 import com.example.grupo22_kotlin.presentation.components.ImportantButton
 import com.example.grupo22_kotlin.presentation.components.DefaultTextField
 import com.example.grupo22_kotlin.presentation.components.Logo
-import com.example.grupo22_kotlin.presentation.navigation.AppScreen
+import com.example.grupo22_kotlin.presentation.navigation.AuthScreen
+import com.example.grupo22_kotlin.presentation.navigation.BottomBarScreen
+import com.example.grupo22_kotlin.presentation.navigation.Graph
 import com.example.grupo22_kotlin.presentation.screens.login.LoginViewModel
 import com.example.grupo22_kotlin.presentation.ui.theme.Raleway
 import com.example.grupo22_kotlin.presentation.ui.theme.darkBlue
 
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun LoginContent(navController: NavHostController, viewModel: LoginViewModel = hiltViewModel()) {
 
-    val loginFlow = viewModel.loginFlow.collectAsState()
-    
-    Box(modifier = Modifier.paint(painter = painterResource(id = R.drawable.ic_bubbleslogin), contentScale = ContentScale.FillWidth))
+    Box(
+        modifier = Modifier.paint(
+            painter = painterResource(id = R.drawable.ic_bubbleslogin),
+            contentScale = ContentScale.FillWidth
+        )
+    )
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -60,37 +67,6 @@ fun LoginContent(navController: NavHostController, viewModel: LoginViewModel = h
             viewModel = viewModel
         )
 
-    }
-    loginFlow.value.let {
-        when (it) {
-            Response.Loading -> {
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    CircularProgressIndicator()
-                }
-            }
-
-            is Response.Success -> {
-                LaunchedEffect(Unit) {
-                    navController.navigate(route = AppScreen.Profile.route) {
-                        popUpTo(AppScreen.Login.route) { inclusive = true }
-                    }
-                }
-                Toast.makeText(LocalContext.current, "Usuario logeado", Toast.LENGTH_LONG).show()
-            }
-
-            is Response.Failure -> {
-                Toast.makeText(
-                    LocalContext.current,
-                    it.exception?.message ?: "Error desconocido",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-
-            else -> {}
-        }
     }
 }
 
@@ -107,7 +83,14 @@ fun LoginHeader(modifier: Modifier) {
 }
 
 @Composable
-fun LoginBody(modifier: Modifier, navController: NavHostController, viewModel: LoginViewModel) {
+fun LoginBody(
+    modifier: Modifier,
+    navController: NavHostController,
+    viewModel: LoginViewModel = hiltViewModel()
+) {
+
+    val loginFlow = viewModel.loginFlow.collectAsState()
+
     Column(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.Bottom,
@@ -158,10 +141,42 @@ fun LoginBody(modifier: Modifier, navController: NavHostController, viewModel: L
         Spacer(modifier = Modifier.height(10.dp))
         Text(text = "Cancel",
             modifier = Modifier.clickable {
-                navController.navigate(route = AppScreen.Start.route)
+                navController.navigate(route = AuthScreen.Start.route)
             }
         )
         Spacer(modifier = Modifier.padding(42.dp))
+
+    }
+    loginFlow.value.let {
+        when (it) {
+            Response.Loading -> {
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    CircularProgressIndicator()
+                }
+            }
+
+            is Response.Success -> {
+                LaunchedEffect(Unit) {
+                    navController.navigate(route = Graph.HOME) {
+                        popUpTo(Graph.AUTHENTICATION) { inclusive = true }
+                    }
+                }
+                Toast.makeText(LocalContext.current, "Usuario logeado", Toast.LENGTH_LONG).show()
+            }
+
+            is Response.Failure -> {
+                Toast.makeText(
+                    LocalContext.current,
+                    it.exception?.message ?: "Error desconocido",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+
+            else -> {}
+        }
     }
 }
 

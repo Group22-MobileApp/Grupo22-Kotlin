@@ -6,6 +6,7 @@ import com.example.grupo22_kotlin.domain.use_case.auth.AuthUseCases
 import com.example.grupo22_kotlin.domain.use_case.auth.GetCurrentUser
 import com.example.grupo22_kotlin.domain.use_case.auth.LogOut
 import com.example.grupo22_kotlin.domain.use_case.auth.Login
+import com.example.grupo22_kotlin.domain.use_case.auth.Signup
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
@@ -25,6 +26,7 @@ object AppModule {
     fun provideAuthUseCases(repository: AuthRepository)= AuthUseCases(
         getCurrentUser = GetCurrentUser(repository),
         login = Login(repository),
-        logOut = LogOut(repository)
+        logOut = LogOut(repository),
+        signup = Signup(repository)
     )
 }
