@@ -19,6 +19,7 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.Icon
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.filled.Create
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -49,7 +50,7 @@ fun ProfileContent(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 20.dp, end = 20.dp, bottom = 20.dp, top = 70.dp),
+            .padding(start = 20.dp, end = 20.dp, bottom = 20.dp, top = 55.dp),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -84,6 +85,7 @@ fun MenuProfileHeader(
                 profileImageWidth = 100.dp,
                 profileImageHeight = 100.dp,
                 isIconButtonVisible = true,
+                icon = Icons.Default.Create,
                 profileImage = viewModel.userData.image,
                 onIconButtonClick = {
                     navController.navigate(

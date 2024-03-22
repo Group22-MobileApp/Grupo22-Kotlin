@@ -75,7 +75,7 @@ fun ExclusiveCheckboxes() {
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.Center
     ) {
-        Column (modifier = Modifier){
+        Column(modifier = Modifier) {
             Text(text = "Condition", fontWeight = FontWeight.Bold, fontSize = 18.sp)
             Row(
                 Modifier
@@ -102,7 +102,7 @@ fun ExclusiveCheckboxes() {
                 Text(text = "Used", modifier = Modifier.padding(start = 8.dp))
             }
         }
-        
+
         Spacer(modifier = Modifier.size(8.dp))
 
         Column {
@@ -244,7 +244,7 @@ fun AddPostBody(
             hideText = true
         )
         ExclusiveCheckboxes()
-        
+
         Spacer(modifier = Modifier.size(16.dp))
     }
 }
