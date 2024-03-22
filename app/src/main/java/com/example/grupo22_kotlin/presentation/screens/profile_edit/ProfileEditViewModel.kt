@@ -22,7 +22,6 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileEditViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val authUseCases: AuthUseCases,
     private val userUseCases: UserUseCases
 ) : ViewModel() {
 
@@ -53,6 +52,26 @@ class ProfileEditViewModel @Inject constructor(
         validateNumber()
         validateCareer()
 
+    }
+
+    var updateResponse by  mutableStateOf<Response<Boolean>?>(null)
+        private set
+
+    fun onUpdate(){
+        val myUser = User(
+            id = user.id,
+            username = username.value,
+            image = "",
+            career =  career.value,
+            number = number.value
+        )
+        update(myUser)
+    }
+
+    fun update(user: User) = viewModelScope.launch {
+        updateResponse = Response.Loading
+        val result = userUseCases.update(user)
+        updateResponse = result
     }
 
 
