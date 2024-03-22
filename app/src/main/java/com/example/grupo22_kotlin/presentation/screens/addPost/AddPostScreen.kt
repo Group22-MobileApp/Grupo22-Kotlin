@@ -21,7 +21,7 @@ fun AddPostScreen(navController: NavHostController) {
 
         },
         content = {
-                AddPostContent(navController = navController)
+            AddPostContent(navController = navController)
         },
         bottomBar = {}
 
@@ -30,6 +30,6 @@ fun AddPostScreen(navController: NavHostController) {
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun PreviewAddPostScreen(){
+fun PreviewAddPostScreen() {
     AddPostScreen(rememberNavController())
 }

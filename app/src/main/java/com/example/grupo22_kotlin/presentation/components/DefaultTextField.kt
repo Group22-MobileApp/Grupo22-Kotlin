@@ -1,6 +1,7 @@
 package com.example.grupo22_kotlin.presentation.components
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -37,11 +38,11 @@ fun DefaultTextField(
     hideText: Boolean = false,
     errorMsg: String = "",
     enabled: Boolean = true,
-    readOnly: Boolean = false
-
+    readOnly: Boolean = false,
+    icon: @Composable () -> Unit = {}
 ) {
     OutlinedTextField(
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth(),
         value = value,
         onValueChange = {
             onValueChange(it)
@@ -63,7 +64,8 @@ fun DefaultTextField(
             unfocusedContainerColor = Color(0xFFF5F5F5)
         ),
         enabled = enabled,
-        readOnly = readOnly
+        readOnly = readOnly,
+        trailingIcon = {icon()}
     )
     Text(
         modifier = Modifier.padding(top = 5.dp),

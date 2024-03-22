@@ -2,6 +2,7 @@ package com.example.grupo22_kotlin.presentation.components
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
@@ -21,7 +22,7 @@ fun ForwardButton(
         enabled = enabled
     ) {
         Icon(
-            imageVector = Icons.Default.ArrowForward,
+            imageVector = Icons.AutoMirrored.Filled.ArrowForward,
             contentDescription = "Forward arrow",
             modifier = Modifier.size(20.dp)
         )
