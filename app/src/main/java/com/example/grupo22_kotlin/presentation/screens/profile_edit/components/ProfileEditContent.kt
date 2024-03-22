@@ -178,7 +178,7 @@ fun SignupBody(
         ImportantButton(
             modifier = Modifier,
             text = "Actualizar Datos",
-            onClick = { },
+            onClick = {viewModel.onUpdate() },
             enabled = viewModel.isEnabledActualizarDatos
         )
         Spacer(modifier = Modifier.height(10.dp))

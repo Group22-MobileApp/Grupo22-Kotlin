@@ -9,6 +9,7 @@ data class User(
     var password: String ="",
     var number: String ="",
     var career: String ="",
+    var image: String =""
 
 
 ) {
