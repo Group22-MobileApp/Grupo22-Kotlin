@@ -120,7 +120,7 @@ fun MenuProfileBody(
             Text(
                 text = "Profile",
                 fontWeight = FontWeight.SemiBold,
-                modifier = modifier.align(Alignment.CenterStart)
+                modifier = modifier.align(Alignment.CenterStart).padding(start = 8.dp)
             )
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
@@ -146,7 +146,7 @@ fun MenuProfileBody(
             Text(
                 text = "History",
                 fontWeight = FontWeight.SemiBold,
-                modifier = modifier.align(Alignment.CenterStart)
+                modifier = modifier.align(Alignment.CenterStart).padding(start = 8.dp)
             )
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
@@ -172,7 +172,7 @@ fun MenuProfileBody(
             Text(
                 text = "Crate a post",
                 fontWeight = FontWeight.SemiBold,
-                modifier = modifier.align(Alignment.CenterStart)
+                modifier = modifier.align(Alignment.CenterStart).padding(start = 8.dp)
             )
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
@@ -198,7 +198,7 @@ fun MenuProfileBody(
             Text(
                 text = "My reviews",
                 fontWeight = FontWeight.SemiBold,
-                modifier = modifier.align(Alignment.CenterStart)
+                modifier = modifier.align(Alignment.CenterStart).padding(start = 8.dp)
             )
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
