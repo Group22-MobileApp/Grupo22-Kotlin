@@ -35,7 +35,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -43,11 +42,10 @@ import androidx.navigation.NavHostController
 import com.example.grupo22_kotlin.R
 import com.example.grupo22_kotlin.presentation.components.DefaultTextField
 import com.example.grupo22_kotlin.presentation.components.ImportantButton
+import com.example.grupo22_kotlin.presentation.components.TitleText
 import com.example.grupo22_kotlin.presentation.navigation.AuthScreen
 import com.example.grupo22_kotlin.presentation.screens.signup.SignupViewModel
 import com.example.grupo22_kotlin.presentation.ui.theme.Montserrat
-import com.example.grupo22_kotlin.presentation.ui.theme.Raleway
-import com.example.grupo22_kotlin.presentation.ui.theme.darkBlue
 
 @Composable
 fun AddPostContent(navController: NavHostController, viewModel: SignupViewModel = hiltViewModel()) {
@@ -69,8 +67,8 @@ fun AddPostContent(navController: NavHostController, viewModel: SignupViewModel 
 
 @Composable
 fun ExclusiveCheckboxes() {
-    var selectedOption1 by remember { mutableStateOf("") }
-    var selectedOption2 by remember { mutableStateOf("") }
+    var selectedCondition by remember { mutableStateOf("") }
+    var selectedInterchangeable by remember { mutableStateOf("") }
 
     Row(
         modifier = Modifier
@@ -82,24 +80,24 @@ fun ExclusiveCheckboxes() {
             Row(
                 Modifier
                     .fillMaxWidth(0.5f)
-                    .clickable(onClick = { selectedOption1 = "New" }),
+                    .clickable(onClick = { selectedCondition = "New" }),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Checkbox(
-                    checked = selectedOption1 == "New",
-                    onCheckedChange = { if (it) selectedOption1 = "New" }
+                    checked = selectedCondition == "New",
+                    onCheckedChange = { if (it) selectedCondition = "New" }
                 )
                 Text(text = "New", modifier = Modifier.padding(start = 8.dp))
             }
             Row(
                 Modifier
                     .fillMaxWidth(0.5f)
-                    .clickable(onClick = { selectedOption1 = "Used" }),
+                    .clickable(onClick = { selectedCondition = "Used" }),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Checkbox(
-                    checked = selectedOption1 == "Used",
-                    onCheckedChange = { if (it) selectedOption1 = "Used" }
+                    checked = selectedCondition == "Used",
+                    onCheckedChange = { if (it) selectedCondition = "Used" }
                 )
                 Text(text = "Used", modifier = Modifier.padding(start = 8.dp))
             }
@@ -112,12 +110,12 @@ fun ExclusiveCheckboxes() {
             Row(
                 Modifier
                     .fillMaxWidth()
-                    .clickable(onClick = { selectedOption2 = "Yes" }),
+                    .clickable(onClick = { selectedInterchangeable = "Yes" }),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Checkbox(
-                    checked = selectedOption2 == "Yes",
-                    onCheckedChange = { if (it) selectedOption2 = "Yes" }
+                    checked = selectedInterchangeable == "Yes",
+                    onCheckedChange = { if (it) selectedInterchangeable = "Yes" }
                 )
                 Text(text = "Yes", modifier = Modifier.padding(start = 8.dp))
             }
@@ -125,12 +123,12 @@ fun ExclusiveCheckboxes() {
             Row(
                 Modifier
                     .fillMaxWidth()
-                    .clickable(onClick = { selectedOption2 = "No" }),
+                    .clickable(onClick = { selectedInterchangeable = "No" }),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Checkbox(
-                    checked = selectedOption2 == "No",
-                    onCheckedChange = { if (it) selectedOption2 = "No" }
+                    checked = selectedInterchangeable == "No",
+                    onCheckedChange = { if (it) selectedInterchangeable = "No" }
                 )
                 Text(text = "No", modifier = Modifier.padding(start = 8.dp))
             }
@@ -141,16 +139,7 @@ fun ExclusiveCheckboxes() {
 @Composable
 fun AddPostHeader(modifier: Modifier) {
     Box(modifier = modifier.fillMaxWidth()) {
-        Text(
-            text = "Create a post",
-            textAlign = TextAlign.Start,
-            color = darkBlue,
-            fontSize = 35.sp,
-            fontFamily = Raleway,
-            fontWeight = FontWeight.Bold,
-            lineHeight = 35.sp,
-            modifier = Modifier.fillMaxWidth()
-        )
+        TitleText(text = "Create a post")
     }
 }
 
@@ -269,7 +258,7 @@ fun AddPostFooter(
     Box(modifier = modifier.fillMaxWidth()) {
         ImportantButton(
             modifier = Modifier,
-            text = "Post",
+            text = "Create",
             onClick = { navController.navigate(route = AuthScreen.Login.route) },
             enabled = viewModel.isEnabledLoginButton
         )
