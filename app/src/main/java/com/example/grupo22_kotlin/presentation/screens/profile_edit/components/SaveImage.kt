@@ -24,6 +24,7 @@ fun SaveImage(viewModel: ProfileEditViewModel= hiltViewModel()){
             }
         }
         is Response.Success ->{
+            Toast.makeText(LocalContext.current,"User Update",Toast.LENGTH_SHORT).show()
             viewModel.onUpdate(response.data)
         }
         is Response.Failure->{

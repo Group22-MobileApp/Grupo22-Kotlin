@@ -24,7 +24,7 @@ fun ChatContent(navController: NavHostController, viewModel: SignupViewModel = h
     ) {
         Image(
             modifier = Modifier.height(100.dp),
-            painter = painterResource(id = R.drawable.logo),
+            painter = painterResource(id = R.drawable.ic_brandlogo),
             contentDescription = "Logo"
         )
         Text(
