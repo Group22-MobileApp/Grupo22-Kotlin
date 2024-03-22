@@ -22,7 +22,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddPostViewModel @Inject constructor(
-    @ApplicationContext private val context: Context,
+    //@ApplicationContext private val context: Context,
     private val postsUseCases: PostUseCases,
     private val authUseCases: AuthUseCases,
 ): ViewModel() {
@@ -68,7 +68,7 @@ class AddPostViewModel @Inject constructor(
 
     fun createPost(post: Post) = viewModelScope.launch {
         createPostResponse = Response.Loading
-        val result = postsUseCases.create(post, file!!)
+        val result = postsUseCases.create(post)
         createPostResponse = result
     }
 
@@ -90,14 +90,6 @@ class AddPostViewModel @Inject constructor(
                 isPriceValid.value &&
                 isDescriptionValid.value &&
                 isCategoryValid.value
-    }
-
-    fun takePhoto() = viewModelScope.launch {
-        val result = resultingActivityHandler.takePicturePreview()
-        if (result != null) {
-            state = state.copy(image = ComposeFileProvider.getPathFromBitmap(context, result))
-            file = File(state.image)
-        }
     }
 
     fun clearForm() {

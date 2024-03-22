@@ -7,6 +7,6 @@ import javax.inject.Inject
 
 class CreatePost @Inject constructor(private val repository: PostRepository){
 
-    suspend operator fun invoke(post: Post, file: File) = repository.create(post, file)
+    suspend operator fun invoke(post: Post) = repository.create(post)
 
 }

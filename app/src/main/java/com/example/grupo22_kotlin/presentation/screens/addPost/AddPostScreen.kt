@@ -12,6 +12,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.grupo22_kotlin.presentation.components.DefaultTopBar
 import com.example.grupo22_kotlin.presentation.screens.addPost.components.AddPostContent
+import com.example.grupo22_kotlin.presentation.screens.addPost.components.NewPost
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -26,6 +27,7 @@ fun AddPostScreen(navController: NavHostController) {
         bottomBar = {}
 
     )
+    NewPost()
 }
 
 @Preview(showBackground = true, showSystemUi = true)

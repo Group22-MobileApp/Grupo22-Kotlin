@@ -7,5 +7,5 @@ import java.io.File
 
 interface PostRepository {
 
-    suspend fun create(post: Post, file: File): Response<Boolean>
+    suspend fun create(post: Post): Response<Boolean>
 }

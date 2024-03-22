@@ -14,18 +14,18 @@ import javax.inject.Named
 
 class PostRepositoryImpl @Inject constructor(
     @Named(POSTS) private val postsRef: CollectionReference,
-    @Named(POSTS) private val storagePostsRef: StorageReference,
+    //@Named(POSTS) private val storagePostsRef: StorageReference,
 ): PostRepository {
-    override suspend fun create(post: Post, file: File): Response<Boolean> {
+    override suspend fun create(post: Post): Response<Boolean> {
         return try {
             // IMAGE
-            val fromFile = Uri.fromFile(file)
-            val ref = storagePostsRef.child(file.name)
-            val uploadTask = ref.putFile(fromFile).await()
-            val url = ref.downloadUrl.await()
+            //val fromFile = Uri.fromFile(file)
+            //val ref = storagePostsRef.child(file.name)
+            //val uploadTask = ref.putFile(fromFile).await()
+            //val url = ref.downloadUrl.await()
 
             // DATA
-            post.image = url.toString()
+            //post.image = url.toString()
             postsRef.add(post).await()
             Response.Success(true)
         } catch (e: Exception) {

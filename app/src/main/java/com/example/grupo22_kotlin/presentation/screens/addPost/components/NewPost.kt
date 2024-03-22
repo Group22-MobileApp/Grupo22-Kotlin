@@ -26,7 +26,7 @@ fun NewPost(viewModel: AddPostViewModel = hiltViewModel()) {
         }
         is Response.Success -> {
             viewModel.clearForm()
-            Toast.makeText(LocalContext.current, "Successfull Post", Toast.LENGTH_LONG).show()
+            Toast.makeText(LocalContext.current, "Successfully Post", Toast.LENGTH_LONG).show()
         }
         is Response.Failure -> {
             Toast.makeText(LocalContext.current, response.exception?.message ?: "NPI", Toast.LENGTH_LONG).show()
