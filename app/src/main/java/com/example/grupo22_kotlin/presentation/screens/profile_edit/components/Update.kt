@@ -29,7 +29,6 @@ fun Update(viewModel: ProfileEditViewModel= hiltViewModel()){
 
         is Response.Success -> {
             Toast.makeText(LocalContext.current,"User Update",Toast.LENGTH_SHORT).show()
-
         }
 
         is Response.Failure -> {

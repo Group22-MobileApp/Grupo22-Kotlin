@@ -63,20 +63,23 @@ import com.example.grupo22_kotlin.presentation.utils.ComposeFileProvider
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
-fun ProfileEditContent(navController: NavHostController,viewModel: ProfileEditViewModel = hiltViewModel(),) {
-
+fun ProfileEditContent(
+    navController: NavHostController,
+    viewModel: ProfileEditViewModel = hiltViewModel(),
+) {
 
 
     viewModel.resultingActivitiHandler.handle()
     var dialogState = remember { mutableStateOf(false) }
     DialogCapturePicture(status = dialogState,
         takePhoto = { viewModel.takePhoto() },
-        pickImage = {viewModel.pickImage()})
-        
+        pickImage = { viewModel.pickImage() })
+
 
 
     Box(
-        modifier = Modifier.padding(start = 20.dp, end = 20.dp, bottom = 20.dp, top = 70.dp), contentAlignment = Alignment.Center
+        modifier = Modifier.padding(start = 20.dp, end = 20.dp, bottom = 20.dp, top = 70.dp),
+        contentAlignment = Alignment.Center
     ) {
         Column {
             Column(
@@ -99,17 +102,17 @@ fun ProfileEditContent(navController: NavHostController,viewModel: ProfileEditVi
                 )
                 Spacer(modifier = Modifier.size(20.dp))
                 Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterStart) {
-                    if( viewModel.image.value != ""){
+                    if (viewModel.image.value != "") {
                         AsyncImage(
                             modifier = Modifier
                                 .height(100.dp)
                                 .clip(CircleShape)
                                 .clickable {
                                     dialogState.value = true
-                                },                            model = viewModel.image.value,
+                                }, model = viewModel.image.value,
                             contentDescription = ""
                         )
-                    }else{
+                    } else {
                         Image(
                             modifier = Modifier
                                 .size(95.dp)
@@ -135,7 +138,6 @@ fun ProfileEditContent(navController: NavHostController,viewModel: ProfileEditVi
 }
 
 
-
 @Composable
 fun SignupBody(
     modifier: Modifier,
@@ -143,7 +145,6 @@ fun SignupBody(
     viewModel: ProfileEditViewModel = hiltViewModel(),
     careers: Careers = Careers()
 ) {
-
 
 
     Column(
@@ -187,8 +188,9 @@ fun SignupBody(
             readOnly = false,
             label = "Whats your career",
             errorMsg = viewModel.careerErrMsg.value,
-            validateField = { viewModel.validateCareer()
-               }
+            validateField = {
+                viewModel.validateCareer()
+            }
         )
         DropdownMenu(
             expanded = expanded,
@@ -210,7 +212,10 @@ fun SignupBody(
         ImportantButton(
             modifier = Modifier,
             text = "Actualizar Datos",
-            onClick = {viewModel.saveImage() },
+            onClick = {
+                viewModel.saveImage()
+                navController.popBackStack()
+            },
             enabled = viewModel.isEnabledActualizarDatos
         )
         Spacer(modifier = Modifier.height(10.dp))

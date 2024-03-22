@@ -19,10 +19,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.example.grupo22_kotlin.R
 import com.example.grupo22_kotlin.presentation.ui.theme.amber
 
@@ -31,7 +33,7 @@ fun ProfileImage(
     modifier: Modifier,
     profileImageWidth: Dp,
     profileImageHeight: Dp,
-    @DrawableRes profileImage: Int = R.drawable.ic_profile,
+    profileImage: String = "",
     isIconButtonVisible: Boolean = false,
     onIconButtonClick: () -> Unit = {}
 ) {
@@ -46,12 +48,22 @@ fun ProfileImage(
                 .align(Alignment.Center)
         ) {
 
-            Image(
-                painter = painterResource(id = profileImage),
-                contentDescription = "Logo",
-                modifier = Modifier
-                    .fillMaxSize()
-            )
+            if (profileImage != "") {
+                AsyncImage(
+                    modifier = Modifier
+                        .size(115.dp)
+                        .clip(CircleShape),
+                    model = profileImage,
+                    contentDescription = "User image"
+                )
+            } else {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_profile),
+                    contentDescription = "Logo",
+                    modifier = Modifier
+                        .fillMaxSize()
+                )
+            }
 
         }
 
