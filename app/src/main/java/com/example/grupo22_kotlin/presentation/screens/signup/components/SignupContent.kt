@@ -12,12 +12,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredSizeIn
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -47,6 +51,7 @@ import com.example.grupo22_kotlin.presentation.components.Logo
 import com.example.grupo22_kotlin.presentation.navigation.AuthScreen
 import com.example.grupo22_kotlin.presentation.navigation.Graph
 import com.example.grupo22_kotlin.presentation.screens.signup.SignupViewModel
+import com.example.grupo22_kotlin.presentation.ui.theme.Montserrat
 import com.example.grupo22_kotlin.presentation.ui.theme.Raleway
 import com.example.grupo22_kotlin.presentation.ui.theme.darkBlue
 
@@ -61,7 +66,8 @@ fun SignupContent(navController: NavHostController) {
         )
     )
     Box(
-        modifier = Modifier.padding(start = 20.dp, end = 20.dp, bottom = 20.dp, top = 70.dp), contentAlignment = Alignment.Center
+        modifier = Modifier.padding(start = 20.dp, end = 20.dp, bottom = 20.dp, top = 70.dp),
+        contentAlignment = Alignment.Center
     ) {
         Column {
             SignupHeader(modifier = Modifier)
@@ -124,7 +130,7 @@ fun SignupBody(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         DefaultTextField(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier,
             value = viewModel.username.value,
             onValueChange = { viewModel.username.value = it },
             label = "Name",
@@ -132,7 +138,7 @@ fun SignupBody(
             validateField = { viewModel.validateUsername() }
         )
         DefaultTextField(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier,
             value = viewModel.email.value,
             onValueChange = { viewModel.email.value = it },
             label = "Email",
@@ -141,7 +147,7 @@ fun SignupBody(
             keyboardType = KeyboardType.Email
         )
         DefaultTextField(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier,
             value = viewModel.password.value,
             onValueChange = { viewModel.password.value = it },
             label = "Password",
@@ -150,7 +156,7 @@ fun SignupBody(
             hideText = true
         )
         DefaultTextField(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier,
             value = viewModel.confirmPassword.value,
             onValueChange = { viewModel.confirmPassword.value = it },
             label = "Confirm Password",
@@ -159,7 +165,7 @@ fun SignupBody(
             hideText = true
         )
         DefaultTextField(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier,
             value = viewModel.number.value,
             onValueChange = {
                 if (it.length <= 10 && it.all { char -> char.isDigit() }) viewModel.number.value =
@@ -172,29 +178,39 @@ fun SignupBody(
         )
 
         var expanded by remember { mutableStateOf(false) }
-        DefaultTextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable { expanded = true },
-            value = viewModel.career.value,
-            onValueChange = { viewModel.career.value = it },
-            enabled = false,
-            readOnly = false,
-            label = "Whats your career",
-            errorMsg = viewModel.careerErrMsg.value,
-            validateField = { viewModel.validateCareer() }
-        )
-        DropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            careers.careers.forEach { c ->
-                DropdownMenuItem(text = { Text(text = c) }, onClick = {
-                    expanded = false
-                    viewModel.career.value = c
-                    viewModel.validateCareer()
-                })
+        Column() {
+            DefaultTextField(
+                modifier = Modifier
+                    .clickable { expanded = true },
+                value = viewModel.career.value,
+                onValueChange = { viewModel.career.value = it },
+                enabled = false,
+                readOnly = false,
+                label = "Whats your career",
+                errorMsg = viewModel.careerErrMsg.value,
+                validateField = { viewModel.validateCareer() },
+                icon = {
+                    Icon(
+                        imageVector = Icons.Default.KeyboardArrowDown,
+                        contentDescription = "Forward arrow",
+                        modifier = Modifier.size(30.dp)
+                    )
+                }
+            )
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .requiredSizeIn(maxHeight = 350.dp)
+            ) {
+                careers.careers.forEach { c ->
+                    DropdownMenuItem(text = { Text(text = c, fontFamily = Montserrat) }, onClick = {
+                        expanded = false
+                        viewModel.career.value = c
+                        viewModel.validateCareer()
+                    })
+                }
             }
         }
         Spacer(modifier = Modifier.size(5.dp))
