@@ -1,6 +1,9 @@
 package com.example.grupo22_kotlin.presentation.screens.profile_edit
 
+import android.net.Uri
 import android.util.Patterns
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -43,6 +46,21 @@ class ProfileEditViewModel @Inject constructor(
 
 
     var isEnabledActualizarDatos by mutableStateOf(false)
+
+    var imageUri by mutableStateOf<Uri?>(null)
+    var hasImage by mutableStateOf(false)
+
+
+    fun onCameraResult(result: Boolean){
+        hasImage= result
+    }
+
+    fun onResult(uri: Uri){
+        hasImage= uri != null
+        imageUri = uri
+    }
+
+
 
     init {
         username.value = user.username
