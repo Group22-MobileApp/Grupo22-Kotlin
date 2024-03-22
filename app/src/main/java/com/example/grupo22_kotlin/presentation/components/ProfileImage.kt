@@ -1,5 +1,6 @@
 package com.example.grupo22_kotlin.presentation.components
 
+import android.graphics.drawable.Icon
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -21,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -35,6 +37,7 @@ fun ProfileImage(
     profileImageHeight: Dp,
     profileImage: String = "",
     isIconButtonVisible: Boolean = false,
+    icon: ImageVector,
     onIconButtonClick: () -> Unit = {}
 ) {
     Box(modifier = modifier.size(profileImageWidth + 10.dp)) {
@@ -77,7 +80,7 @@ fun ProfileImage(
             enabled = isIconButtonVisible
         ) {
             Icon(
-                imageVector = Icons.Default.Create,
+                imageVector = icon,
                 contentDescription = "Forward arrow",
                 modifier = Modifier.size(20.dp)
             )

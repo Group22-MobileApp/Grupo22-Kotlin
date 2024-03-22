@@ -2,64 +2,43 @@ package com.example.grupo22_kotlin.presentation.screens.profile_edit.components
 
 
 import android.annotation.SuppressLint
-import android.widget.Toast
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredSizeIn
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.paint
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import coil.compose.AsyncImage
-import com.example.grupo22_kotlin.R
 import com.example.grupo22_kotlin.presentation.components.ImportantButton
-import com.example.grupo22_kotlin.domain.model.Response
 import com.example.grupo22_kotlin.presentation.components.DefaultTextField
 import com.example.grupo22_kotlin.presentation.components.DialogCapturePicture
-import com.example.grupo22_kotlin.presentation.components.Logo
-import com.example.grupo22_kotlin.presentation.navigation.AuthScreen
-import com.example.grupo22_kotlin.presentation.navigation.Graph
-import com.example.grupo22_kotlin.presentation.screens.profile.ProfileViewModel
+import com.example.grupo22_kotlin.presentation.components.ProfileImage
+import com.example.grupo22_kotlin.presentation.components.TitleText
 import com.example.grupo22_kotlin.presentation.screens.profile_edit.ProfileEditViewModel
-import com.example.grupo22_kotlin.presentation.screens.signup.SignupViewModel
 import com.example.grupo22_kotlin.presentation.screens.signup.components.Careers
-import com.example.grupo22_kotlin.presentation.ui.theme.Raleway
-import com.example.grupo22_kotlin.presentation.ui.theme.darkBlue
-import com.example.grupo22_kotlin.presentation.utils.ComposeFileProvider
 
 
 @SuppressLint("StateFlowValueCalledInComposition")
@@ -70,67 +49,17 @@ fun ProfileEditContent(
 ) {
 
 
-    viewModel.resultingActivitiHandler.handle()
-    var dialogState = remember { mutableStateOf(false) }
-    DialogCapturePicture(status = dialogState,
-        takePhoto = { viewModel.takePhoto() },
-        pickImage = { viewModel.pickImage() })
-
-
-
     Box(
-        modifier = Modifier.padding(start = 20.dp, end = 20.dp, bottom = 20.dp, top = 70.dp),
+        modifier = Modifier.padding(start = 20.dp, end = 20.dp, bottom = 20.dp, top = 55.dp),
         contentAlignment = Alignment.Center
     ) {
         Column {
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.Top,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-
-
-                Spacer(modifier = Modifier.padding(10.dp))
-                Text(
-                    text = "Editar Perfil",
-                    textAlign = TextAlign.Start,
-                    color = darkBlue,
-                    fontSize = 50.sp,
-                    fontFamily = Raleway,
-                    fontWeight = FontWeight.Bold,
-                    lineHeight = 50.sp,
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Spacer(modifier = Modifier.size(20.dp))
-                Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterStart) {
-                    if (viewModel.image.value != "") {
-                        AsyncImage(
-                            modifier = Modifier
-                                .height(100.dp)
-                                .clip(CircleShape)
-                                .clickable {
-                                    dialogState.value = true
-                                }, model = viewModel.image.value,
-                            contentDescription = ""
-                        )
-                    } else {
-                        Image(
-                            modifier = Modifier
-                                .size(95.dp)
-                                .clickable {
-                                    dialogState.value = true
-                                },
-                            painter = painterResource(id = R.drawable.ic_addphoto),
-                            contentDescription = "Add a photo"
-                        )
-
-                    }
-
-                }
-                Spacer(modifier = Modifier.size(20.dp))
-
-            }
-            SignupBody(modifier = Modifier, navController = navController)
+            EditProfileHeader(
+                modifier = Modifier,
+                navController = navController,
+                viewModel = viewModel
+            )
+            EditProfileBody(modifier = Modifier, navController = navController)
         }
 
     }
@@ -138,20 +67,53 @@ fun ProfileEditContent(
 
 }
 
+@Composable
+fun EditProfileHeader(
+    modifier: Modifier,
+    navController: NavHostController,
+    viewModel: ProfileEditViewModel
+) {
+    viewModel.resultingActivitiHandler.handle()
+    var dialogState = remember { mutableStateOf(false) }
+    DialogCapturePicture(status = dialogState,
+        takePhoto = { viewModel.takePhoto() },
+        pickImage = { viewModel.pickImage() })
+    Column(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        TitleText(text = "Edit profile")
+        Spacer(modifier = Modifier.size(16.dp))
+        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterStart) {
+            ProfileImage(
+                modifier = Modifier,
+                profileImageWidth = 100.dp,
+                profileImageHeight = 100.dp,
+                isIconButtonVisible = true,
+                icon = Icons.Outlined.Add,
+                profileImage = viewModel.image.value,
+                onIconButtonClick = {
+                    dialogState.value = true
+                }
+            )
+
+        }
+        Spacer(modifier = Modifier.size(20.dp))
+
+    }
+}
+
 
 @Composable
-fun SignupBody(
+fun EditProfileBody(
     modifier: Modifier,
     navController: NavHostController,
     viewModel: ProfileEditViewModel = hiltViewModel(),
     careers: Careers = Careers()
 ) {
-
-
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .verticalScroll(rememberScrollState()),
+            .verticalScroll(rememberScrollState()).padding(vertical = 8.dp),
         verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -179,34 +141,45 @@ fun SignupBody(
         )
 
         var expanded by remember { mutableStateOf(false) }
-        DefaultTextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable { expanded = true },
-            value = viewModel.career.value,
-            onValueChange = { viewModel.career.value = it },
-            enabled = false,
-            readOnly = false,
-            label = "Whats your career",
-            errorMsg = viewModel.careerErrMsg.value,
-            validateField = {
-                viewModel.validateCareer()
-            }
-        )
-        DropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            careers.careers.forEach { c ->
-                DropdownMenuItem(text = { Text(text = c) }, onClick = {
-                    expanded = false
-                    viewModel.career.value = c
+        Column() {
+            DefaultTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { expanded = true },
+                value = viewModel.career.value,
+                onValueChange = { viewModel.career.value = it },
+                enabled = false,
+                readOnly = false,
+                label = "Whats your career",
+                errorMsg = viewModel.careerErrMsg.value,
+                validateField = {
                     viewModel.validateCareer()
-                })
+                },
+                icon = {
+                    Icon(
+                        imageVector = Icons.Default.KeyboardArrowDown,
+                        contentDescription = "Forward arrow",
+                        modifier = Modifier.size(30.dp)
+                    )
+                }
+            )
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .requiredSizeIn(maxHeight = 350.dp)
+            ) {
+                careers.careers.forEach { c ->
+                    DropdownMenuItem(text = { Text(text = c) }, onClick = {
+                        expanded = false
+                        viewModel.career.value = c
+                        viewModel.validateCareer()
+                    })
+
+                }
 
             }
-
         }
         Spacer(modifier = Modifier.size(5.dp))
 
