@@ -48,6 +48,7 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.grupo22_kotlin.R
 import com.example.grupo22_kotlin.presentation.components.DefaultTextField
+import com.example.grupo22_kotlin.presentation.components.DialogCapturePicture
 import com.example.grupo22_kotlin.presentation.components.ImportantButton
 import com.example.grupo22_kotlin.presentation.navigation.AuthScreen
 import com.example.grupo22_kotlin.presentation.screens.addPost.AddPostViewModel
@@ -170,19 +171,11 @@ fun AddPostBody(
     categories: Categories = Categories()
 ) {
 
-    val imagePicker = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent(),
-        onResult = {uri->
-            uri?.let { viewModel.onResult(it) }
-
-        })
-
-    val cameraLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.TakePicture(),
-        onResult = {hasImage->
-            viewModel.onCameraResult(hasImage)
-
-        })
+    viewModel.resultingActivitiHandler.handle()
+    var dialogState = remember { mutableStateOf(false) }
+    DialogCapturePicture(status = dialogState,
+        takePhoto = { viewModel.takePhoto() },
+        pickImage = {viewModel.pickImage()})
 
     val context = LocalContext.current
 
@@ -206,9 +199,13 @@ fun AddPostBody(
             ) {
                 Text(text = "Take or add a photo", color = Color.Gray)
                 Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                    if(viewModel.hasImage && viewModel.imageUri != null){
+                    if(viewModel.image.value != ""){
                         AsyncImage(
-                            modifier = Modifier.height(100.dp).clip(CircleShape),                            model = viewModel.imageUri,
+                            modifier = Modifier.height(100.dp)
+                                .clip(CircleShape)
+                                .clickable {
+                                           dialogState.value = true
+                                },                            model = viewModel.image.value,
                             contentDescription = ""
                         )
                     }else{
@@ -216,10 +213,7 @@ fun AddPostBody(
                             modifier = Modifier
                                 .size(95.dp)
                                 .clickable {
-                                    //imagePicker.launch("image/*")
-                                    val uri = ComposeFileProvider.getImageUri(context)
-                                    viewModel.imageUri = uri
-                                    cameraLauncher.launch(uri)
+                                    dialogState.value = true
                                 },
                             painter = painterResource(id = R.drawable.ic_addphoto),
                             contentDescription = "Add a photo"

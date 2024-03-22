@@ -22,7 +22,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddPostViewModel @Inject constructor(
-    //@ApplicationContext private val context: Context,
+    @ApplicationContext private val context: Context,
     private val postsUseCases: PostUseCases,
     private val authUseCases: AuthUseCases,
 ): ViewModel() {
@@ -53,14 +53,14 @@ class AddPostViewModel @Inject constructor(
     var selectedOption2: MutableState<String> = mutableStateOf("")
     var isSelectedOption2Selected: MutableState<Boolean> = mutableStateOf(false)
 
-    var imageUri by mutableStateOf<Uri?>(null)
-    var hasImage by mutableStateOf(false)
+    var image: MutableState<String> = mutableStateOf("")
 
     //var state by mutableStateOf(NewPostState())
 
     // FILE
     var file: File? = null
-    val resultingActivityHandler = ResultingActivityHandler()
+
+    val resultingActivitiHandler = ResultingActivityHandler()
 
     val currentUser = authUseCases.getCurrentUser()
     var createPostResponse by mutableStateOf<Response<Boolean>?>(null)
@@ -68,7 +68,7 @@ class AddPostViewModel @Inject constructor(
 
     fun createPost(post: Post) = viewModelScope.launch {
         createPostResponse = Response.Loading
-        val result = postsUseCases.create(post)
+        val result = postsUseCases.create(post, file!!)
         createPostResponse = result
     }
 
@@ -85,6 +85,24 @@ class AddPostViewModel @Inject constructor(
         createPost(post)
     }
 
+    fun pickImage()= viewModelScope.launch{
+        val result = resultingActivitiHandler.getContent("image/*")
+        if (result != null){
+            file = ComposeFileProvider.createFileFromUri(context, result)
+            image.value = result.toString()
+        }
+    }
+
+    fun takePhoto()= viewModelScope.launch{
+        val result = resultingActivitiHandler.takePicturePreview()
+        if (result != null){
+            image.value = ComposeFileProvider.getPathFromBitmap(context, result)
+            file = File(image.value)
+        }
+
+    }
+
+
     fun enabledAddPostButton() {
         isEnabledPostButton = isNameValid.value &&
                 isPriceValid.value &&
@@ -96,16 +114,10 @@ class AddPostViewModel @Inject constructor(
         name.value =""
         category.value = ""
         description.value = ""
+        price.value = ""
+        selectedOption1.value = ""
+        selectedOption2.value = ""
         createPostResponse = null
-    }
-
-    fun onCameraResult(result: Boolean){
-        hasImage= result
-    }
-
-    fun onResult(uri: Uri){
-        hasImage= uri != null
-        imageUri = uri
     }
 
     fun validateName() {

@@ -19,8 +19,7 @@ import javax.inject.Named
 
 
 class UserRepositoryImpl  @Inject  constructor(
-    @Named(USERS) private val usersRef: CollectionReference: UserRepository
-    private val usersRef: CollectionReference,
+    @Named(USERS) private val usersRef: CollectionReference,
     private val storaUsersRef: StorageReference): UserRepository {
     override suspend fun create(user: User): Response<Boolean> {
 
