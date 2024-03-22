@@ -49,6 +49,7 @@ import com.example.grupo22_kotlin.R
 import com.example.grupo22_kotlin.presentation.components.ImportantButton
 import com.example.grupo22_kotlin.domain.model.Response
 import com.example.grupo22_kotlin.presentation.components.DefaultTextField
+import com.example.grupo22_kotlin.presentation.components.DialogCapturePicture
 import com.example.grupo22_kotlin.presentation.components.Logo
 import com.example.grupo22_kotlin.presentation.navigation.AuthScreen
 import com.example.grupo22_kotlin.presentation.navigation.Graph
@@ -64,21 +65,15 @@ import com.example.grupo22_kotlin.presentation.utils.ComposeFileProvider
 @Composable
 fun ProfileEditContent(navController: NavHostController,viewModel: ProfileEditViewModel = hiltViewModel(),) {
 
-    val imagePicker = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent(),
-        onResult = {uri->
-            uri?.let { viewModel.onResult(it) }
 
-        })
 
-    val cameraLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.TakePicture(),
-        onResult = {hasImage->
-             viewModel.onCameraResult(hasImage)
+    viewModel.resultingActivitiHandler.handle()
+    var dialogState = remember { mutableStateOf(false) }
+    DialogCapturePicture(status = dialogState,
+        takePhoto = { viewModel.takePhoto() },
+        pickImage = {viewModel.pickImage()})
+        
 
-        })
-
-    val context = LocalContext.current
 
     Box(
         modifier = Modifier.padding(start = 20.dp, end = 20.dp, bottom = 20.dp, top = 70.dp), contentAlignment = Alignment.Center
@@ -104,9 +99,14 @@ fun ProfileEditContent(navController: NavHostController,viewModel: ProfileEditVi
                 )
                 Spacer(modifier = Modifier.size(20.dp))
                 Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterStart) {
-                    if(viewModel.hasImage && viewModel.imageUri != null){
+                    if( viewModel.image.value != ""){
                         AsyncImage(
-                            modifier = Modifier.height(100.dp).clip(CircleShape),                            model = viewModel.imageUri,
+                            modifier = Modifier
+                                .height(100.dp)
+                                .clip(CircleShape)
+                                .clickable {
+                                    dialogState.value = true
+                                },                            model = viewModel.image.value,
                             contentDescription = ""
                         )
                     }else{
@@ -114,10 +114,7 @@ fun ProfileEditContent(navController: NavHostController,viewModel: ProfileEditVi
                             modifier = Modifier
                                 .size(95.dp)
                                 .clickable {
-                                    //imagePicker.launch("image/*")
-                                           val uri = ComposeFileProvider.getImageUri(context)
-                                           viewModel.imageUri = uri
-                                           cameraLauncher.launch(uri)
+                                    dialogState.value = true
                                 },
                             painter = painterResource(id = R.drawable.ic_addphoto),
                             contentDescription = "Add a photo"
@@ -213,7 +210,7 @@ fun SignupBody(
         ImportantButton(
             modifier = Modifier,
             text = "Actualizar Datos",
-            onClick = {viewModel.onUpdate() },
+            onClick = {viewModel.saveImage() },
             enabled = viewModel.isEnabledActualizarDatos
         )
         Spacer(modifier = Modifier.height(10.dp))
