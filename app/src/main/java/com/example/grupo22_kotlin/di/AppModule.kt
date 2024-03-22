@@ -15,6 +15,7 @@ import com.example.grupo22_kotlin.domain.use_case.auth.LogOut
 import com.example.grupo22_kotlin.domain.use_case.auth.Login
 import com.example.grupo22_kotlin.domain.use_case.auth.Signup
 import com.example.grupo22_kotlin.domain.use_case.posts.CreatePost
+import com.example.grupo22_kotlin.domain.use_case.posts.GetPosts
 import com.example.grupo22_kotlin.domain.use_case.posts.PostUseCases
 import com.example.grupo22_kotlin.domain.use_case.users.Create
 import com.example.grupo22_kotlin.domain.use_case.users.GetUserById
@@ -89,6 +90,7 @@ object AppModule {
 
     @Provides
     fun providePostUseCases(repository: PostRepository) = PostUseCases(
-        create = CreatePost(repository)
+        create = CreatePost(repository),
+        getPosts = GetPosts(repository)
     )
 }
