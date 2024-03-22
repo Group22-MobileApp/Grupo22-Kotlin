@@ -51,7 +51,7 @@ fun ProfileImage(
             if (profileImage != "") {
                 AsyncImage(
                     modifier = Modifier
-                        .size(115.dp)
+                        .fillMaxSize()
                         .clip(CircleShape),
                     model = profileImage,
                     contentDescription = "User image"
