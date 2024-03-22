@@ -269,7 +269,7 @@ fun AddPostFooter(
     Box(modifier = modifier.fillMaxWidth()) {
         ImportantButton(
             modifier = Modifier,
-            text = "POST",
+            text = "Post",
             onClick = { navController.navigate(route = AuthScreen.Login.route) },
             enabled = viewModel.isEnabledLoginButton
         )
