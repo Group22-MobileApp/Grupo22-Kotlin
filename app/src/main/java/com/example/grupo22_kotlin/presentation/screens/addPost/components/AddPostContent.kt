@@ -40,7 +40,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -50,6 +49,7 @@ import com.example.grupo22_kotlin.R
 import com.example.grupo22_kotlin.presentation.components.DefaultTextField
 import com.example.grupo22_kotlin.presentation.components.DialogCapturePicture
 import com.example.grupo22_kotlin.presentation.components.ImportantButton
+import com.example.grupo22_kotlin.presentation.components.TitleText
 import com.example.grupo22_kotlin.presentation.navigation.AuthScreen
 import com.example.grupo22_kotlin.presentation.screens.addPost.AddPostViewModel
 import com.example.grupo22_kotlin.presentation.screens.signup.SignupViewModel
@@ -151,16 +151,7 @@ fun ExclusiveCheckboxes(viewModel: AddPostViewModel) {
 @Composable
 fun AddPostHeader(modifier: Modifier) {
     Box(modifier = modifier.fillMaxWidth()) {
-        Text(
-            text = "Create a post",
-            textAlign = TextAlign.Start,
-            color = darkBlue,
-            fontSize = 35.sp,
-            fontFamily = Raleway,
-            fontWeight = FontWeight.Bold,
-            lineHeight = 35.sp,
-            modifier = Modifier.fillMaxWidth()
-        )
+        TitleText(text = "Create a post")
     }
 }
 
@@ -313,7 +304,7 @@ fun AddPostFooter(
     Box(modifier = modifier.fillMaxWidth()) {
         ImportantButton(
             modifier = Modifier,
-            text = "Post",
+            text = "Create",
             onClick = { navController.navigate(route = AuthScreen.Login.route) },
             enabled = viewModel.isEnabledPostButton
         )
