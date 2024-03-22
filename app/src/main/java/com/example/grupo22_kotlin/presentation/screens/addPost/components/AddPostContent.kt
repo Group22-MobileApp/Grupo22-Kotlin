@@ -40,6 +40,7 @@ import com.example.grupo22_kotlin.presentation.components.DefaultTextField
 import com.example.grupo22_kotlin.presentation.components.ImportantButton
 import com.example.grupo22_kotlin.presentation.components.Logo
 import com.example.grupo22_kotlin.presentation.navigation.AuthScreen
+import com.example.grupo22_kotlin.presentation.screens.addPost.AddPostViewModel
 import com.example.grupo22_kotlin.presentation.screens.signup.SignupViewModel
 import com.example.grupo22_kotlin.presentation.screens.signup.components.Careers
 import com.example.grupo22_kotlin.presentation.screens.signup.components.SignupBody
@@ -95,7 +96,7 @@ fun AddPostHeader(modifier: Modifier){
 fun AddPostBody(
     modifier: Modifier,
     navController: NavHostController,
-    viewModel: SignupViewModel = hiltViewModel(),
+    viewModel: AddPostViewModel = hiltViewModel(),
     categories: Categories = Categories()
 ){
     Column(
@@ -110,31 +111,33 @@ fun AddPostBody(
 
         DefaultTextField(
             modifier = Modifier,
-            value = viewModel.username.value,
-            onValueChange = { viewModel.username.value = it },
+            value = viewModel.name.value,
+            onValueChange = { viewModel.name.value = it },
             label = "Name",
-            errorMsg = viewModel.usernameErrMsg.value,
-            validateField = { viewModel.validateUsername() }
+            errorMsg = viewModel.nameErrMsg.value,
+            validateField = { viewModel.validateName() }
         )
         Spacer(modifier = Modifier.height(8.dp))
         DefaultTextField(
             modifier = Modifier,
-            value = viewModel.email.value,
-            onValueChange = { viewModel.email.value = it },
+            value = viewModel.price.value,
+            onValueChange = {
+                if (it.length <= 10 && it.all { char -> char.isDigit() }) viewModel.price.value =
+                    it
+            },
             label = "Price",
-            errorMsg = viewModel.emailErrMsg.value,
-            validateField = { viewModel.validateEmail() },
-            keyboardType = KeyboardType.Email
+            errorMsg = viewModel.priceErrMsg.value,
+            validateField = { viewModel.validatePrice() },
+            keyboardType = KeyboardType.Number
         )
         Spacer(modifier = Modifier.height(8.dp))
         DefaultTextField(
             modifier = Modifier,
-            value = viewModel.password.value,
-            onValueChange = { viewModel.password.value = it },
+            value = viewModel.description.value,
+            onValueChange = { viewModel.description.value = it },
             label = "Description",
-            errorMsg = viewModel.passwordErrMsg.value,
-            validateField = { viewModel.validatePassword() },
-            hideText = true
+            errorMsg = viewModel.descriptionErrMsg.value,
+            validateField = { viewModel.validateDescription() },
         )
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -151,8 +154,8 @@ fun AddPostBody(
                     fontSize = 15.sp,
                     fontFamily = Raleway,
                 )
-                CustomCheckbox("New")
-                CustomCheckbox("Used")
+                CustomCheckbox("New", viewModel.isEnabledCheckNew)
+                CustomCheckbox("Used", viewModel.isEnabledCheckUsed)
 
             }
             Column {
@@ -162,8 +165,8 @@ fun AddPostBody(
                     fontSize = 15.sp,
                     fontFamily = Raleway,
                 )
-                CustomCheckbox("Yes")
-                CustomCheckbox("No")
+                CustomCheckbox("Yes", viewModel.isEnabledCheckYes)
+                CustomCheckbox("No", viewModel.isEnabledCheckNo)
             }
         }
 
@@ -172,13 +175,13 @@ fun AddPostBody(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable { expanded = true },
-            value = viewModel.career.value,
-            onValueChange = { viewModel.career.value = it },
+            value = viewModel.category.value,
+            onValueChange = { viewModel.category.value = it },
             enabled = false,
             readOnly = false,
             label = "Post category",
-            errorMsg = viewModel.careerErrMsg.value,
-            validateField = { viewModel.validateCareer() }
+            errorMsg = viewModel.categoryErrMsg.value,
+            validateField = { viewModel.validateCategory() }
         )
         DropdownMenu(
             expanded = expanded,
@@ -188,8 +191,8 @@ fun AddPostBody(
             categories.categories.forEach { c ->
                 DropdownMenuItem(text = { Text(text = c) }, onClick = {
                     expanded = false
-                    viewModel.career.value = c
-                    viewModel.validateCareer()
+                    viewModel.category.value = c
+                    viewModel.validateCategory()
                 })
             }
         }
@@ -198,7 +201,7 @@ fun AddPostBody(
             modifier = Modifier,
             text = "POST",
             onClick = { navController.navigate(route = AuthScreen.Login.route) },
-            enabled = viewModel.isEnabledLoginButton
+            enabled = viewModel.isEnabledPostButton
         )
 
 
@@ -234,7 +237,7 @@ fun CustomButtonAddPicture() {
 }
 
 @Composable
-fun CustomCheckbox(text: String) {
+fun CustomCheckbox(text: String, enabledCheck: Boolean) {
     val checked = remember { mutableStateOf(false) }
 
     Row(
@@ -246,6 +249,7 @@ fun CustomCheckbox(text: String) {
         Checkbox(
             checked = checked.value,
             onCheckedChange = { isChecked -> checked.value = isChecked },
+            enabled = enabledCheck
         )
     }
 }

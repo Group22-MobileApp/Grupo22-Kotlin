@@ -27,10 +27,10 @@ class AddPostViewModel @Inject constructor(): ViewModel() {
 
     var isEnabledPostButton = false
 
-    var isEnabledCheckYes = false
-    var isEnabledCheckNo = false
-    var isEnabledCheckNew = false
-    var isEnabledCheckUsed = false
+    var isEnabledCheckYes = true
+    var isEnabledCheckNo = true
+    var isEnabledCheckNew = true
+    var isEnabledCheckUsed = true
 
     fun enabledLoginButton() {
         isEnabledPostButton = isNameValid.value &&
@@ -54,12 +54,12 @@ class AddPostViewModel @Inject constructor(): ViewModel() {
     }
 
     fun validatePrice() {
-        if (price.value.toDouble() >= 1000) {
+        if (price.value.length > 1) {
             isPriceValid.value = true
             priceErrMsg.value = ""
         } else {
             isPriceValid.value = false
-            priceErrMsg.value = "The minimum transaction should be 1000 pesos"
+            priceErrMsg.value = "More than a Number"
         }
 
         enabledLoginButton()
