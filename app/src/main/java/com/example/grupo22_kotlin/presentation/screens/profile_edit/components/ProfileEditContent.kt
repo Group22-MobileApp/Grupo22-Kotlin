@@ -40,6 +40,7 @@ import com.example.grupo22_kotlin.presentation.components.TitleText
 import com.example.grupo22_kotlin.presentation.screens.profile_edit.ProfileEditViewModel
 import com.example.grupo22_kotlin.presentation.screens.signup.components.Careers
 
+
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun ProfileEditContent(
@@ -187,7 +188,9 @@ fun EditProfileBody(
             text = "Actualizar Datos",
             onClick = {
                 viewModel.saveImage()
-                navController.popBackStack()
+
+
+
             },
             enabled = viewModel.isEnabledActualizarDatos
         )

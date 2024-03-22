@@ -2,6 +2,7 @@ package com.example.grupo22_kotlin.data.repository
 
 import android.net.Uri
 import androidx.compose.runtime.snapshotFlow
+import com.example.grupo22_kotlin.core.Constants.USERS
 import com.example.grupo22_kotlin.domain.model.Response
 import com.example.grupo22_kotlin.domain.model.User
 import com.example.grupo22_kotlin.domain.repository.UserRepository
@@ -14,11 +15,11 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 import java.io.File
 import javax.inject.Inject
-
+import javax.inject.Named
 
 
 class UserRepositoryImpl  @Inject  constructor(
-    private val usersRef: CollectionReference,
+    @Named(USERS) private val usersRef: CollectionReference,
     private val storaUsersRef: StorageReference): UserRepository {
     override suspend fun create(user: User): Response<Boolean> {
 

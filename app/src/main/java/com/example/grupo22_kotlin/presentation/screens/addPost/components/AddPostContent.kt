@@ -1,5 +1,7 @@
 package com.example.grupo22_kotlin.presentation.screens.addPost.components
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -14,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSizeIn
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
@@ -31,7 +34,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -39,16 +44,22 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import coil.compose.AsyncImage
 import com.example.grupo22_kotlin.R
 import com.example.grupo22_kotlin.presentation.components.DefaultTextField
+import com.example.grupo22_kotlin.presentation.components.DialogCapturePicture
 import com.example.grupo22_kotlin.presentation.components.ImportantButton
 import com.example.grupo22_kotlin.presentation.components.TitleText
 import com.example.grupo22_kotlin.presentation.navigation.AuthScreen
+import com.example.grupo22_kotlin.presentation.screens.addPost.AddPostViewModel
 import com.example.grupo22_kotlin.presentation.screens.signup.SignupViewModel
 import com.example.grupo22_kotlin.presentation.ui.theme.Montserrat
+import com.example.grupo22_kotlin.presentation.ui.theme.Raleway
+import com.example.grupo22_kotlin.presentation.ui.theme.darkBlue
+import com.example.grupo22_kotlin.presentation.utils.ComposeFileProvider
 
 @Composable
-fun AddPostContent(navController: NavHostController, viewModel: SignupViewModel = hiltViewModel()) {
+fun AddPostContent(navController: NavHostController, viewModel: AddPostViewModel = hiltViewModel()) {
     Box(
         modifier = Modifier.padding(start = 20.dp, end = 20.dp, bottom = 20.dp, top = 55.dp),
         contentAlignment = Alignment.Center
@@ -56,19 +67,19 @@ fun AddPostContent(navController: NavHostController, viewModel: SignupViewModel 
         Column {
             AddPostHeader(modifier = Modifier)
             AddPostBody(modifier = Modifier.weight(4f), viewModel)
-            AddPostFooter(
+            /*AddPostFooter(
                 modifier = Modifier.weight(1f),
                 navController = navController,
                 viewModel = viewModel
-            )
+            )*/
         }
     }
 }
 
 @Composable
-fun ExclusiveCheckboxes() {
-    var selectedCondition by remember { mutableStateOf("") }
-    var selectedInterchangeable by remember { mutableStateOf("") }
+fun ExclusiveCheckboxes(viewModel: AddPostViewModel) {
+    /*var selectedOption1 by remember { mutableStateOf("") }
+    var selectedOption2 by remember { mutableStateOf("") }*/
 
     Row(
         modifier = Modifier
@@ -80,24 +91,24 @@ fun ExclusiveCheckboxes() {
             Row(
                 Modifier
                     .fillMaxWidth(0.5f)
-                    .clickable(onClick = { selectedCondition = "New" }),
+                    .clickable(onClick = { viewModel.selectedOption1.value = "New" }),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Checkbox(
-                    checked = selectedCondition == "New",
-                    onCheckedChange = { if (it) selectedCondition = "New" }
+                    checked = viewModel.selectedOption1.value == "New",
+                    onCheckedChange = { if (it) viewModel.selectedOption1.value = "New" }
                 )
                 Text(text = "New", modifier = Modifier.padding(start = 8.dp))
             }
             Row(
                 Modifier
                     .fillMaxWidth(0.5f)
-                    .clickable(onClick = { selectedCondition = "Used" }),
+                    .clickable(onClick = { viewModel.selectedOption1.value = "Used" }),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Checkbox(
-                    checked = selectedCondition == "Used",
-                    onCheckedChange = { if (it) selectedCondition = "Used" }
+                    checked = viewModel.selectedOption1.value == "Used",
+                    onCheckedChange = { if (it) viewModel.selectedOption1.value = "Used" }
                 )
                 Text(text = "Used", modifier = Modifier.padding(start = 8.dp))
             }
@@ -110,12 +121,12 @@ fun ExclusiveCheckboxes() {
             Row(
                 Modifier
                     .fillMaxWidth()
-                    .clickable(onClick = { selectedInterchangeable = "Yes" }),
+                    .clickable(onClick = { viewModel.selectedOption2.value = "Yes" }),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Checkbox(
-                    checked = selectedInterchangeable == "Yes",
-                    onCheckedChange = { if (it) selectedInterchangeable = "Yes" }
+                    checked = viewModel.selectedOption2.value == "Yes",
+                    onCheckedChange = { if (it) viewModel.selectedOption2.value = "Yes" }
                 )
                 Text(text = "Yes", modifier = Modifier.padding(start = 8.dp))
             }
@@ -123,12 +134,13 @@ fun ExclusiveCheckboxes() {
             Row(
                 Modifier
                     .fillMaxWidth()
-                    .clickable(onClick = { selectedInterchangeable = "No" }),
+                    .clickable(onClick = { viewModel.selectedOption2.value = "No" }),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Checkbox(
-                    checked = selectedInterchangeable == "No",
-                    onCheckedChange = { if (it) selectedInterchangeable = "No" }
+                    checked = viewModel.selectedOption2.value == "No",
+                    onCheckedChange = { if (it) viewModel.selectedOption2.value = "No" },
+
                 )
                 Text(text = "No", modifier = Modifier.padding(start = 8.dp))
             }
@@ -146,9 +158,18 @@ fun AddPostHeader(modifier: Modifier) {
 @Composable
 fun AddPostBody(
     modifier: Modifier,
-    viewModel: SignupViewModel,
+    viewModel: AddPostViewModel,
     categories: Categories = Categories()
 ) {
+
+    viewModel.resultingActivitiHandler.handle()
+    var dialogState = remember { mutableStateOf(false) }
+    DialogCapturePicture(status = dialogState,
+        takePhoto = { viewModel.takePhoto() },
+        pickImage = {viewModel.pickImage()})
+
+    val context = LocalContext.current
+
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -169,11 +190,27 @@ fun AddPostBody(
             ) {
                 Text(text = "Take or add a photo", color = Color.Gray)
                 Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                    Image(
-                        modifier = Modifier.size(95.dp),
-                        painter = painterResource(id = R.drawable.ic_addphoto),
-                        contentDescription = "Add a photo"
-                    )
+                    if(viewModel.image.value != ""){
+                        AsyncImage(
+                            modifier = Modifier.height(100.dp)
+                                .clip(CircleShape)
+                                .clickable {
+                                           dialogState.value = true
+                                },                            model = viewModel.image.value,
+                            contentDescription = ""
+                        )
+                    }else{
+                        Image(
+                            modifier = Modifier
+                                .size(95.dp)
+                                .clickable {
+                                    dialogState.value = true
+                                },
+                            painter = painterResource(id = R.drawable.ic_addphoto),
+                            contentDescription = "Add a photo"
+                        )
+
+                    }
 
                 }
             }
@@ -182,20 +219,23 @@ fun AddPostBody(
 
         DefaultTextField(
             modifier = Modifier,
-            value = viewModel.username.value,
-            onValueChange = { viewModel.username.value = it },
+            value = viewModel.name.value,
+            onValueChange = { viewModel.name.value = it },
             label = "Name",
-            errorMsg = viewModel.usernameErrMsg.value,
-            validateField = { viewModel.validateUsername() }
+            errorMsg = viewModel.nameErrMsg.value,
+            validateField = { viewModel.validateName() }
         )
         DefaultTextField(
             modifier = Modifier,
-            value = viewModel.email.value,
-            onValueChange = { viewModel.email.value = it },
+            value = viewModel.price.value,
+            onValueChange = {
+                if (it.length <= 10 && it.all { char -> char.isDigit() }) viewModel.price.value =
+                    it
+            },
             label = "Price",
-            errorMsg = viewModel.emailErrMsg.value,
-            validateField = { viewModel.validateEmail() },
-            keyboardType = KeyboardType.Email
+            errorMsg = viewModel.priceErrMsg.value,
+            validateField = { viewModel.validatePrice() },
+            keyboardType = KeyboardType.Number
         )
 
         var expanded by remember { mutableStateOf(false) }
@@ -203,13 +243,13 @@ fun AddPostBody(
             DefaultTextField(
                 modifier = Modifier
                     .clickable { expanded = true },
-                value = viewModel.career.value,
-                onValueChange = { viewModel.career.value = it },
+                value = viewModel.category.value,
+                onValueChange = { viewModel.category.value = it },
                 enabled = false,
                 readOnly = false,
                 label = "Categorie",
-                errorMsg = viewModel.careerErrMsg.value,
-                validateField = { viewModel.validateCareer() },
+                errorMsg = viewModel.categoryErrMsg.value,
+                validateField = { viewModel.validateCategory() },
                 icon = {
                     Icon(
                         imageVector = Icons.Default.KeyboardArrowDown,
@@ -228,24 +268,30 @@ fun AddPostBody(
                 categories.categories.forEach { c ->
                     DropdownMenuItem(text = { Text(text = c, fontFamily = Montserrat) }, onClick = {
                         expanded = false
-                        viewModel.career.value = c
-                        viewModel.validateCareer()
+                        viewModel.category.value = c
+                        viewModel.validateCategory()
                     })
                 }
             }
         }
         DefaultTextField(
             modifier = Modifier,
-            value = viewModel.password.value,
-            onValueChange = { viewModel.password.value = it },
+            value = viewModel.description.value,
+            onValueChange = { viewModel.description.value = it },
             label = "Description",
-            errorMsg = viewModel.passwordErrMsg.value,
-            validateField = { viewModel.validatePassword() },
-            hideText = true
+            errorMsg = viewModel.descriptionErrMsg.value,
+            validateField = { viewModel.validateDescription() },
         )
-        ExclusiveCheckboxes()
+        ExclusiveCheckboxes(viewModel)
 
         Spacer(modifier = Modifier.size(16.dp))
+
+        ImportantButton(
+            modifier = Modifier,
+            text = "Post",
+            onClick = { viewModel.onNewPost() },
+            enabled = viewModel.isEnabledPostButton
+        )
     }
 }
 
@@ -253,14 +299,14 @@ fun AddPostBody(
 fun AddPostFooter(
     modifier: Modifier,
     navController: NavHostController,
-    viewModel: SignupViewModel
+    viewModel: AddPostViewModel
 ) {
     Box(modifier = modifier.fillMaxWidth()) {
         ImportantButton(
             modifier = Modifier,
             text = "Create",
             onClick = { navController.navigate(route = AuthScreen.Login.route) },
-            enabled = viewModel.isEnabledLoginButton
+            enabled = viewModel.isEnabledPostButton
         )
     }
 
