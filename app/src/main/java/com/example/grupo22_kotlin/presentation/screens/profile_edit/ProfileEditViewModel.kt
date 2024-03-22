@@ -25,6 +25,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
@@ -50,10 +51,14 @@ class ProfileEditViewModel @Inject constructor(
     var isnumberValid: MutableState<Boolean> = mutableStateOf(false)
     var numberErrMsg: MutableState<String> = mutableStateOf("")
 
+    var image: MutableState<String> = mutableStateOf("")
+
 
     var isEnabledActualizarDatos by mutableStateOf(false)
 
-    var imageUri by mutableStateOf("")
+
+
+    var file: File? = null
 
     val resultingActivitiHandler = ResultingActivityHandler()
 
@@ -61,7 +66,10 @@ class ProfileEditViewModel @Inject constructor(
     fun pickImage()= viewModelScope.launch{
         val result = resultingActivitiHandler.getContent("image/*")
         if (result != null){
-            imageUri = result.toString()
+            file = ComposeFileProvider.createFileFromUri(context, result)
+            image.value = result.toString()
+
+
         }
 
     }
@@ -69,7 +77,8 @@ class ProfileEditViewModel @Inject constructor(
     fun takePhoto()= viewModelScope.launch{
         val result = resultingActivitiHandler.takePicturePreview()
         if (result != null){
-            imageUri = ComposeFileProvider.getPathFromBitmap(context, result)
+            image.value = ComposeFileProvider.getPathFromBitmap(context, result)
+            file = File(image.value)
         }
 
     }
@@ -80,6 +89,7 @@ class ProfileEditViewModel @Inject constructor(
         username.value = user.username
         number.value = user.number
         career.value = user.career
+        image.value = user.image
         validateUsername()
         validateNumber()
         validateCareer()
@@ -89,11 +99,27 @@ class ProfileEditViewModel @Inject constructor(
     var updateResponse by  mutableStateOf<Response<Boolean>?>(null)
         private set
 
-    fun onUpdate(){
+    var saveImageupdateResponse by  mutableStateOf<Response<String>?>(null)
+        private set
+
+    fun saveImage() = viewModelScope.launch {
+        if(file != null){
+            saveImageupdateResponse = Response.Loading
+            val result = userUseCases.saveImage(file!!)
+            saveImageupdateResponse = result
+
+        }else{
+
+            onUpdate(image.value)
+        }
+
+    }
+
+    fun onUpdate(url: String){
         val myUser = User(
             id = user.id,
             username = username.value,
-            image = "",
+            image = url ,
             career =  career.value,
             number = number.value
         )

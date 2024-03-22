@@ -7,10 +7,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -19,11 +22,14 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import coil.compose.AsyncImage
 import com.example.grupo22_kotlin.R
 import com.example.grupo22_kotlin.presentation.MainActivity
 import com.example.grupo22_kotlin.presentation.components.ImportantButton
 import com.example.grupo22_kotlin.presentation.navigation.DetailsScreen
 import com.example.grupo22_kotlin.presentation.screens.profile.ProfileViewModel
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 @Composable
 fun ProfileContent(
@@ -38,10 +44,19 @@ fun ProfileContent(
         Spacer(modifier = Modifier.height(30.dp))
         Text(text = "Profile")
         Spacer(modifier = Modifier.height(30.dp))
-        Image(
-            painter = painterResource(id = R.drawable.ic_brandlogo),
-            contentDescription = "User_Login"
-        )
+        if(viewModel.userData.image != ""){
+            AsyncImage(
+                modifier = Modifier.size(115.dp).clip(CircleShape),
+                model = viewModel.userData.image,
+                contentDescription = "User image")
+        }else{
+            Image(
+                painter = painterResource(id = R.drawable.ic_brandlogo),
+                contentDescription = "User_Login"
+            )
+
+        }
+
         Spacer(modifier = Modifier.height(30.dp))
         Text(text = viewModel.userData.username, fontSize = 25.sp)
         Spacer(modifier = Modifier.height(30.dp))
@@ -51,7 +66,7 @@ fun ProfileContent(
             modifier = Modifier,
             text = "Editar Datos",
             onClick = {
-                navController.navigate(
+               navController.navigate(
                     route = DetailsScreen.ProfileUpdate.passUser(viewModel.userData.toJson())
                 )
             }

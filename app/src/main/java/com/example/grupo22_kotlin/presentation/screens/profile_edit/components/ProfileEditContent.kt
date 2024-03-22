@@ -99,14 +99,14 @@ fun ProfileEditContent(navController: NavHostController,viewModel: ProfileEditVi
                 )
                 Spacer(modifier = Modifier.size(20.dp))
                 Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterStart) {
-                    if( viewModel.imageUri != ""){
+                    if( viewModel.image.value != ""){
                         AsyncImage(
                             modifier = Modifier
                                 .height(100.dp)
                                 .clip(CircleShape)
                                 .clickable {
                                     dialogState.value = true
-                                },                            model = viewModel.imageUri,
+                                },                            model = viewModel.image.value,
                             contentDescription = ""
                         )
                     }else{
@@ -210,7 +210,7 @@ fun SignupBody(
         ImportantButton(
             modifier = Modifier,
             text = "Actualizar Datos",
-            onClick = {viewModel.onUpdate() },
+            onClick = {viewModel.saveImage() },
             enabled = viewModel.isEnabledActualizarDatos
         )
         Spacer(modifier = Modifier.height(10.dp))
