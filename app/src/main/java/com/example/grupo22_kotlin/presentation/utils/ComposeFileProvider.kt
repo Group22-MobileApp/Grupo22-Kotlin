@@ -23,20 +23,20 @@ class ComposeFileProvider: FileProvider(R.xml.file_paths) {
     companion object {
 
         fun createFileFromUri(context: Context, uri: Uri):File?{
-          return try {
-              val stream = context.contentResolver.openInputStream(uri)
-              val file = File.createTempFile(
-                  "${System.currentTimeMillis()}",
-                  ".png",
-                  context.cacheDir
-              )
-              FileUtils.copyInputStreamToFile(stream, file)
-              return file
+            return try {
+                val stream = context.contentResolver.openInputStream(uri)
+                val file = File.createTempFile(
+                    "${System.currentTimeMillis()}",
+                    ".png",
+                    context.cacheDir
+                )
+                FileUtils.copyInputStreamToFile(stream, file)
+                return file
 
-          } catch (e: Exception){
-              e.printStackTrace()
-              return null
-          }
+            } catch (e: Exception){
+                e.printStackTrace()
+                return null
+            }
         }
         fun getImageUri(context: Context): Uri {
 
