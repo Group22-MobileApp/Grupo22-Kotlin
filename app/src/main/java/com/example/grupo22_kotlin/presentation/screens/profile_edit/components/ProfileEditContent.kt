@@ -61,6 +61,7 @@ import com.example.grupo22_kotlin.presentation.ui.theme.Raleway
 import com.example.grupo22_kotlin.presentation.ui.theme.darkBlue
 import com.example.grupo22_kotlin.presentation.utils.ComposeFileProvider
 
+
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun ProfileEditContent(
@@ -214,7 +215,9 @@ fun SignupBody(
             text = "Actualizar Datos",
             onClick = {
                 viewModel.saveImage()
-                navController.popBackStack()
+
+
+
             },
             enabled = viewModel.isEnabledActualizarDatos
         )
