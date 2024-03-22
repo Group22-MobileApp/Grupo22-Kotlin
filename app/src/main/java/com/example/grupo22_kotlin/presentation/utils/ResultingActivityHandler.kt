@@ -14,7 +14,11 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 
+<<<<<<< HEAD
 class ResultingActivityHandler{
+=======
+class ResultingActivityHandler {
+>>>>>>> Dev
     private var _callback = mutableStateOf<(@Composable () -> Unit)?>(null)
 
     suspend fun takePicturePreview(
@@ -48,7 +52,11 @@ class ResultingActivityHandler{
         contract: ActivityResultContract<I, O>,
         maxTry: Int = 10,
         millis: Long = 200,
+<<<<<<< HEAD
         launcher: (ManagedActivityResultLauncher<I, O>)->Unit
+=======
+        launcher: (ManagedActivityResultLauncher<I,O>)->Unit
+>>>>>>> Dev
     ): O? =  suspendCancellableCoroutine {coroutine->
         _callback.value = {
             val a = rememberLauncherForActivityResult(

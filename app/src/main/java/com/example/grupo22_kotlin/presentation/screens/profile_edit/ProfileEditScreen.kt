@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.grupo22_kotlin.presentation.screens.profile_edit.components.ProfileEditContent
+import com.example.grupo22_kotlin.presentation.screens.profile_edit.components.SaveImage
 import com.example.grupo22_kotlin.presentation.screens.profile_edit.components.Update
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -26,6 +27,7 @@ fun ProfileEditScreen(
         },
         bottomBar = {}
     )
+    SaveImage()
     Update()
 
 }

@@ -18,6 +18,7 @@ import com.example.grupo22_kotlin.domain.use_case.posts.CreatePost
 import com.example.grupo22_kotlin.domain.use_case.posts.PostUseCases
 import com.example.grupo22_kotlin.domain.use_case.users.Create
 import com.example.grupo22_kotlin.domain.use_case.users.GetUserById
+import com.example.grupo22_kotlin.domain.use_case.users.SaveImage
 import com.example.grupo22_kotlin.domain.use_case.users.Update
 import com.example.grupo22_kotlin.domain.use_case.users.UserUseCases
 import com.google.firebase.Firebase
@@ -36,6 +37,13 @@ import javax.inject.Named
 @InstallIn(SingletonComponent::class)
 @Module
 object AppModule {
+
+    @Provides
+    fun provideFirebaseStorage(): FirebaseStorage = FirebaseStorage.getInstance()
+
+    @Provides
+    fun provideStorageUsersRed(storage: FirebaseStorage): StorageReference = storage.reference.child(
+        USERS)
 
     @Provides
     fun provideFirebaseFirestore(): FirebaseFirestore = Firebase.firestore
@@ -75,7 +83,8 @@ object AppModule {
     fun provideUsersUseCases(repository: UserRepository) = UserUseCases(
         create = Create(repository),
         getUserById = GetUserById(repository),
-        update = Update(repository)
+        update = Update(repository),
+        saveImage = SaveImage(repository)
     )
 
     @Provides
