@@ -86,7 +86,7 @@ fun ExclusiveCheckboxes(viewModel: AddPostViewModel) {
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.Center
     ) {
-        Column (modifier = Modifier){
+        Column(modifier = Modifier) {
             Text(text = "Condition", fontWeight = FontWeight.Bold, fontSize = 18.sp)
             Row(
                 Modifier
