@@ -67,6 +67,9 @@ dependencies {
     testImplementation(libs.junit)
     implementation("androidx.navigation:navigation-compose:2.5.3")
     implementation("com.google.dagger:hilt-android:2.48")
+
+    implementation("com.google.code.gson:gson:2.9.0")
+
     kapt("com.google.dagger:hilt-android-compiler:2.48")
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
     // Import the BoM for the Firebase platform

@@ -8,6 +8,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.grupo22_kotlin.presentation.screens.login.components.Login
 import com.example.grupo22_kotlin.presentation.screens.login.components.LoginContent
 import com.example.grupo22_kotlin.presentation.screens.signup.SignupScreen
 
@@ -24,5 +25,6 @@ fun LoginScreen(navController: NavHostController) {
         bottomBar = {}
 
     )
+    Login(navController = navController)
 }
 

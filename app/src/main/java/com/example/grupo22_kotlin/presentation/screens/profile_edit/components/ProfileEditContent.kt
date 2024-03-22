@@ -1,4 +1,5 @@
-package com.example.grupo22_kotlin.presentation.screens.signup.components
+package com.example.grupo22_kotlin.presentation.screens.profile_edit.components
+
 
 import android.annotation.SuppressLint
 import android.widget.Toast
@@ -46,20 +47,17 @@ import com.example.grupo22_kotlin.presentation.components.DefaultTextField
 import com.example.grupo22_kotlin.presentation.components.Logo
 import com.example.grupo22_kotlin.presentation.navigation.AuthScreen
 import com.example.grupo22_kotlin.presentation.navigation.Graph
+import com.example.grupo22_kotlin.presentation.screens.profile.ProfileViewModel
+import com.example.grupo22_kotlin.presentation.screens.profile_edit.ProfileEditViewModel
 import com.example.grupo22_kotlin.presentation.screens.signup.SignupViewModel
+import com.example.grupo22_kotlin.presentation.screens.signup.components.Careers
 import com.example.grupo22_kotlin.presentation.ui.theme.Raleway
 import com.example.grupo22_kotlin.presentation.ui.theme.darkBlue
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
-fun SignupContent(navController: NavHostController) {
+fun ProfileEditContent(navController: NavHostController) {
 
-    Box(
-        modifier = Modifier.paint(
-            painter = painterResource(id = R.drawable.ic_bubblessignup),
-            contentScale = ContentScale.FillWidth
-        )
-    )
     Box(
         modifier = Modifier.padding(start = 20.dp, end = 20.dp, bottom = 20.dp, top = 70.dp), contentAlignment = Alignment.Center
     ) {
@@ -81,10 +79,10 @@ fun SignupHeader(modifier: Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Logo(modifier = Modifier, width = 115.dp, height = 115.dp)
+
         Spacer(modifier = Modifier.padding(10.dp))
         Text(
-            text = "Create\nAccount",
+            text = "Editar Perfil",
             textAlign = TextAlign.Start,
             color = darkBlue,
             fontSize = 50.sp,
@@ -110,7 +108,7 @@ fun SignupHeader(modifier: Modifier) {
 fun SignupBody(
     modifier: Modifier,
     navController: NavHostController,
-    viewModel: SignupViewModel = hiltViewModel(),
+    viewModel: ProfileEditViewModel = hiltViewModel(),
     careers: Careers = Careers()
 ) {
 
@@ -131,33 +129,8 @@ fun SignupBody(
             errorMsg = viewModel.usernameErrMsg.value,
             validateField = { viewModel.validateUsername() }
         )
-        DefaultTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = viewModel.email.value,
-            onValueChange = { viewModel.email.value = it },
-            label = "Email",
-            errorMsg = viewModel.emailErrMsg.value,
-            validateField = { viewModel.validateEmail() },
-            keyboardType = KeyboardType.Email
-        )
-        DefaultTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = viewModel.password.value,
-            onValueChange = { viewModel.password.value = it },
-            label = "Password",
-            errorMsg = viewModel.passwordErrMsg.value,
-            validateField = { viewModel.validatePassword() },
-            hideText = true
-        )
-        DefaultTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = viewModel.confirmPassword.value,
-            onValueChange = { viewModel.confirmPassword.value = it },
-            label = "Confirm Password",
-            errorMsg = viewModel.confirmPasswordErrMsg.value,
-            validateField = { viewModel.validateConfirmPasword() },
-            hideText = true
-        )
+
+
         DefaultTextField(
             modifier = Modifier.fillMaxWidth(),
             value = viewModel.number.value,
@@ -182,7 +155,8 @@ fun SignupBody(
             readOnly = false,
             label = "Whats your career",
             errorMsg = viewModel.careerErrMsg.value,
-            validateField = { viewModel.validateCareer() }
+            validateField = { viewModel.validateCareer()
+               }
         )
         DropdownMenu(
             expanded = expanded,
@@ -195,19 +169,22 @@ fun SignupBody(
                     viewModel.career.value = c
                     viewModel.validateCareer()
                 })
+
             }
+
         }
         Spacer(modifier = Modifier.size(5.dp))
+
         ImportantButton(
             modifier = Modifier,
-            text = "Done",
-            onClick = { viewModel.onSignup() },
-            enabled = viewModel.isEnabledLoginButton
+            text = "Actualizar Datos",
+            onClick = { },
+            enabled = viewModel.isEnabledActualizarDatos
         )
         Spacer(modifier = Modifier.height(10.dp))
         Text(text = "Cancel",
             modifier = Modifier.clickable {
-                navController.navigate(route = AuthScreen.Start.route)
+                navController.popBackStack()
             }
         )
         Spacer(modifier = Modifier.size(40.dp))

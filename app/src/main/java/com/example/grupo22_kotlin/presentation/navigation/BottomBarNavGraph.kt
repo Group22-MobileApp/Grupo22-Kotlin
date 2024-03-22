@@ -47,6 +47,8 @@ fun BottomBarNavGraph(navController: NavHostController) {
             ProfileScreen(navController)
         }
 
+        detailsNavGraph(navController)
+
     }
 
 }

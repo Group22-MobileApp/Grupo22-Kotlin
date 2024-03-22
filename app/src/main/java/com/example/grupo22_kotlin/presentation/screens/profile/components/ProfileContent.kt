@@ -22,6 +22,7 @@ import androidx.navigation.NavHostController
 import com.example.grupo22_kotlin.R
 import com.example.grupo22_kotlin.presentation.MainActivity
 import com.example.grupo22_kotlin.presentation.components.ImportantButton
+import com.example.grupo22_kotlin.presentation.navigation.DetailsScreen
 import com.example.grupo22_kotlin.presentation.screens.profile.ProfileViewModel
 
 @Composable
@@ -49,7 +50,11 @@ fun ProfileContent(
         ImportantButton(
             modifier = Modifier,
             text = "Editar Datos",
-            onClick = {}
+            onClick = {
+                navController.navigate(
+                    route = DetailsScreen.ProfileUpdate.passUser(viewModel.userData.toJson())
+                )
+            }
         )
         Spacer(modifier = Modifier.height(30.dp))
         ImportantButton(modifier = Modifier,
