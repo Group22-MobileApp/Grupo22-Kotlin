@@ -1,6 +1,9 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    id("com.google.dagger.hilt.android")
+    id("kotlin-kapt")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -59,7 +62,28 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.auth.ktx)
+    implementation(libs.firebase.storage.ktx)
     testImplementation(libs.junit)
+    implementation("androidx.navigation:navigation-compose:2.5.3")
+    implementation("com.google.dagger:hilt-android:2.48")
+
+    implementation("com.google.code.gson:gson:2.9.0")
+
+    kapt("com.google.dagger:hilt-android-compiler:2.48")
+    implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
+    // Import the BoM for the Firebase platform
+    implementation(platform("com.google.firebase:firebase-bom:32.7.4"))
+    // Declare the dependency for the Cloud Firestore library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation("com.google.firebase:firebase-firestore")
+
+    implementation("io.coil-kt:coil-compose:2.6.0")
+    implementation("commons-io:commons-io:2.7")
+
+    implementation("com.google.firebase:firebase-storage")
+
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
