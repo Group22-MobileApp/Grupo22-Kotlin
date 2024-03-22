@@ -3,6 +3,8 @@ package com.example.grupo22_kotlin.presentation.screens.profile_edit.components
 
 import android.annotation.SuppressLint
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -15,6 +17,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
@@ -29,6 +32,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -40,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import coil.compose.AsyncImage
 import com.example.grupo22_kotlin.R
 import com.example.grupo22_kotlin.presentation.components.ImportantButton
 import com.example.grupo22_kotlin.domain.model.Response
@@ -53,16 +58,77 @@ import com.example.grupo22_kotlin.presentation.screens.signup.SignupViewModel
 import com.example.grupo22_kotlin.presentation.screens.signup.components.Careers
 import com.example.grupo22_kotlin.presentation.ui.theme.Raleway
 import com.example.grupo22_kotlin.presentation.ui.theme.darkBlue
+import com.example.grupo22_kotlin.presentation.utils.ComposeFileProvider
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
-fun ProfileEditContent(navController: NavHostController) {
+fun ProfileEditContent(navController: NavHostController,viewModel: ProfileEditViewModel = hiltViewModel(),) {
+
+    val imagePicker = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent(),
+        onResult = {uri->
+            uri?.let { viewModel.onResult(it) }
+
+        })
+
+    val cameraLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.TakePicture(),
+        onResult = {hasImage->
+             viewModel.onCameraResult(hasImage)
+
+        })
+
+    val context = LocalContext.current
 
     Box(
         modifier = Modifier.padding(start = 20.dp, end = 20.dp, bottom = 20.dp, top = 70.dp), contentAlignment = Alignment.Center
     ) {
         Column {
-            SignupHeader(modifier = Modifier)
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+
+
+                Spacer(modifier = Modifier.padding(10.dp))
+                Text(
+                    text = "Editar Perfil",
+                    textAlign = TextAlign.Start,
+                    color = darkBlue,
+                    fontSize = 50.sp,
+                    fontFamily = Raleway,
+                    fontWeight = FontWeight.Bold,
+                    lineHeight = 50.sp,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Spacer(modifier = Modifier.size(20.dp))
+                Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterStart) {
+                    if(viewModel.hasImage && viewModel.imageUri != null){
+                        AsyncImage(
+                            modifier = Modifier.height(100.dp).clip(CircleShape),                            model = viewModel.imageUri,
+                            contentDescription = ""
+                        )
+                    }else{
+                        Image(
+                            modifier = Modifier
+                                .size(95.dp)
+                                .clickable {
+                                    //imagePicker.launch("image/*")
+                                           val uri = ComposeFileProvider.getImageUri(context)
+                                           viewModel.imageUri = uri
+                                           cameraLauncher.launch(uri)
+                                },
+                            painter = painterResource(id = R.drawable.ic_addphoto),
+                            contentDescription = "Add a photo"
+                        )
+
+                    }
+
+                }
+                Spacer(modifier = Modifier.size(20.dp))
+
+            }
             SignupBody(modifier = Modifier, navController = navController)
         }
 
@@ -71,38 +137,7 @@ fun ProfileEditContent(navController: NavHostController) {
 
 }
 
-@Composable
-fun SignupHeader(modifier: Modifier) {
-    Column(
-        modifier = modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
 
-
-        Spacer(modifier = Modifier.padding(10.dp))
-        Text(
-            text = "Editar Perfil",
-            textAlign = TextAlign.Start,
-            color = darkBlue,
-            fontSize = 50.sp,
-            fontFamily = Raleway,
-            fontWeight = FontWeight.Bold,
-            lineHeight = 50.sp,
-            modifier = Modifier.fillMaxWidth()
-        )
-        Spacer(modifier = Modifier.size(20.dp))
-        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterStart) {
-            Image(
-                modifier = Modifier.size(95.dp),
-                painter = painterResource(id = R.drawable.ic_addphoto),
-                contentDescription = "Add a photo"
-            )
-        }
-        Spacer(modifier = Modifier.size(20.dp))
-
-    }
-}
 
 @Composable
 fun SignupBody(
@@ -178,7 +213,7 @@ fun SignupBody(
         ImportantButton(
             modifier = Modifier,
             text = "Actualizar Datos",
-            onClick = { },
+            onClick = {viewModel.onUpdate() },
             enabled = viewModel.isEnabledActualizarDatos
         )
         Spacer(modifier = Modifier.height(10.dp))
