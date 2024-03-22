@@ -109,7 +109,7 @@ fun LoginBody(
         Text(text = "Good to see you back!", modifier = Modifier.fillMaxWidth())
         Spacer(modifier = Modifier.height(10.dp))
         DefaultTextField(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier,
             value = viewModel.email,
             onValueChange = { viewModel.email = it },
             label = "Email",
@@ -120,7 +120,7 @@ fun LoginBody(
             }
         )
         DefaultTextField(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier,
             value = viewModel.password,
             onValueChange = { viewModel.password = it },
             label = "Password",
