@@ -1,7 +1,10 @@
 package com.example.grupo22_kotlin.presentation.screens.addPost
 
+import android.net.Uri
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -27,18 +30,28 @@ class AddPostViewModel @Inject constructor(): ViewModel() {
 
     var isEnabledPostButton = false
 
-    var isEnabledCheckYes = true
-    var isEnabledCheckNo = true
-    var isEnabledCheckNew = true
-    var isEnabledCheckUsed = true
+    var selectedOption1: MutableState<String> = mutableStateOf("")
+    var isSelectedOption1Selected: MutableState<Boolean> = mutableStateOf(false)
 
-    fun enabledLoginButton() {
+    var selectedOption2: MutableState<String> = mutableStateOf("")
+    var isSelectedOption2Selected: MutableState<Boolean> = mutableStateOf(false)
+
+    var imageUri by mutableStateOf<Uri?>(null)
+    var hasImage by mutableStateOf(false)
+    fun enabledAddPostButton() {
         isEnabledPostButton = isNameValid.value &&
                 isPriceValid.value &&
                 isDescriptionValid.value &&
-                isCategoryValid.value &&
-                (isEnabledCheckNew || isEnabledCheckUsed) &&
-                (isEnabledCheckYes || isEnabledCheckNo)
+                isCategoryValid.value
+    }
+
+    fun onCameraResult(result: Boolean){
+        hasImage= result
+    }
+
+    fun onResult(uri: Uri){
+        hasImage= uri != null
+        imageUri = uri
     }
 
     fun validateName() {
@@ -50,7 +63,7 @@ class AddPostViewModel @Inject constructor(): ViewModel() {
             nameErrMsg.value = "A name needs at least 5 characters"
         }
 
-        enabledLoginButton()
+        enabledAddPostButton()
     }
 
     fun validatePrice() {
@@ -62,7 +75,7 @@ class AddPostViewModel @Inject constructor(): ViewModel() {
             priceErrMsg.value = "More than a Number"
         }
 
-        enabledLoginButton()
+        enabledAddPostButton()
     }
 
     fun validateDescription() {
@@ -74,7 +87,7 @@ class AddPostViewModel @Inject constructor(): ViewModel() {
             descriptionErrMsg.value = "A description needs at least 6 characters"
         }
 
-        enabledLoginButton()
+        enabledAddPostButton()
     }
     fun validateCategory() {
         if (category.value.length >= 1) {
@@ -85,6 +98,24 @@ class AddPostViewModel @Inject constructor(): ViewModel() {
             category.value = "That career must not be empty"
         }
 
-        enabledLoginButton()
+        enabledAddPostButton()
+    }
+
+    fun validateOption1(){
+        if (selectedOption1.value != ""){
+            isSelectedOption1Selected.value = true
+        } else {
+            isSelectedOption1Selected.value = false
+        }
+        enabledAddPostButton()
+    }
+
+    fun validateOption2(){
+        if (selectedOption2.value != ""){
+            isSelectedOption2Selected.value = true
+        } else {
+            isSelectedOption2Selected.value = false
+        }
+        enabledAddPostButton()
     }
 }
