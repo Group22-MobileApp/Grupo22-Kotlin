@@ -21,12 +21,7 @@ fun AddPostScreen(navController: NavHostController) {
 
         },
         content = {
-            Column(modifier = Modifier.padding(top=55.dp)) {
                 AddPostContent(navController = navController)
-            }
-
-
-
         },
         bottomBar = {}
 
