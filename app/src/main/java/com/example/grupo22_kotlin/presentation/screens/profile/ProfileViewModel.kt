@@ -15,9 +15,13 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(private val authUseCases: AuthUseCases, private val userUseCases: UserUseCases): ViewModel() {
 
+
+
     val currentUser = authUseCases.getCurrentUser()
     var userData by mutableStateOf(User())
         private set
+
+
 
     init {
         getUserById()

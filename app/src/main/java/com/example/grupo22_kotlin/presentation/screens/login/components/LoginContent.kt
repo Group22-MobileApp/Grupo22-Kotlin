@@ -90,7 +90,7 @@ fun LoginBody(
     viewModel: LoginViewModel = hiltViewModel()
 ) {
 
-    val loginFlow = viewModel.loginFlow.collectAsState()
+
 
     Column(
         modifier = modifier.fillMaxWidth(),
@@ -110,8 +110,8 @@ fun LoginBody(
         Spacer(modifier = Modifier.height(10.dp))
         DefaultTextField(
             modifier = Modifier,
-            value = viewModel.email.value,
-            onValueChange = { viewModel.email.value = it },
+            value = viewModel.email,
+            onValueChange = { viewModel.email = it },
             label = "Email",
             keyboardType = KeyboardType.Email,
             errorMsg = viewModel.emailErrMsg.value,
@@ -121,8 +121,8 @@ fun LoginBody(
         )
         DefaultTextField(
             modifier = Modifier,
-            value = viewModel.password.value,
-            onValueChange = { viewModel.password.value = it },
+            value = viewModel.password,
+            onValueChange = { viewModel.password = it },
             label = "Password",
             hideText = true,
             errorMsg = viewModel.passwordErrMsg.value,
@@ -148,34 +148,7 @@ fun LoginBody(
         Spacer(modifier = Modifier.padding(42.dp))
 
     }
-    loginFlow.value.let {
-        when (it) {
-            Response.Loading -> {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator(modifier = Modifier.size(80.dp))
-                }
-            }
 
-            is Response.Success -> {
-                LaunchedEffect(Unit) {
-                    navController.navigate(route = Graph.HOME) {
-                        popUpTo(Graph.AUTHENTICATION) { inclusive = true }
-                    }
-                }
-                Toast.makeText(LocalContext.current, "Usuario logeado", Toast.LENGTH_LONG).show()
-            }
-
-            is Response.Failure -> {
-                Toast.makeText(
-                    LocalContext.current,
-                    it.exception?.message ?: "Error desconocido",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-
-            else -> {}
-        }
-    }
 }
 
 

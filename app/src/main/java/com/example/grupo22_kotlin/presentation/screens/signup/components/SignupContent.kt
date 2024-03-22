@@ -120,7 +120,7 @@ fun SignupBody(
     careers: Careers = Careers()
 ) {
 
-    val signupFlow = viewModel.signupFlow.collectAsState()
+
 
     Column(
         modifier = modifier
@@ -231,33 +231,5 @@ fun SignupBody(
 
     }
 
-    signupFlow.value.let {
-        when (it) {
-            Response.Loading -> {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator(modifier = Modifier.size(80.dp))
-                }
-            }
 
-            is Response.Success -> {
-                LaunchedEffect(Unit) {
-                    viewModel.createUser()
-                    navController.navigate(route = Graph.HOME) {
-                        popUpTo(Graph.AUTHENTICATION) { inclusive = true }
-                    }
-                }
-                Toast.makeText(LocalContext.current, "Usuario creado", Toast.LENGTH_SHORT).show()
-            }
-
-            is Response.Failure -> {
-                Toast.makeText(
-                    LocalContext.current,
-                    it.exception?.message ?: "Error desconocido",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-
-            else -> {}
-        }
-    }
 }
