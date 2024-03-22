@@ -13,6 +13,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.grupo22_kotlin.presentation.components.DefaultTopBar
+import com.example.grupo22_kotlin.presentation.screens.signup.components.SignIn
 import com.example.grupo22_kotlin.presentation.screens.signup.components.SignupContent
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -30,6 +31,8 @@ fun SignupScreen(navController: NavHostController) {
         bottomBar = {}
 
     )
+
+    SignIn(navController = navController )
 }
 
 @Preview(showBackground = true, showSystemUi = true)
