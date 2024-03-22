@@ -304,7 +304,7 @@ fun AddPostBody(
         ImportantButton(
             modifier = Modifier,
             text = "Post",
-            onClick = {  },
+            onClick = { viewModel.onNewPost() },
             enabled = viewModel.isEnabledPostButton
         )
     }

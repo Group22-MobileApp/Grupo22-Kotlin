@@ -1,6 +1,7 @@
 package com.example.grupo22_kotlin.data.repository
 
 import androidx.compose.runtime.snapshotFlow
+import com.example.grupo22_kotlin.core.Constants.USERS
 import com.example.grupo22_kotlin.domain.model.Response
 import com.example.grupo22_kotlin.domain.model.User
 import com.example.grupo22_kotlin.domain.repository.UserRepository
@@ -11,10 +12,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
+import javax.inject.Named
 
 
-
-class UserRepositoryImpl  @Inject  constructor(private val usersRef: CollectionReference): UserRepository {
+class UserRepositoryImpl  @Inject  constructor(
+    @Named(USERS) private val usersRef: CollectionReference): UserRepository {
     override suspend fun create(user: User): Response<Boolean> {
 
         return try {
