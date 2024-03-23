@@ -110,7 +110,9 @@ class SignupViewModel @Inject constructor(
             usernameErrMsg.value = ""
         } else {
             isUsernameValid.value = false
-            usernameErrMsg.value = "At least 5 caracters"
+
+            usernameErrMsg.value = "At least 5 characters"
+
         }
 
         enabledLoginButton()
@@ -123,7 +125,10 @@ class SignupViewModel @Inject constructor(
             passwordErrMsg.value = ""
         } else {
             isPasswordValid.value = false
-            passwordErrMsg.value = "That Password is not valid"
+
+            passwordErrMsg.value = "That Password must have at least 6 characters"
+
+
         }
 
         enabledLoginButton()
@@ -148,7 +153,9 @@ class SignupViewModel @Inject constructor(
             numberErrMsg.value = ""
         } else {
             isnumberValid.value = false
-            numberErrMsg.value = "That number is not valid"
+
+            numberErrMsg.value = "That number must be 10 characters long"
+
         }
 
         enabledLoginButton()
