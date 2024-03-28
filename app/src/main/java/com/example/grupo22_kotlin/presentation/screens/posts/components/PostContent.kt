@@ -20,7 +20,7 @@ fun PostContent(posts: List<Post>){
         items(
             items = posts
         ) { post ->
-            Text(text = post.name)
+            PostCard(post = post)
         }
     }
 }
