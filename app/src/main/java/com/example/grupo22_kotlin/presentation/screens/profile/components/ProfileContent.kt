@@ -39,6 +39,7 @@ import com.example.grupo22_kotlin.presentation.MainActivity
 import com.example.grupo22_kotlin.presentation.components.ImportantButton
 import com.example.grupo22_kotlin.presentation.components.ProfileImage
 import com.example.grupo22_kotlin.presentation.components.TitleText
+import com.example.grupo22_kotlin.presentation.navigation.BottomBarScreen
 import com.example.grupo22_kotlin.presentation.navigation.DetailsScreen
 import com.example.grupo22_kotlin.presentation.screens.profile.ProfileViewModel
 
@@ -169,7 +170,11 @@ fun MenuProfileBody(
             modifier = modifier
                 .fillMaxWidth()
                 .height(70.dp)
-                .clickable { }
+                .clickable {
+                    navController.navigate(
+                        route = BottomBarScreen.AddPosts.route
+                    )
+                }
         ) {
             Text(
                 text = "Crate a post",
