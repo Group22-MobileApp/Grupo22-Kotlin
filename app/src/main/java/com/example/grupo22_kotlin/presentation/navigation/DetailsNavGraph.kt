@@ -42,5 +42,4 @@ sealed class DetailsScreen(val route: String) {
         fun passUser(user: String) = "profile/update/$user"
     }
 
-
 }
