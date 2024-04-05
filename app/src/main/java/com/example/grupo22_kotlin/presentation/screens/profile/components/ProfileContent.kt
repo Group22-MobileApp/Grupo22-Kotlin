@@ -116,7 +116,7 @@ fun MenuProfileBody(
         Box(
             modifier = modifier
                 .fillMaxWidth()
-                .height(70.dp)
+                .height(50.dp)
                 .clickable { }
         ) {
             Text(
@@ -142,7 +142,7 @@ fun MenuProfileBody(
         Box(
             modifier = modifier
                 .fillMaxWidth()
-                .height(70.dp)
+                .height(50.dp)
                 .clickable { }
         ) {
             Text(
@@ -168,7 +168,7 @@ fun MenuProfileBody(
         Box(
             modifier = modifier
                 .fillMaxWidth()
-                .height(70.dp)
+                .height(50.dp)
                 .clickable { }
         ) {
             Text(
@@ -194,7 +194,7 @@ fun MenuProfileBody(
         Box(
             modifier = modifier
                 .fillMaxWidth()
-                .height(70.dp)
+                .height(50.dp)
                 .clickable { }
         ) {
             Text(

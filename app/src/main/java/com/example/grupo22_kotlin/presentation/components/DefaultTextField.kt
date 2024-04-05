@@ -69,7 +69,7 @@ fun DefaultTextField(
     )
     Text(
         modifier = Modifier.padding(top = 5.dp),
-        fontSize = 11.sp,
+        fontSize = 10.sp,
         fontWeight = FontWeight.SemiBold,
         text = errorMsg,
         color = Color.Red
