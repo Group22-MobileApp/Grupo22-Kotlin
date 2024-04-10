@@ -14,10 +14,13 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.grupo22_kotlin.R
+import com.example.grupo22_kotlin.presentation.screens.posts.components.GetPosts
 import com.example.grupo22_kotlin.presentation.screens.signup.SignupViewModel
 
 @Composable
-fun MainHomeContent(navController: NavHostController, viewModel: SignupViewModel = hiltViewModel()) {
+fun MainHomeContent(navController: NavHostController
+                    , viewModel: SignupViewModel = hiltViewModel(),
+                    ) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -31,5 +34,8 @@ fun MainHomeContent(navController: NavHostController, viewModel: SignupViewModel
             modifier = Modifier.padding(15.dp),
             text = "Main Home Page"
         )
+
+        GetPosts(navController)
+
     }
 }
