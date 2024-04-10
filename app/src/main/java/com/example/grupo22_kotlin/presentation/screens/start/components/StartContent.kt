@@ -55,16 +55,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 @Composable
 fun StartContent(navController: NavHostController, viewModel: StartViewModel = hiltViewModel()) {
     val loginFlow = viewModel.loginFlow.collectAsState()
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        LandingBody(modifier = Modifier.weight(3f))
-        LandingFooter(modifier = Modifier.weight(1f), navController)
-    }
     loginFlow.value.let {
         when(it){
             is Response.Success ->{
@@ -73,9 +63,20 @@ fun StartContent(navController: NavHostController, viewModel: StartViewModel = h
                         popUpTo(Graph.AUTHENTICATION){inclusive= true}
                     }
                 }
-                Toast.makeText(LocalContext.current, "Usuario logeado", Toast.LENGTH_LONG).show()
+                //Toast.makeText(LocalContext.current, "Usuario logeado", Toast.LENGTH_LONG).show()
             }
-            else ->{}
+            else ->{
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 16.dp),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    LandingBody(modifier = Modifier.weight(3f))
+                    LandingFooter(modifier = Modifier.weight(1f), navController)
+                }
+            }
         }
     }
 }

@@ -76,9 +76,7 @@ fun RowScope.AddItem(
 ) {
 
     NavigationBarItem(
-        label = {
-            Text(text = screen.title)
-        },
+
         icon = {
             Icon(
                 imageVector = screen.icon,
