@@ -5,6 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.*
 import androidx.navigation.compose.composable
+import com.example.grupo22_kotlin.presentation.screens.myPosts.MyPostsScreen
 import com.example.grupo22_kotlin.presentation.screens.profile_edit.ProfileEditScreen
 
 fun NavGraphBuilder.detailsNavGraph(navController: NavHostController) {
@@ -14,6 +15,9 @@ fun NavGraphBuilder.detailsNavGraph(navController: NavHostController) {
         startDestination = DetailsScreen.ProfileUpdate.route
     ) {
 
+        composable(route = DetailsScreen.MyPosts.route) {
+            MyPostsScreen(navController = navController)
+        }
 
 
         composable(
@@ -37,7 +41,7 @@ fun NavGraphBuilder.detailsNavGraph(navController: NavHostController) {
 
 sealed class DetailsScreen(val route: String) {
 
-
+    object MyPosts: DetailsScreen("profile/myPosts")
     object ProfileUpdate: DetailsScreen("profile/update/{user}") {
         fun passUser(user: String) = "profile/update/$user"
     }

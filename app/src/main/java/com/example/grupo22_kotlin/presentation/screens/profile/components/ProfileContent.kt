@@ -202,9 +202,7 @@ fun MenuProfileBody(
                 .fillMaxWidth()
                 .height(70.dp)
                 .clickable {
-                    navController.navigate(
-                        route = BottomBarScreen.AddPosts.route
-                    )
+                    navController.navigate(DetailsScreen.MyPosts.route)
                 }
         ) {
             Text(

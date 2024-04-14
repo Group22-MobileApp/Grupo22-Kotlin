@@ -23,17 +23,6 @@ fun MyPostsScreen(navController: NavHostController, viewModel: PostViewModel = h
     Scaffold(
         content = {
             GetPostsByUserId(navController = navController)
-        },
-        floatingActionButton = {
-            FloatingActionButton(
-                modifier = Modifier.padding(bottom = 50.dp),
-                onClick = { navController.navigate(DetailsScreen) }
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = ""
-                )
-            }
         }
     )
 
