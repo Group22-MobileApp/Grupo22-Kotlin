@@ -74,10 +74,6 @@ class AddPostViewModel @Inject constructor(
 
     fun createPost(post: Post) = viewModelScope.launch {
         createPostResponse = Response.Loading
-        userCurrent.getUserById(currentUser!!.uid).collect(){
-            userData = it
-        }
-        post.userCarrer = userData.career
         val result = postsUseCases.create(post, file!!)
         createPostResponse = result
     }
@@ -93,7 +89,7 @@ class AddPostViewModel @Inject constructor(
             interchangeable = selectedOption2.value,
             category = category.value,
             idUser = currentUser?.uid ?: "",
-            userCarrer = ""
+            userCarrer = "Arte"
         )
         createPost(post)
     }

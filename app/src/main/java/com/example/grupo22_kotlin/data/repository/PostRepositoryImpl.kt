@@ -28,14 +28,14 @@ class PostRepositoryImpl @Inject constructor(
     @Named(USERS) private val usersRef: CollectionReference,
 ): PostRepository {
     override fun getPosts(): Flow<Response<List<Post>>> = callbackFlow {
-        val snapshotListener = postsRef.addSnapshotListener { snapshot, e ->
+        val snapshotListener = postsRef.whereEqualTo("userCarrer","Arte").addSnapshotListener { snapshot, e ->
 
             GlobalScope.launch(Dispatchers.IO) {
                 val postsResponse = if (snapshot != null) {
                     val posts = snapshot.toObjects(Post::class.java)
 
                     snapshot.documents.forEachIndexed { index, document ->
-                        posts[index].id = document.id
+                        posts[index].userCarrer = "Arte"
                     }
 
                     val idUserArray = ArrayList<String>()
@@ -116,21 +116,19 @@ class PostRepositoryImpl @Inject constructor(
     }
 
     override fun getPostsByUserTaste(userCarrer: String): Flow<Response<List<Post>>> = callbackFlow {
-        val snapshotListener = postsRef.whereEqualTo("idUser", userCarrer).addSnapshotListener { snapshot, e ->
+        val snapshotListener = postsRef.whereEqualTo("userCarrer", userCarrer).addSnapshotListener { snapshot, e ->
 
             val postsResponse = if (snapshot != null) {
                 val posts = snapshot.toObjects(Post::class.java)
                 snapshot.documents.forEachIndexed { index, document ->
                     posts[index].id = document.id
                 }
-
                 Response.Success(posts)
             }
             else {
                 Response.Failure(e)
             }
             trySend(postsResponse)
-
         }
         awaitClose {
             snapshotListener.remove()
