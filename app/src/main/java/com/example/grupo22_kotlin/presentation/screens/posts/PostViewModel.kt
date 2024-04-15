@@ -30,14 +30,24 @@ class PostViewModel @Inject constructor(
 
 
     init {
-        getPosts()
-        //getPostsByUserTaste()
+        //getPosts()
+        getPostsByUserTaste()
     }
 
-    fun getPosts() = viewModelScope.launch {
+    /*fun getPosts() = viewModelScope.launch {
         postsResponse = Response.Loading
         postsUseCases.getPosts().collect() { response ->
             postsResponse = response
+        }
+    }*/
+
+    fun getPostsByUserTaste() = viewModelScope.launch {
+        postsResponse = Response.Loading
+        userCurrent.getUserById(currentUser!!.uid).collect(){
+            userData = it
+            postsUseCases.getPostsByUserTaste(userData.career).collect() { response ->
+                postsResponse = response
+            }
         }
     }
 

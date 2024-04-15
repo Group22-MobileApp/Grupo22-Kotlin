@@ -5,6 +5,6 @@ import javax.inject.Inject
 
 class GetPostsByUserTaste @Inject constructor(private val repository: PostRepository) {
 
-    operator fun invoke(userCarrer : String) = repository.getPostsByUserId(userCarrer)
+    operator fun invoke(userCarrer : String) = repository.getPostsByUserTaste(userCarrer)
 
 }

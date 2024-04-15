@@ -28,14 +28,14 @@ class PostRepositoryImpl @Inject constructor(
     @Named(USERS) private val usersRef: CollectionReference,
 ): PostRepository {
     override fun getPosts(): Flow<Response<List<Post>>> = callbackFlow {
-        val snapshotListener = postsRef.whereEqualTo("userCarrer","Arte").addSnapshotListener { snapshot, e ->
+        val snapshotListener = postsRef.addSnapshotListener { snapshot, e ->
 
             GlobalScope.launch(Dispatchers.IO) {
                 val postsResponse = if (snapshot != null) {
                     val posts = snapshot.toObjects(Post::class.java)
 
                     snapshot.documents.forEachIndexed { index, document ->
-                        posts[index].userCarrer = "Arte"
+                        posts[index].id = document.id
                     }
 
                     val idUserArray = ArrayList<String>()
@@ -115,7 +115,7 @@ class PostRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getPostsByUserTaste(userCarrer: String): Flow<Response<List<Post>>> = callbackFlow {
+    /*override fun getPostsByUserTaste(userCarrer: String): Flow<Response<List<Post>>> = callbackFlow {
         val snapshotListener = postsRef.whereEqualTo("userCarrer", userCarrer).addSnapshotListener { snapshot, e ->
 
             val postsResponse = if (snapshot != null) {
@@ -129,6 +129,54 @@ class PostRepositoryImpl @Inject constructor(
                 Response.Failure(e)
             }
             trySend(postsResponse)
+        }
+        awaitClose {
+            snapshotListener.remove()
+        }
+    }*/
+
+    override fun getPostsByUserTaste(userCarrer: String): Flow<Response<List<Post>>> = callbackFlow {
+        val snapshotListener = postsRef.whereEqualTo("userCarrer",userCarrer).addSnapshotListener { snapshot, e ->
+
+            GlobalScope.launch(Dispatchers.IO) {
+                val postsResponse = if (snapshot != null) {
+                    val posts = snapshot.toObjects(Post::class.java)
+
+                    snapshot.documents.forEachIndexed { index, document ->
+                        posts[index].id = document.id
+                    }
+
+                    val idUserArray = ArrayList<String>()
+
+                    posts.forEach { post ->
+                        idUserArray.add(post.idUser)
+                    }
+
+                    val idUserList = idUserArray.toSet().toList() // ELEMENTOS SIN REPETIR
+
+                    idUserList.map { id ->
+                        async {
+                            val user = usersRef.document(id).get().await().toObject(User::class.java)!!
+                            posts.forEach { post ->
+                                if (post.idUser == id) {
+                                    post.user = user
+                                }
+                            }
+
+                            Log.d("PostsRepositoryImpl", "Id: ${id}")
+                        }
+                    }.forEach {
+                        it.await()
+                    }
+
+                    Response.Success(posts)
+                }
+                else {
+                    Response.Failure(e)
+                }
+                trySend(postsResponse)
+            }
+
         }
         awaitClose {
             snapshotListener.remove()
