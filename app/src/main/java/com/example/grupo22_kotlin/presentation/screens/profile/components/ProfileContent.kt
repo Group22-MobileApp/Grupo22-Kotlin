@@ -196,6 +196,36 @@ fun MenuProfileBody(
                     .fillMaxWidth()
             )
         }
+
+        Box(
+            modifier = modifier
+                .fillMaxWidth()
+                .height(70.dp)
+                .clickable {
+                    navController.navigate(DetailsScreen.MyPosts.route)
+                }
+        ) {
+            Text(
+                text = "My posts",
+                fontWeight = FontWeight.SemiBold,
+                modifier = modifier.align(Alignment.CenterStart).padding(start = 8.dp)
+            )
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                contentDescription = "Next",
+                modifier
+                    .align(Alignment.CenterEnd)
+                    .size(30.dp)
+            )
+            Spacer(
+                modifier = modifier
+                    .height(1.dp)
+                    .background(Color.LightGray)
+                    .align(Alignment.BottomStart)
+                    .fillMaxWidth()
+            )
+        }
+
         Box(
             modifier = modifier
                 .fillMaxWidth()
