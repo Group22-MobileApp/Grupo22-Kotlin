@@ -115,6 +115,28 @@ class PostRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun getPostsByUserTaste(userCarrer: String): Flow<Response<List<Post>>> = callbackFlow {
+        val snapshotListener = postsRef.whereEqualTo("idUser", userCarrer).addSnapshotListener { snapshot, e ->
+
+            val postsResponse = if (snapshot != null) {
+                val posts = snapshot.toObjects(Post::class.java)
+                snapshot.documents.forEachIndexed { index, document ->
+                    posts[index].id = document.id
+                }
+
+                Response.Success(posts)
+            }
+            else {
+                Response.Failure(e)
+            }
+            trySend(postsResponse)
+
+        }
+        awaitClose {
+            snapshotListener.remove()
+        }
+    }
+
     override suspend fun delete(idPost: String): Response<Boolean> {
         return try {
             postsRef.document(idPost).delete().await()
