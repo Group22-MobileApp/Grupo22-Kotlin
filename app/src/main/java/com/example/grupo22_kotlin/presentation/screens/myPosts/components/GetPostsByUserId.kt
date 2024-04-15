@@ -27,7 +27,7 @@ fun GetPostsByUserId(navController: NavHostController, viewModel: MyPostsViewMod
             }
         }
         is Response.Success -> {
-            MyPostsContent(posts = response.data)
+            MyPostsContent(posts = response.data, viewModel)
         }
         is Response.Failure -> {
             Toast.makeText(LocalContext.current,
