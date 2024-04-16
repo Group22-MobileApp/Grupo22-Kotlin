@@ -15,17 +15,19 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.grupo22_kotlin.domain.model.Post
+import com.example.grupo22_kotlin.presentation.navigation.DetailsScreen
 
 @Composable
-fun PostCard (post: Post){
+fun PostCard (post: Post, navController: NavHostController){
     Card(
         modifier = Modifier
             .padding(top = 0.dp, bottom = 15.dp)
             .clickable {
-                //TODO
-               // on click navigate to the detail
+                navController.navigate(route = DetailsScreen.PostDetail.passPost(post.toJson()))
             },
         shape = RoundedCornerShape(20.dp)
 
@@ -39,6 +41,7 @@ fun PostCard (post: Post){
                 contentDescription = "",
                 contentScale = ContentScale.Crop
             )
+            //Text(text = post.id)
             Text(
                 modifier = Modifier.padding(horizontal = 15.dp, vertical = 10.dp),
                 text = post.name,

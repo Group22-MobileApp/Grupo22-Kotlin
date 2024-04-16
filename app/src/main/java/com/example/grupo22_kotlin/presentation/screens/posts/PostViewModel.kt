@@ -29,6 +29,9 @@ class PostViewModel @Inject constructor(
 
 
 
+    var postData by mutableStateOf(Post())
+        private set
+
     init {
         //getPosts()
         getPostsByUserTaste()

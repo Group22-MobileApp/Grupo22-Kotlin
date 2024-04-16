@@ -8,10 +8,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.example.grupo22_kotlin.domain.model.Post
 
 @Composable
-fun PostContent(posts: List<Post>){
+fun PostContent(posts: List<Post>, navController: NavHostController){
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
@@ -20,7 +22,7 @@ fun PostContent(posts: List<Post>){
         items(
             items = posts
         ) { post ->
-            PostCard(post = post)
+            PostCard(post = post, navController)
         }
     }
 }

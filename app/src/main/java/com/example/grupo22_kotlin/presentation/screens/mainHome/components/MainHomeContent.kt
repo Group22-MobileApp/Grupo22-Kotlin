@@ -18,9 +18,10 @@ import com.example.grupo22_kotlin.presentation.screens.posts.components.GetPosts
 import com.example.grupo22_kotlin.presentation.screens.signup.SignupViewModel
 
 @Composable
-fun MainHomeContent(navController: NavHostController
-                    , viewModel: SignupViewModel = hiltViewModel(),
-                    ) {
+fun MainHomeContent(
+    navController: NavHostController,
+    viewModel: SignupViewModel = hiltViewModel(),
+) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
