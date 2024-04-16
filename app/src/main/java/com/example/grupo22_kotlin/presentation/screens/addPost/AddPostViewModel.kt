@@ -67,6 +67,9 @@ class AddPostViewModel @Inject constructor(
 
     val currentUser = authUseCases.getCurrentUser()
 
+    /*val user = userCurrent.getUserById(currentUser!!.uid).collect(){
+        userData = it
+    }*/
     var userData by mutableStateOf(User())
         private set
     var createPostResponse by mutableStateOf<Response<Boolean>?>(null)
@@ -74,8 +77,13 @@ class AddPostViewModel @Inject constructor(
 
     fun createPost(post: Post) = viewModelScope.launch {
         createPostResponse = Response.Loading
-        val result = postsUseCases.create(post, file!!)
-        createPostResponse = result
+        userCurrent.getUserById(currentUser!!.uid).collect(){
+            userData = it
+
+            post.userCarrer = userData.career
+            val result = postsUseCases.create(post, file!!)
+            createPostResponse = result
+        }
     }
 
      fun onNewPost() {
