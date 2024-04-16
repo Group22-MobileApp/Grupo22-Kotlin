@@ -26,7 +26,7 @@ fun GetPostsByTaste(navController: NavHostController, viewModel: PostViewModel =
             }
         }
         is Response.Success -> {
-            PostContent(posts = response.data, navController)
+            PostContent(posts = response.data.take(4), navController)
         }
 
         is Response.Failure -> {

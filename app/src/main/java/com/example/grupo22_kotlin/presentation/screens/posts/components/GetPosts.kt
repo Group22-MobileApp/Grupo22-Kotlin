@@ -29,7 +29,7 @@ fun GetPosts(navController: NavHostController, viewModel: PostViewModel = hiltVi
             }
         }
         is Response.Success -> {
-            PostContent(posts = response.data, navController)
+            PostContent(posts = response.data.take(4), navController)
         }
 
         is Response.Failure -> {
