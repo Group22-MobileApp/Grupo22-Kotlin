@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.grupo22_kotlin.domain.model.Post
 import com.example.grupo22_kotlin.domain.model.Response
+import com.example.grupo22_kotlin.domain.model.User
 import com.example.grupo22_kotlin.domain.use_case.auth.AuthUseCases
 import com.example.grupo22_kotlin.domain.use_case.posts.PostUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,6 +23,9 @@ class PostViewModel @Inject constructor(
     var postsResponse by mutableStateOf<Response<List<Post>>?>(null)
     var currentUser = authUseCases.getCurrentUser()
 
+    var postData by mutableStateOf(Post())
+        private set
+
     init {
         getPosts()
     }
@@ -32,5 +36,7 @@ class PostViewModel @Inject constructor(
             postsResponse = response
         }
     }
+
+
 
 }
