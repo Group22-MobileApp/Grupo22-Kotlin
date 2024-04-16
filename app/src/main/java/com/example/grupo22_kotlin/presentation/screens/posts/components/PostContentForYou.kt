@@ -15,7 +15,7 @@ import androidx.navigation.NavHostController
 import com.example.grupo22_kotlin.domain.model.Post
 
 @Composable
-fun PostContent(posts: List<Post>, navController: NavHostController){
+fun PostContentForYou(posts: List<Post>, navController: NavHostController){
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()

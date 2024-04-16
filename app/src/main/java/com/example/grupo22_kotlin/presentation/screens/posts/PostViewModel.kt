@@ -23,6 +23,7 @@ class PostViewModel @Inject constructor(
 ): ViewModel() {
 
     var postsResponse by mutableStateOf<Response<List<Post>>?>(null)
+    var postForYouResponse by mutableStateOf<Response<List<Post>>?>(null)
     val currentUser = authUseCases.getCurrentUser()
     var userData by mutableStateOf(User())
         private set
@@ -33,23 +34,23 @@ class PostViewModel @Inject constructor(
         private set
 
     init {
-        //getPosts()
+        getPosts()
         getPostsByUserTaste()
     }
 
-    /*fun getPosts() = viewModelScope.launch {
+    fun getPosts() = viewModelScope.launch {
         postsResponse = Response.Loading
         postsUseCases.getPosts().collect() { response ->
             postsResponse = response
         }
-    }*/
+    }
 
     fun getPostsByUserTaste() = viewModelScope.launch {
-        postsResponse = Response.Loading
+        postForYouResponse = Response.Loading
         userCurrent.getUserById(currentUser!!.uid).collect(){
             userData = it
             postsUseCases.getPostsByUserTaste(userData.career).collect() { response ->
-                postsResponse = response
+                postForYouResponse = response
             }
         }
     }

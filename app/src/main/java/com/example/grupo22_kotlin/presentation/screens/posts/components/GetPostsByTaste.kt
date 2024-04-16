@@ -18,7 +18,7 @@ import com.example.grupo22_kotlin.presentation.screens.posts.PostViewModel
 @Composable
 fun GetPostsByTaste(navController: NavHostController, viewModel: PostViewModel = hiltViewModel()) {
 
-    when(val response = viewModel.postsResponse) {
+    when(val response = viewModel.postForYouResponse) {
         // MOSTRAR QUE SE ESTA REALIZANDO LA PETICION Y TODAVIA ESTA EN PROCESO
         Response.Loading -> {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -26,7 +26,7 @@ fun GetPostsByTaste(navController: NavHostController, viewModel: PostViewModel =
             }
         }
         is Response.Success -> {
-            PostContent(posts = response.data)
+            PostContent(posts = response.data, navController)
         }
 
         is Response.Failure -> {
