@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.grupo22_kotlin.presentation.ui.theme.darkBlue
 import com.example.grupo22_kotlin.presentation.ui.theme.yellow
+import kotlin.math.sin
 
 @Composable
 fun DefaultTextField(
@@ -39,7 +40,8 @@ fun DefaultTextField(
     errorMsg: String = "",
     enabled: Boolean = true,
     readOnly: Boolean = false,
-    icon: @Composable () -> Unit = {}
+    icon: @Composable () -> Unit = {},
+    singleLine: Boolean = true
 ) {
     OutlinedTextField(
         modifier = modifier.fillMaxWidth(),
@@ -52,8 +54,7 @@ fun DefaultTextField(
         label = {
             Text(label, fontSize = 14.sp)
         },
-        maxLines = 1,
-        singleLine = true,
+        singleLine = singleLine,
         visualTransformation = if (hideText) PasswordVisualTransformation() else VisualTransformation.None,
         colors = OutlinedTextFieldDefaults.colors(
             unfocusedBorderColor = Color.LightGray,

@@ -27,8 +27,7 @@ fun ImportantButton(
         onClick = { onClick() },
         modifier = modifier
             .fillMaxWidth()
-            .height(52.dp)
-            .padding(horizontal = 8.dp),
+            .height(52.dp),
         enabled = enabled,
         colors = ButtonDefaults.buttonColors(
             contentColor = darkBlue,
