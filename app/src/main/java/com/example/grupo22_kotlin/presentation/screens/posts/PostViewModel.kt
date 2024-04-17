@@ -55,6 +55,14 @@ class PostViewModel @Inject constructor(
         }
     }
 
+    fun getPostsByCategory(category: String) = viewModelScope.launch {
+        postForYouResponse = Response.Loading //PostCategoryResponse
+        postsUseCases.getPostsByCategory(category).collect() { response ->
+            postForYouResponse = response
+
+        }
+    }
+
     /*fun getPostsByUserTaste() = viewModelScope.launch {
         postsResponse = Response.Loading
         /*userCurrent.getUserById(currentUser!!.uid).collect(){

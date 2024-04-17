@@ -19,7 +19,15 @@ fun PostFetchContent(
     viewModel: ViewModel,
     navController: NavHostController
 ) {
-    if (postType == "posts"){
-        GetAllPosts(navController)
+    when (postType) {
+        "posts" -> {
+            GetAllPosts(navController)
+        }
+        "forYou" -> {
+            GetPostsForYou(navController)
+        }
+        "categories" -> {
+            CategoryContent(navController)
+        }
     }
 }

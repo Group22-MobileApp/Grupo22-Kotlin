@@ -74,7 +74,7 @@ fun MainHomeContent(
             ForwardButton(
                 modifier = Modifier,
                 onClick = {
-                    //Navegation to those posts
+                    navController.navigate(route = DetailsScreen.PostType.passPostType("forYou"))
                 })
         }
 
@@ -92,7 +92,7 @@ fun MainHomeContent(
             ForwardButton(
                 modifier = Modifier,
                 onClick = {
-                    //Navegation to those posts
+                    navController.navigate(route = DetailsScreen.PostType.passPostType("categories"))
                 })
         }
 
