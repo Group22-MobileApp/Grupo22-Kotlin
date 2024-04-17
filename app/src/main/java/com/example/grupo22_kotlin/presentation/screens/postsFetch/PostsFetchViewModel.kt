@@ -30,7 +30,7 @@ class PostsFetchViewModel @Inject constructor(
     var categoryErrMsg: MutableState<String> = mutableStateOf("")
 
     init {
-        getPosts()
+        //getPosts()
         getPostsByCategory("Textile and Crafts")
     }
 

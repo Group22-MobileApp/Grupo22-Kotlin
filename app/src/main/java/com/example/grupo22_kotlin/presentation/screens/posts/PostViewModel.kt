@@ -24,6 +24,8 @@ class PostViewModel @Inject constructor(
 
     var postsResponse by mutableStateOf<Response<List<Post>>?>(null)
     var postForYouResponse by mutableStateOf<Response<List<Post>>?>(null)
+    var postCategory by mutableStateOf<Response<List<Post>>?>(null)
+
     val currentUser = authUseCases.getCurrentUser()
     var userData by mutableStateOf(User())
         private set
@@ -36,6 +38,7 @@ class PostViewModel @Inject constructor(
     init {
         getPosts()
         getPostsByUserTaste()
+        getPostsByCategory("Miscellaneous")
     }
 
     fun getPosts() = viewModelScope.launch {
@@ -56,9 +59,9 @@ class PostViewModel @Inject constructor(
     }
 
     fun getPostsByCategory(category: String) = viewModelScope.launch {
-        postForYouResponse = Response.Loading //PostCategoryResponse
+        postCategory = Response.Loading //PostCategoryResponse
         postsUseCases.getPostsByCategory(category).collect() { response ->
-            postForYouResponse = response
+            postCategory = response
 
         }
     }

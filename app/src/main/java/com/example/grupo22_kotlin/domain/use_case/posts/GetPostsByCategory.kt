@@ -5,6 +5,6 @@ import javax.inject.Inject
 
 class GetPostsByCategory @Inject constructor(private val repository: PostRepository) {
 
-    operator fun invoke(category: String) = repository.getPostsByUserTaste(category)
+    operator fun invoke(category: String) = repository.getPostsByCategory(category)
 
 }

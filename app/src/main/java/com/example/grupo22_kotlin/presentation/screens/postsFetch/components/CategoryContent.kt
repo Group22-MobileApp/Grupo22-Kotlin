@@ -48,7 +48,7 @@ fun CategoryContent(
             onValueChange = { viewModel.category.value = it },
             enabled = false,
             readOnly = false,
-            label = "Categorie",
+            label = "Categories",
             errorMsg = viewModel.categoryErrMsg.value,
             validateField = {  },
             icon = {
