@@ -21,6 +21,7 @@ import androidx.navigation.NavHostController
 import com.example.grupo22_kotlin.R
 import com.example.grupo22_kotlin.presentation.components.ForwardButton
 import com.example.grupo22_kotlin.presentation.navigation.AuthScreen
+import com.example.grupo22_kotlin.presentation.navigation.DetailsScreen
 import com.example.grupo22_kotlin.presentation.screens.posts.components.GetPosts
 import com.example.grupo22_kotlin.presentation.screens.posts.components.GetPostsByTaste
 import com.example.grupo22_kotlin.presentation.screens.signup.SignupViewModel
@@ -55,7 +56,7 @@ fun MainHomeContent(
             ForwardButton(
                 modifier = Modifier,
                 onClick = {
-                    //Navegation to those posts
+                    navController.navigate(route = DetailsScreen.PostType.passPostType("posts"))
                 })
         }
 
