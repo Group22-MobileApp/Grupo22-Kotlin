@@ -17,6 +17,7 @@ import com.example.grupo22_kotlin.domain.use_case.auth.Signup
 import com.example.grupo22_kotlin.domain.use_case.posts.CreatePost
 import com.example.grupo22_kotlin.domain.use_case.posts.DeletePost
 import com.example.grupo22_kotlin.domain.use_case.posts.GetPosts
+import com.example.grupo22_kotlin.domain.use_case.posts.GetPostsByCategory
 import com.example.grupo22_kotlin.domain.use_case.posts.GetPostsByUserId
 import com.example.grupo22_kotlin.domain.use_case.posts.GetPostsByUserTaste
 import com.example.grupo22_kotlin.domain.use_case.posts.PostUseCases
@@ -97,6 +98,7 @@ object AppModule {
         getPosts = GetPosts(repository),
         deletePost = DeletePost(repository),
         getPostsByUserId = GetPostsByUserId(repository),
-        getPostsByUserTaste = GetPostsByUserTaste(repository)
+        getPostsByUserTaste = GetPostsByUserTaste(repository),
+        getPostsByCategory = GetPostsByCategory(repository)
     )
 }

@@ -183,6 +183,54 @@ class PostRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun getPostsByCategory(category: String): Flow<Response<List<Post>>> = callbackFlow {
+        val snapshotListener = postsRef.whereEqualTo("category",category).addSnapshotListener { snapshot, e ->
+
+            GlobalScope.launch(Dispatchers.IO) {
+                val postsResponse = if (snapshot != null) {
+                    val posts = snapshot.toObjects(Post::class.java)
+
+                    snapshot.documents.forEachIndexed { index, document ->
+                        posts[index].id = document.id
+                    }
+
+                    val idUserArray = ArrayList<String>()
+
+                    posts.forEach { post ->
+                        idUserArray.add(post.idUser)
+                    }
+
+                    val idUserList = idUserArray.toSet().toList() // ELEMENTOS SIN REPETIR
+
+                    idUserList.map { id ->
+                        async {
+                            val user = usersRef.document(id).get().await().toObject(User::class.java)!!
+                            posts.forEach { post ->
+                                if (post.idUser == id) {
+                                    post.user = user
+                                }
+                            }
+
+                            Log.d("PostsRepositoryImpl", "Id: ${id}")
+                        }
+                    }.forEach {
+                        it.await()
+                    }
+
+                    Response.Success(posts)
+                }
+                else {
+                    Response.Failure(e)
+                }
+                trySend(postsResponse)
+            }
+
+        }
+        awaitClose {
+            snapshotListener.remove()
+        }
+    }
+
     override suspend fun delete(idPost: String): Response<Boolean> {
         return try {
             postsRef.document(idPost).delete().await()

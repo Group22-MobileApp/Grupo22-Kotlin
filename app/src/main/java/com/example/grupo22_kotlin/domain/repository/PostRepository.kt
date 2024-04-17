@@ -5,6 +5,7 @@ import com.example.grupo22_kotlin.domain.model.Response
 import com.example.grupo22_kotlin.domain.model.User
 import kotlinx.coroutines.flow.Flow
 import java.io.File
+import java.util.Locale.Category
 
 interface PostRepository {
 
@@ -14,4 +15,6 @@ interface PostRepository {
     suspend fun delete(idPost: String): Response<Boolean>
 
     fun getPostsByUserTaste(userCarrer: String): Flow<Response<List<Post>>>
+
+    fun getPostsByCategory(category: String): Flow<Response<List<Post>>>
 }
