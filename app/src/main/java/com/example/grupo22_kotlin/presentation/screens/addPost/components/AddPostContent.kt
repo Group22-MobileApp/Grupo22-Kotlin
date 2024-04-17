@@ -281,6 +281,7 @@ fun AddPostBody(
             label = "Description",
             errorMsg = viewModel.descriptionErrMsg.value,
             validateField = { viewModel.validateDescription() },
+            singleLine = false
         )
         ExclusiveCheckboxes(viewModel)
 

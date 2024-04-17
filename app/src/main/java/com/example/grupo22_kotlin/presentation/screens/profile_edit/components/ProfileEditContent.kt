@@ -188,9 +188,6 @@ fun EditProfileBody(
             text = "Actualizar Datos",
             onClick = {
                 viewModel.saveImage()
-
-
-
             },
             enabled = viewModel.isEnabledActualizarDatos
         )
