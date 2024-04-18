@@ -4,5 +4,7 @@ data class PostUseCases (
     val create: CreatePost,
     val getPosts: GetPosts,
     val deletePost: DeletePost,
-    val getPostsByUserId: GetPostsByUserId
+    val getPostsByUserId: GetPostsByUserId,
+    val getPostsByUserTaste: GetPostsByUserTaste,
+    val getPostsByCategory: GetPostsByCategory
 )

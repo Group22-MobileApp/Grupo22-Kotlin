@@ -10,8 +10,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.grupo22_kotlin.domain.model.Post
 import com.example.grupo22_kotlin.domain.model.Response
+import com.example.grupo22_kotlin.domain.model.User
 import com.example.grupo22_kotlin.domain.use_case.auth.AuthUseCases
 import com.example.grupo22_kotlin.domain.use_case.posts.PostUseCases
+import com.example.grupo22_kotlin.domain.use_case.users.UserUseCases
 import com.example.grupo22_kotlin.presentation.utils.ComposeFileProvider
 import com.example.grupo22_kotlin.presentation.utils.ResultingActivityHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,6 +27,7 @@ class AddPostViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val postsUseCases: PostUseCases,
     private val authUseCases: AuthUseCases,
+    private val  userCurrent: UserUseCases
 ): ViewModel() {
 
     var state by mutableStateOf(NewPostState())
@@ -63,16 +66,29 @@ class AddPostViewModel @Inject constructor(
     val resultingActivitiHandler = ResultingActivityHandler()
 
     val currentUser = authUseCases.getCurrentUser()
+
+    /*val user = userCurrent.getUserById(currentUser!!.uid).collect(){
+        userData = it
+    }*/
+    var userData by mutableStateOf(User())
+        private set
     var createPostResponse by mutableStateOf<Response<Boolean>?>(null)
         private set
 
     fun createPost(post: Post) = viewModelScope.launch {
         createPostResponse = Response.Loading
-        val result = postsUseCases.create(post, file!!)
-        createPostResponse = result
+        userCurrent.getUserById(currentUser!!.uid).collect(){
+            userData = it
+
+            post.userCarrer = userData.career
+            val result = postsUseCases.create(post, file!!)
+            createPostResponse = result
+        }
     }
 
-    fun onNewPost() {
+     fun onNewPost() {
+
+
         val post = Post(
             name = name.value,
             description = description.value,
@@ -80,7 +96,8 @@ class AddPostViewModel @Inject constructor(
             condition = selectedOption1.value,
             interchangeable = selectedOption2.value,
             category = category.value,
-            idUser = currentUser?.uid ?: ""
+            idUser = currentUser?.uid ?: "",
+            userCarrer = "Arte"
         )
         createPost(post)
     }

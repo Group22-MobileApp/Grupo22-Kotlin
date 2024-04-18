@@ -22,7 +22,7 @@ fun MainHomeScreen(navController: NavHostController) {
         topBar = {
         },
         content = {
-            Column(modifier = Modifier.padding(top=55.dp)) {
+            Column(modifier = Modifier.padding(top=10.dp)) {
                 MainHomeContent(navController = navController)
             }
         },

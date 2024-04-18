@@ -15,6 +15,7 @@ data class Post(
     var interchangeable: String = "",
     var image: String = "",
     var idUser: String = "",
+    var userCarrer: String = "",
     var user: User? = null,
 ){
     fun toJson(): String = Gson().toJson(Post(
@@ -27,10 +28,12 @@ data class Post(
         interchangeable,
         if (image != "") URLEncoder.encode(image, StandardCharsets.UTF_8.toString()) else "",
         idUser,
+        userCarrer,
         User(
             id = user?.id ?: "",
             username = user?.username ?: "",
             email = user?.email ?: "",
+            career = user?.career?: "",
             image =
             if (!user?.image.isNullOrBlank())
                 URLEncoder.encode(user?.image, StandardCharsets.UTF_8.toString())
