@@ -1,5 +1,6 @@
 package com.example.grupo22_kotlin.presentation.screens.mainHome.components
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,6 +13,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -22,6 +25,9 @@ import com.example.grupo22_kotlin.R
 import com.example.grupo22_kotlin.presentation.components.ForwardButton
 import com.example.grupo22_kotlin.presentation.navigation.AuthScreen
 import com.example.grupo22_kotlin.presentation.navigation.DetailsScreen
+import com.example.grupo22_kotlin.presentation.screens.mainHome.ConnectivityObserver
+import com.example.grupo22_kotlin.presentation.screens.mainHome.MainHomeViewModel
+import com.example.grupo22_kotlin.presentation.screens.mainHome.NetworkConnectivityObserver
 import com.example.grupo22_kotlin.presentation.screens.posts.components.GetPosts
 import com.example.grupo22_kotlin.presentation.screens.posts.components.GetPostsByTaste
 import com.example.grupo22_kotlin.presentation.screens.posts.components.GetPostsCategory
@@ -32,6 +38,12 @@ fun MainHomeContent(
     navController: NavHostController,
     viewModel: SignupViewModel = hiltViewModel(),
 ) {
+
+    val connectivityObserver = MainHomeViewModel()
+
+    val status by connectivityObserver.observe().collectAsState(
+        initial = ConnectivityObserver.Status.Unavailable
+    )
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -41,7 +53,7 @@ fun MainHomeContent(
         Row {
             Text(
                 modifier = Modifier.padding(15.dp),
-                text = "Main Home Page"
+                text = "Main Home Page $status"
             )
         }
 
