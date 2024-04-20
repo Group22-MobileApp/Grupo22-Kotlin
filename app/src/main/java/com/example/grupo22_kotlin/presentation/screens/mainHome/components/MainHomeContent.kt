@@ -13,6 +13,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -32,18 +33,25 @@ import com.example.grupo22_kotlin.presentation.screens.posts.components.GetPosts
 import com.example.grupo22_kotlin.presentation.screens.posts.components.GetPostsByTaste
 import com.example.grupo22_kotlin.presentation.screens.posts.components.GetPostsCategory
 import com.example.grupo22_kotlin.presentation.screens.signup.SignupViewModel
+import com.google.android.gms.common.api.internal.LifecycleActivity
+
 
 @Composable
 fun MainHomeContent(
     navController: NavHostController,
-    viewModel: SignupViewModel = hiltViewModel(),
+    viewModel: MainHomeViewModel = hiltViewModel(),
 ) {
 
-    val connectivityObserver = MainHomeViewModel()
+    //val isOnline by viewModel.isOnline.observe(this, false)
 
-    val status by connectivityObserver.observe().collectAsState(
-        initial = ConnectivityObserver.Status.Unavailable
-    )
+    // Use LaunchedEffect to observe the value of isOnline
+    /*LaunchedEffect(isOnline) {
+        if (isOnline) {
+            // Handle online state
+        } else {
+            // Handle offline state
+        }
+    }*/
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -53,7 +61,7 @@ fun MainHomeContent(
         Row {
             Text(
                 modifier = Modifier.padding(15.dp),
-                text = "Main Home Page $status"
+                text = "Main Home Page"
             )
         }
 
@@ -114,7 +122,7 @@ fun MainHomeContent(
                     navController.navigate(route = DetailsScreen.PostType.passPostType("categories"))
                 })
         }
-        
+
         GetPostsCategory(navController)
 
     }
