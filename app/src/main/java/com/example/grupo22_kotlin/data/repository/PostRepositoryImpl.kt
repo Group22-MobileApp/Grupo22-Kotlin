@@ -231,6 +231,33 @@ class PostRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun update(post: Post, file: File?): Response<Boolean> {
+        return try {
+
+            if (file != null) {
+                val fromFile = Uri.fromFile(file)
+                val ref = storagePostsRef.child(file.name)
+                val uploadTask = ref.putFile(fromFile).await()
+                val url = ref.downloadUrl.await()
+                post.image = url.toString()
+            }
+            val map: MutableMap<String, Any> = HashMap()
+            map["name"] = post.name
+            map["description"] = post.description
+            map["image"] = post.image
+            map["category"] = post.category
+            map["condition"] = post.condition
+            map["price"] = post.price
+            map["interchangeable"] = post.interchangeable
+
+            postsRef.document(post.id).update(map).await()
+            Response.Success(true)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Response.Failure(e)
+        }
+    }
+
     override suspend fun delete(idPost: String): Response<Boolean> {
         return try {
             postsRef.document(idPost).delete().await()
