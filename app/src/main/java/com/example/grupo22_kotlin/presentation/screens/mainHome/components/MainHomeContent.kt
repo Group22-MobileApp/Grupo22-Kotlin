@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Observer
 import androidx.navigation.NavHostController
 import com.example.grupo22_kotlin.R
 import com.example.grupo22_kotlin.presentation.components.ForwardButton
@@ -34,24 +35,33 @@ import com.example.grupo22_kotlin.presentation.screens.posts.components.GetPosts
 import com.example.grupo22_kotlin.presentation.screens.posts.components.GetPostsCategory
 import com.example.grupo22_kotlin.presentation.screens.signup.SignupViewModel
 import com.google.android.gms.common.api.internal.LifecycleActivity
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.lifecycle.LifecycleOwner
 
 
 @Composable
 fun MainHomeContent(
     navController: NavHostController,
     viewModel: MainHomeViewModel = hiltViewModel(),
+
 ) {
 
-    //val isOnline by viewModel.isOnline.observe(this, false)
+    var isOnline by remember { mutableStateOf(false) }
 
-    // Use LaunchedEffect to observe the value of isOnline
-    /*LaunchedEffect(isOnline) {
-        if (isOnline) {
-            // Handle online state
-        } else {
-            // Handle offline state
-        }
-    }*/
+    val lifecycleOwner = LocalLifecycleOwner.current
+
+    viewModel.isOnline.observe(lifecycleOwner) { newIsOnline ->
+        isOnline = newIsOnline
+    }
+
+    if (!isOnline){
+        NoConnectivity()
+    }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -125,5 +135,12 @@ fun MainHomeContent(
 
         GetPostsCategory(navController)
 
+    }
+}
+
+@Composable
+fun NoConnectivity(){
+    Column {
+        Text(text = "No connectivity")
     }
 }
