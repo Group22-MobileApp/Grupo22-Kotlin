@@ -6,6 +6,7 @@ import androidx.navigation.*
 import androidx.navigation.compose.composable
 import com.example.grupo22_kotlin.presentation.screens.myPosts.MyPostsScreen
 import com.example.grupo22_kotlin.presentation.screens.postDetail.PostDetailScreen
+import com.example.grupo22_kotlin.presentation.screens.postUpdate.PostUpdateScreen
 import com.example.grupo22_kotlin.presentation.screens.postsFetch.PostsFetchScreen
 import com.example.grupo22_kotlin.presentation.screens.profile_edit.ProfileEditScreen
 
@@ -44,6 +45,17 @@ fun NavGraphBuilder.detailsNavGraph(navController: NavHostController) {
         }
 
         composable(
+            route = DetailsScreen.PostUpdate.route,
+            arguments = listOf(navArgument("post"){
+                type = NavType.StringType
+            })
+        ) {
+            it.arguments?.getString("post")?.let {
+                PostUpdateScreen(navController, post = it)
+            }
+        }
+
+        composable(
             route = DetailsScreen.PostType.route,
             arguments = listOf(navArgument("postType"){
                 type = NavType.StringType
@@ -70,6 +82,10 @@ sealed class DetailsScreen(val route: String) {
 
     object PostDetail: DetailsScreen("home/detail/{post}") {
         fun passPost(post: String) = "home/detail/$post"
+    }
+
+    object PostUpdate: DetailsScreen("profile/myPosts/{post}") {
+        fun passPost(post: String) = "profile/myPosts/$post"
     }
 
     object PostType: DetailsScreen("home/type/{postType}") {

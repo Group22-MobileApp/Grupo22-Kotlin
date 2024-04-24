@@ -8,13 +8,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.grupo22_kotlin.domain.model.Post
 
 @Composable
 fun MyPostsContent(
     posts: List<Post>,
-    viewModel: ViewModel
+    viewModel: ViewModel,
+    navController: NavHostController
 ) {
     LazyColumn(
         modifier = Modifier
@@ -24,7 +26,7 @@ fun MyPostsContent(
         items(
             items = posts
         ) { post ->
-            MyPostsCard(post = post)
+            MyPostsCard(post = post, navController = navController)
         }
     }
 }
