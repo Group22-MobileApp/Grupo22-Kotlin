@@ -59,6 +59,7 @@ class SignupViewModel @Inject constructor(
 
     var user = User()
     fun onSignup() {
+        username.value = username.value.trim()
         user.username = username.value
         user.email = email.value
         user.password = password.value
@@ -105,19 +106,28 @@ class SignupViewModel @Inject constructor(
 
 
     fun validateUsername() {
-        if (username.value.length >= 5) {
+        val usernameRegex = Regex("^[a-zA-Z0-9](.*[a-zA-Z0-9])?\$")
+        val maxLength = 25
+
+        if (username.value.trim().length >= 5 &&
+            username.value.trim().length <= maxLength &&
+            username.value.trim().matches(usernameRegex)
+        ) {
             isUsernameValid.value = true
             usernameErrMsg.value = ""
         } else {
             isUsernameValid.value = false
-
-            usernameErrMsg.value = "At least 5 characters"
-
+            if (username.value.trim().length < 5) {
+                usernameErrMsg.value = "At least 5 characters"
+            } else if (username.value.trim().length > maxLength) {
+                usernameErrMsg.value = "Maximum 25 characters"
+            } else {
+                usernameErrMsg.value = "Invalid characters or format"
+            }
         }
 
         enabledLoginButton()
     }
-
 
     fun validatePassword() {
         if (password.value.length >= 6) {
@@ -148,7 +158,7 @@ class SignupViewModel @Inject constructor(
 
 
     fun validateNumber() {
-        if (number.value.length >= 10) {
+        if (number.value.length == 10) {
             isnumberValid.value = true
             numberErrMsg.value = ""
         } else {
