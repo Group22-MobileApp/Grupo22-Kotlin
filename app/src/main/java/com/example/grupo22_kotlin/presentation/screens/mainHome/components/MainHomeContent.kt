@@ -39,6 +39,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.LifecycleOwner
 
@@ -47,20 +48,12 @@ import androidx.lifecycle.LifecycleOwner
 fun MainHomeContent(
     navController: NavHostController,
     viewModel: MainHomeViewModel = hiltViewModel(),
-
+    //connectivityObserver: ConnectivityObserver
 ) {
 
-    var isOnline by remember { mutableStateOf(false) }
-
-    val lifecycleOwner = LocalLifecycleOwner.current
-
-    viewModel.isOnline.observe(lifecycleOwner) { newIsOnline ->
-        isOnline = newIsOnline
-    }
-
-    if (!isOnline){
-        NoConnectivity()
-    }
+    val status by viewModel.connectivityObserver.observe().collectAsState(
+        initial = ConnectivityObserver.Status.Unavailable
+    )
 
     Column(
         modifier = Modifier
@@ -68,11 +61,14 @@ fun MainHomeContent(
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Row {
-            Text(
-                modifier = Modifier.padding(15.dp),
-                text = "Main Home Page"
-            )
+        if (status.toString() == "Unavailable"){
+            Row {
+                Text(
+                    modifier = Modifier.padding(15.dp),
+                    text = "Your actual state is $status",
+                    color = Color.Red
+                )
+            }
         }
 
         Row(
