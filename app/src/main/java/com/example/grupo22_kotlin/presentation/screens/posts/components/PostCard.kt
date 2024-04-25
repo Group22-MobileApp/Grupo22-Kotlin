@@ -15,18 +15,21 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.grupo22_kotlin.domain.model.Post
 import com.example.grupo22_kotlin.presentation.navigation.DetailsScreen
+import com.example.grupo22_kotlin.presentation.screens.posts.PostViewModel
 
 @Composable
-fun PostCard (post: Post, navController: NavHostController){
+fun PostCard (post: Post, navController: NavHostController, viewModel: PostViewModel = hiltViewModel()){
     Card(
         modifier = Modifier
             .padding(top = 0.dp, bottom = 15.dp)
             .clickable {
+                viewModel.updateViews(post.id, post.views)
                 navController.navigate(route = DetailsScreen.PostDetail.passPost(post.toJson()))
             },
         shape = RoundedCornerShape(20.dp)

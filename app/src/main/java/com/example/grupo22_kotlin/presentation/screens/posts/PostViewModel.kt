@@ -25,6 +25,8 @@ class PostViewModel @Inject constructor(
     var postsResponse by mutableStateOf<Response<List<Post>>?>(null)
     var postForYouResponse by mutableStateOf<Response<List<Post>>?>(null)
     var postCategory by mutableStateOf<Response<List<Post>>?>(null)
+    var updateViews by mutableStateOf<Response<Boolean>?>(null)
+
 
     val currentUser = authUseCases.getCurrentUser()
     var userData by mutableStateOf(User())
@@ -64,6 +66,16 @@ class PostViewModel @Inject constructor(
             postCategory = response
 
         }
+    }
+
+    fun updateViews(idPost: String, newViews: String) = viewModelScope.launch {
+        val viewsAsInt: Int = newViews.toInt()
+        val updatedViews: Int = viewsAsInt + 1
+        val updatedViewsString: String = updatedViews.toString()
+
+        updateViews = Response.Loading
+        val result = postsUseCases.updateViews(idPost, updatedViewsString)
+        updateViews = result
     }
 
     /*fun getPostsByUserTaste() = viewModelScope.launch {

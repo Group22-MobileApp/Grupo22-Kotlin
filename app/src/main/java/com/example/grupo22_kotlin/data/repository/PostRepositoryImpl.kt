@@ -258,6 +258,19 @@ class PostRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun updateViews(idPost: String, newViews: String): Response<Boolean> {
+        return try {
+            val map: MutableMap<String, Any> = HashMap()
+            map["views"] = newViews
+
+            postsRef.document(idPost).update(map).await()
+            Response.Success(true)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Response.Failure(e)
+        }
+    }
+
     override suspend fun delete(idPost: String): Response<Boolean> {
         return try {
             postsRef.document(idPost).delete().await()

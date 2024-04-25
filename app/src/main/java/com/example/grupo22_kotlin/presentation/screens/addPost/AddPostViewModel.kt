@@ -97,7 +97,8 @@ class AddPostViewModel @Inject constructor(
             interchangeable = selectedOption2.value,
             category = category.value,
             idUser = currentUser?.uid ?: "",
-            userCarrer = "Arte"
+            userCarrer = "Arte",
+            views = "0"
         )
         createPost(post)
     }

@@ -81,7 +81,9 @@ class PostUpdateViewModel @Inject constructor(
             interchangeable = selectedOption2.value,
             category = category.value,
             image = post.image,
-            idUser = currentUser?.uid ?: ""
+            idUser = currentUser?.uid ?: "",
+            userCarrer = post.userCarrer,
+            views = post.views
         )
         updatePost(post)
     }

@@ -22,6 +22,7 @@ import com.example.grupo22_kotlin.domain.use_case.posts.GetPostsByUserId
 import com.example.grupo22_kotlin.domain.use_case.posts.GetPostsByUserTaste
 import com.example.grupo22_kotlin.domain.use_case.posts.PostUseCases
 import com.example.grupo22_kotlin.domain.use_case.posts.UpdatePost
+import com.example.grupo22_kotlin.domain.use_case.posts.UpdateViews
 import com.example.grupo22_kotlin.domain.use_case.users.Create
 import com.example.grupo22_kotlin.domain.use_case.users.GetUserById
 import com.example.grupo22_kotlin.domain.use_case.users.SaveImage
@@ -101,6 +102,7 @@ object AppModule {
         getPostsByUserId = GetPostsByUserId(repository),
         getPostsByUserTaste = GetPostsByUserTaste(repository),
         getPostsByCategory = GetPostsByCategory(repository),
-        updatePost = UpdatePost(repository)
+        updatePost = UpdatePost(repository),
+        updateViews = UpdateViews(repository)
     )
 }
