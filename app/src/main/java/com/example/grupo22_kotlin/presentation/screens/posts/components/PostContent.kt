@@ -1,31 +1,31 @@
 package com.example.grupo22_kotlin.presentation.screens.posts.components
 
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Text
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.grupo22_kotlin.domain.model.Post
 
 @Composable
 fun PostContent(posts: List<Post>, navController: NavHostController){
-    LazyColumn(
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 20.dp, end = 20.dp, top = 20.dp, bottom = 20.dp)
-            .height(500.dp)
+            .padding(top = 20.dp, bottom = 20.dp)
+            .heightIn(max = 2000.dp),
+        horizontalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         items(
-            items = posts
-        ) { post ->
-            PostCard(post = post, navController)
+            count = posts.size
+        ) { i ->
+            PostCard(post = posts[i], navController)
         }
     }
 }

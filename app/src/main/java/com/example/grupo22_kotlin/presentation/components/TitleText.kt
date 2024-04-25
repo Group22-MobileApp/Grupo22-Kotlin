@@ -21,7 +21,6 @@ fun TitleText(text:String, color: Color = darkBlue, fontSize: TextUnit = 35.sp){
         fontSize = fontSize,
         fontFamily = Raleway,
         fontWeight = FontWeight.Bold,
-        lineHeight = fontSize,
-        modifier = Modifier.fillMaxWidth()
+        lineHeight = fontSize
     )
 }
