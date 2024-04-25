@@ -15,6 +15,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.materialIcon
 import androidx.compose.material.icons.outlined.Delete
+import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
@@ -29,13 +30,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.grupo22_kotlin.domain.model.Post
+import com.example.grupo22_kotlin.presentation.navigation.DetailsScreen
 import com.example.grupo22_kotlin.presentation.screens.myPosts.MyPostsViewModel
 import com.example.grupo22_kotlin.presentation.screens.posts.components.PostCard
 
 @Composable
-fun MyPostsCard (post: Post, viewModel: MyPostsViewModel = hiltViewModel()){
+fun MyPostsCard (post: Post, viewModel: MyPostsViewModel = hiltViewModel(), navController: NavHostController){
     Card(
         modifier = Modifier
             .padding(top = 0.dp, bottom = 15.dp)
@@ -70,14 +74,28 @@ fun MyPostsCard (post: Post, viewModel: MyPostsViewModel = hiltViewModel()){
                     )
                 }
                 Column {
-                    Button(
-                        onClick = { viewModel.delete(post.id) },
+                    Row {
+                        Button(
+                            onClick = { viewModel.delete(post.id) },
 
-                    ) {
-                        Icon(
-                            imageVector = Icons.Outlined.Delete,
-                            contentDescription = "Delete"
-                        )
+                            ) {
+                            Icon(
+                                imageVector = Icons.Outlined.Delete,
+                                contentDescription = "Delete"
+                            )
+                        }
+
+                        Button(
+                            onClick = {
+                                navController.navigate(route = DetailsScreen.PostUpdate.passPost(post.toJson()))
+                                      },
+
+                            ) {
+                            Icon(
+                                imageVector = Icons.Outlined.Edit,
+                                contentDescription = "Update"
+                            )
+                        }
                     }
                 }
             }

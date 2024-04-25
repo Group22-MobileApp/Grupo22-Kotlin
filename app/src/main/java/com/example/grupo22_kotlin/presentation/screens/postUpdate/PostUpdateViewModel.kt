@@ -1,16 +1,15 @@
-package com.example.grupo22_kotlin.presentation.screens.addPost
+package com.example.grupo22_kotlin.presentation.screens.postUpdate
 
 import android.content.Context
-import android.net.Uri
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.grupo22_kotlin.domain.model.Post
 import com.example.grupo22_kotlin.domain.model.Response
-import com.example.grupo22_kotlin.domain.model.User
 import com.example.grupo22_kotlin.domain.use_case.auth.AuthUseCases
 import com.example.grupo22_kotlin.domain.use_case.posts.PostUseCases
 import com.example.grupo22_kotlin.domain.use_case.users.UserUseCases
@@ -23,88 +22,78 @@ import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
-class AddPostViewModel @Inject constructor(
+class PostUpdateViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val postsUseCases: PostUseCases,
+    private val savedStateHandle: SavedStateHandle,
     private val authUseCases: AuthUseCases,
-    private val  userCurrent: UserUseCases
+    private val  postUseCases: PostUseCases
 ): ViewModel() {
 
-    var state by mutableStateOf(NewPostState())
+    var file: File? = null
+    val resultingActivityHandler = ResultingActivityHandler()
 
-    var name: MutableState<String> = mutableStateOf("")
+    val data = savedStateHandle.get<String>("post")
+    val post = Post.fromJson(data!!)
+
+    var updatePostResponse by mutableStateOf<Response<Boolean>?>(null)
+        private set
+
+    var image: MutableState<String> = mutableStateOf("")
+
+    val currentUser = authUseCases.getCurrentUser()
+
+    var name: MutableState<String> = mutableStateOf(post.name)
     var isNameValid: MutableState<Boolean> = mutableStateOf(false)
     var nameErrMsg: MutableState<String> = mutableStateOf("")
 
-    var price: MutableState<String> = mutableStateOf("")
+    var price: MutableState<String> = mutableStateOf(post.price)
     var isPriceValid: MutableState<Boolean> = mutableStateOf(false)
     var priceErrMsg: MutableState<String> = mutableStateOf("")
 
-    var description: MutableState<String> = mutableStateOf("")
+    var description: MutableState<String> = mutableStateOf(post.description)
     var isDescriptionValid: MutableState<Boolean> = mutableStateOf(false)
     var descriptionErrMsg: MutableState<String> = mutableStateOf("")
 
-    var category: MutableState<String> = mutableStateOf("")
+    var category: MutableState<String> = mutableStateOf(post.category)
     var isCategoryValid: MutableState<Boolean> = mutableStateOf(false)
     var categoryErrMsg: MutableState<String> = mutableStateOf("")
 
     var isEnabledPostButton = false
 
-    var selectedOption1: MutableState<String> = mutableStateOf("")
+    var selectedOption1: MutableState<String> = mutableStateOf(post.condition)
     var isSelectedOption1Selected: MutableState<Boolean> = mutableStateOf(false)
 
-    var selectedOption2: MutableState<String> = mutableStateOf("")
+    var selectedOption2: MutableState<String> = mutableStateOf(post.interchangeable)
     var isSelectedOption2Selected: MutableState<Boolean> = mutableStateOf(false)
 
-    var image: MutableState<String> = mutableStateOf("")
-
-    //var state by mutableStateOf(NewPostState())
-
-    // FILE
-    var file: File? = null
-
-    val resultingActivitiHandler = ResultingActivityHandler()
-
-    val currentUser = authUseCases.getCurrentUser()
-
-    /*val user = userCurrent.getUserById(currentUser!!.uid).collect(){
-        userData = it
-    }*/
-    var userData by mutableStateOf(User())
-        private set
-    var createPostResponse by mutableStateOf<Response<Boolean>?>(null)
-        private set
-
-    fun createPost(post: Post) = viewModelScope.launch {
-        createPostResponse = Response.Loading
-        userCurrent.getUserById(currentUser!!.uid).collect(){
-            userData = it
-
-            post.userCarrer = userData.career
-            val result = postsUseCases.create(post, file!!)
-            createPostResponse = result
-        }
+    fun updatePost(post: Post) = viewModelScope.launch {
+        updatePostResponse = Response.Loading
+        val result = postUseCases.updatePost(post, file)
+        updatePostResponse = result
     }
-
-     fun onNewPost() {
-
-
+    fun onUpdatePost() {
         val post = Post(
+            id = post.id,
             name = name.value,
             description = description.value,
             price = price.value,
             condition = selectedOption1.value,
             interchangeable = selectedOption2.value,
             category = category.value,
+            image = post.image,
             idUser = currentUser?.uid ?: "",
-            userCarrer = "Arte",
-            views = "0"
+            userCarrer = post.userCarrer,
+            views = post.views
         )
-        createPost(post)
+        updatePost(post)
+    }
+
+    init {
+        enabledUpdateButton()
     }
 
     fun pickImage()= viewModelScope.launch{
-        val result = resultingActivitiHandler.getContent("image/*")
+        val result = resultingActivityHandler.getContent("image/*")
         if (result != null){
             file = ComposeFileProvider.createFileFromUri(context, result)
             image.value = result.toString()
@@ -112,30 +101,18 @@ class AddPostViewModel @Inject constructor(
     }
 
     fun takePhoto()= viewModelScope.launch{
-        val result = resultingActivitiHandler.takePicturePreview()
+        val result = resultingActivityHandler.takePicturePreview()
         if (result != null){
             image.value = ComposeFileProvider.getPathFromBitmap(context, result)
             file = File(image.value)
         }
-
     }
 
-
-    fun enabledAddPostButton() {
+    fun enabledUpdateButton() {
         isEnabledPostButton = isNameValid.value &&
                 isPriceValid.value &&
                 isDescriptionValid.value &&
                 isCategoryValid.value
-    }
-
-    fun clearForm() {
-        name.value =""
-        category.value = ""
-        description.value = ""
-        price.value = ""
-        selectedOption1.value = ""
-        selectedOption2.value = ""
-        createPostResponse = null
     }
 
     fun validateName() {
@@ -147,7 +124,7 @@ class AddPostViewModel @Inject constructor(
             nameErrMsg.value = "A name needs at least 5 characters"
         }
 
-        enabledAddPostButton()
+        enabledUpdateButton()
     }
 
     fun validatePrice() {
@@ -159,7 +136,7 @@ class AddPostViewModel @Inject constructor(
             priceErrMsg.value = "More than a Number"
         }
 
-        enabledAddPostButton()
+        enabledUpdateButton()
     }
 
     fun validateDescription() {
@@ -171,7 +148,7 @@ class AddPostViewModel @Inject constructor(
             descriptionErrMsg.value = "A description needs at least 6 characters"
         }
 
-        enabledAddPostButton()
+        enabledUpdateButton()
     }
     fun validateCategory() {
         if (category.value.length >= 1) {
@@ -182,24 +159,8 @@ class AddPostViewModel @Inject constructor(
             category.value = "That career must not be empty"
         }
 
-        enabledAddPostButton()
+        enabledUpdateButton()
     }
 
-    fun validateOption1(){
-        if (selectedOption1.value != ""){
-            isSelectedOption1Selected.value = true
-        } else {
-            isSelectedOption1Selected.value = false
-        }
-        enabledAddPostButton()
-    }
 
-    fun validateOption2(){
-        if (selectedOption2.value != ""){
-            isSelectedOption2Selected.value = true
-        } else {
-            isSelectedOption2Selected.value = false
-        }
-        enabledAddPostButton()
-    }
 }
