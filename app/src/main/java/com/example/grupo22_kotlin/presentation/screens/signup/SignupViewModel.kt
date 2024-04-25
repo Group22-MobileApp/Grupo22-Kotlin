@@ -128,7 +128,7 @@ class SignupViewModel @Inject constructor(
 
         enabledLoginButton()
     }
-    
+
     fun validatePassword() {
         if (password.value.length >= 6) {
             isPasswordValid.value = true
@@ -158,7 +158,7 @@ class SignupViewModel @Inject constructor(
 
 
     fun validateNumber() {
-        if (number.value.length >= 10) {
+        if (number.value.length == 10) {
             isnumberValid.value = true
             numberErrMsg.value = ""
         } else {
