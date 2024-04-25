@@ -102,7 +102,7 @@ fun MainHomeHeader(
     viewModel: MainHomeViewModel,
     userViewModel: ProfileViewModel = hiltViewModel()
 ) {
-    Column(modifier = modifier.fillMaxWidth()) {
+    Column(modifier = modifier.fillMaxWidth().padding(top = 16.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             ProfileImage(
                 modifier = modifier,
