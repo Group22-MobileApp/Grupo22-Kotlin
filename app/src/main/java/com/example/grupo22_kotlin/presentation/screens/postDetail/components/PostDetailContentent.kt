@@ -136,7 +136,7 @@ fun PostDetailBody(
                 Spacer(modifier = modifier.size(10.dp))
 
                 val text = viewModel.post.user?.username?.let {
-                    if (it.length > 10) it.take(10) + "..."
+                    if (it.length > 15) it.take(15) + "..."
                     else it
                 }
                 Column {
