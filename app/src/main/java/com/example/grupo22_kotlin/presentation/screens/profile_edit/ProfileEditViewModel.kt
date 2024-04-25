@@ -117,8 +117,9 @@ class ProfileEditViewModel @Inject constructor(
 
     fun onUpdate(url: String){
         val myUser = User(
+
             id = user.id,
-            username = username.value,
+            username = username.value.trim(),
             image = url ,
             career =  career.value,
             number = number.value
@@ -144,19 +145,31 @@ class ProfileEditViewModel @Inject constructor(
 
 
     fun validateUsername() {
-        if (username.value.length >= 5) {
+        val usernameRegex = Regex("^[a-zA-Z0-9](.*[a-zA-Z0-9])?\$")
+        val maxLength = 25
+
+        if (username.value.trim().length >= 5 &&
+            username.value.trim().length <= maxLength &&
+            username.value.trim().matches(usernameRegex)
+        ) {
             isUsernameValid.value = true
             usernameErrMsg.value = ""
         } else {
             isUsernameValid.value = false
-            usernameErrMsg.value = "At least 5 caracters"
+            if (username.value.trim().length < 5) {
+                usernameErrMsg.value = "At least 5 characters"
+            } else if (username.value.trim().length > maxLength) {
+                usernameErrMsg.value = "Maximum 25 characters"
+            } else {
+                usernameErrMsg.value = "Invalid characters or format"
+            }
         }
 
         enabledLoginButton()
     }
 
     fun validateNumber() {
-        if (number.value.length >= 10) {
+        if (number.value.length == 10) {
             isnumberValid.value = true
             numberErrMsg.value = ""
         } else {
