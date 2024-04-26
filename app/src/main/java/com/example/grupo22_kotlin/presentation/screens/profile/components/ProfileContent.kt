@@ -69,7 +69,7 @@ fun ProfileContent(
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            if (status.toString() == "Unavailable") {
+            if (status.toString() == "Unavailable" || status.toString() == "Lost") {
                 Image(
                     modifier = Modifier.size(64.dp),
                     painter = painterResource(id = R.drawable.ic_errorconnection),

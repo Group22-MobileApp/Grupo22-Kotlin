@@ -74,7 +74,7 @@ fun AddPostContent(
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            if (status.toString() == "Unavailable") {
+            if (status.toString() == "Unavailable" || status.toString() == "Lost") {
                 Spacer(modifier = Modifier.weight(1f))
                 Image(
                     modifier = Modifier.size(64.dp),
