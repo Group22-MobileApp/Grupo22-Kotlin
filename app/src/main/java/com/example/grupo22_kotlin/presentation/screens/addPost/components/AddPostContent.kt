@@ -1,7 +1,5 @@
 package com.example.grupo22_kotlin.presentation.screens.addPost.components
 
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -10,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -28,6 +27,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -52,26 +52,51 @@ import com.example.grupo22_kotlin.presentation.components.ImportantButton
 import com.example.grupo22_kotlin.presentation.components.TitleText
 import com.example.grupo22_kotlin.presentation.navigation.AuthScreen
 import com.example.grupo22_kotlin.presentation.screens.addPost.AddPostViewModel
-import com.example.grupo22_kotlin.presentation.screens.signup.SignupViewModel
+import com.example.grupo22_kotlin.presentation.screens.mainHome.ConnectivityObserver
 import com.example.grupo22_kotlin.presentation.ui.theme.Montserrat
-import com.example.grupo22_kotlin.presentation.ui.theme.Raleway
-import com.example.grupo22_kotlin.presentation.ui.theme.darkBlue
-import com.example.grupo22_kotlin.presentation.utils.ComposeFileProvider
 
 @Composable
-fun AddPostContent(navController: NavHostController, viewModel: AddPostViewModel = hiltViewModel()) {
+fun AddPostContent(
+    navController: NavHostController,
+    viewModel: AddPostViewModel = hiltViewModel()
+) {
+    val status by viewModel.connectivityObserver.observe().collectAsState(
+        initial = ConnectivityObserver.Status.Unavailable
+    )
+
     Box(
-        modifier = Modifier.padding(start = 20.dp, end = 20.dp, bottom = 20.dp, top = 55.dp),
-        contentAlignment = Alignment.Center
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(start = 20.dp, end = 20.dp, bottom = 20.dp, top = 55.dp)
     ) {
-        Column {
-            AddPostHeader(modifier = Modifier)
-            AddPostBody(modifier = Modifier.weight(4f), viewModel)
-            /*AddPostFooter(
+        Column(
+            modifier = Modifier
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            if (status.toString() == "Unavailable" || status.toString() == "Lost") {
+                Spacer(modifier = Modifier.weight(1f))
+                Image(
+                    modifier = Modifier.size(64.dp),
+                    painter = painterResource(id = R.drawable.ic_errorconnection),
+                    contentDescription = "error internet connection"
+                )
+                Text(
+                    text = "No Internet connection",
+                    color = Color(0xFFBBBBBB),
+                    fontWeight = FontWeight.SemiBold
+                )
+                Spacer(modifier = Modifier.weight(1f))
+
+            } else {
+                AddPostHeader(modifier = Modifier)
+                AddPostBody(modifier = Modifier.weight(4f), viewModel)
+                /*AddPostFooter(
                 modifier = Modifier.weight(1f),
                 navController = navController,
                 viewModel = viewModel
             )*/
+            }
         }
     }
 }
@@ -141,7 +166,7 @@ fun ExclusiveCheckboxes(viewModel: AddPostViewModel) {
                     checked = viewModel.selectedOption2.value == "No",
                     onCheckedChange = { if (it) viewModel.selectedOption2.value = "No" },
 
-                )
+                    )
                 Text(text = "No", modifier = Modifier.padding(start = 8.dp))
             }
         }
@@ -166,7 +191,7 @@ fun AddPostBody(
     var dialogState = remember { mutableStateOf(false) }
     DialogCapturePicture(status = dialogState,
         takePhoto = { viewModel.takePhoto() },
-        pickImage = {viewModel.pickImage()})
+        pickImage = { viewModel.pickImage() })
 
     val context = LocalContext.current
 
@@ -190,16 +215,17 @@ fun AddPostBody(
             ) {
                 Text(text = "Take or add a photo", color = Color.Gray)
                 Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                    if(viewModel.image.value != ""){
+                    if (viewModel.image.value != "") {
                         AsyncImage(
-                            modifier = Modifier.height(100.dp)
+                            modifier = Modifier
+                                .height(100.dp)
                                 .clip(CircleShape)
                                 .clickable {
-                                           dialogState.value = true
-                                },                            model = viewModel.image.value,
+                                    dialogState.value = true
+                                }, model = viewModel.image.value,
                             contentDescription = ""
                         )
-                    }else{
+                    } else {
                         Image(
                             modifier = Modifier
                                 .size(95.dp)

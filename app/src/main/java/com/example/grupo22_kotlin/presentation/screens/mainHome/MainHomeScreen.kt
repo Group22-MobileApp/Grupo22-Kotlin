@@ -23,9 +23,7 @@ fun MainHomeScreen(navController: NavHostController) {
         topBar = {
         },
         content = {
-            Column(modifier = Modifier.padding(top=10.dp)) {
-                MainHomeContent(navController = navController)
-            }
+            MainHomeContent(navController = navController)
         },
         bottomBar = {}
 
@@ -34,6 +32,6 @@ fun MainHomeScreen(navController: NavHostController) {
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun PreviewMainHomeScreen(){
+fun PreviewMainHomeScreen() {
     MainHomeScreen(rememberNavController())
 }
