@@ -2,13 +2,16 @@ package com.example.grupo22_kotlin.presentation.screens.profile.components
 
 import android.app.Activity
 import android.content.Intent
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -22,6 +25,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -41,6 +46,7 @@ import com.example.grupo22_kotlin.presentation.components.ProfileImage
 import com.example.grupo22_kotlin.presentation.components.TitleText
 import com.example.grupo22_kotlin.presentation.navigation.BottomBarScreen
 import com.example.grupo22_kotlin.presentation.navigation.DetailsScreen
+import com.example.grupo22_kotlin.presentation.screens.mainHome.ConnectivityObserver
 import com.example.grupo22_kotlin.presentation.screens.profile.ProfileViewModel
 
 @Composable
@@ -48,6 +54,9 @@ fun ProfileContent(
     navController: NavHostController,
     viewModel: ProfileViewModel = hiltViewModel()
 ) {
+    val status by viewModel.connectivityObserver.observe().collectAsState(
+        initial = ConnectivityObserver.Status.Unavailable
+    )
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -56,9 +65,23 @@ fun ProfileContent(
     ) {
         Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .verticalScroll(rememberScrollState())
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            if (status.toString() == "Unavailable") {
+                Image(
+                    modifier = Modifier.size(64.dp),
+                    painter = painterResource(id = R.drawable.ic_errorconnection),
+                    contentDescription = "error internet connection"
+                )
+                Text(
+                    text = "No Internet connection",
+                    color = Color(0xFFBBBBBB),
+                    fontWeight = FontWeight.SemiBold
+                )
+
+            }
             MenuProfileHeader(
                 modifier = Modifier,
                 navController = navController,
@@ -69,6 +92,7 @@ fun ProfileContent(
                 navController = navController,
                 viewModel = viewModel
             )
+
         }
     }
 }
@@ -123,7 +147,9 @@ fun MenuProfileBody(
             Text(
                 text = "Profile",
                 fontWeight = FontWeight.SemiBold,
-                modifier = modifier.align(Alignment.CenterStart).padding(start = 8.dp)
+                modifier = modifier
+                    .align(Alignment.CenterStart)
+                    .padding(start = 8.dp)
             )
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
@@ -149,7 +175,9 @@ fun MenuProfileBody(
             Text(
                 text = "History",
                 fontWeight = FontWeight.SemiBold,
-                modifier = modifier.align(Alignment.CenterStart).padding(start = 8.dp)
+                modifier = modifier
+                    .align(Alignment.CenterStart)
+                    .padding(start = 8.dp)
             )
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
@@ -179,7 +207,9 @@ fun MenuProfileBody(
             Text(
                 text = "Crate a post",
                 fontWeight = FontWeight.SemiBold,
-                modifier = modifier.align(Alignment.CenterStart).padding(start = 8.dp)
+                modifier = modifier
+                    .align(Alignment.CenterStart)
+                    .padding(start = 8.dp)
             )
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
@@ -208,7 +238,9 @@ fun MenuProfileBody(
             Text(
                 text = "My posts",
                 fontWeight = FontWeight.SemiBold,
-                modifier = modifier.align(Alignment.CenterStart).padding(start = 8.dp)
+                modifier = modifier
+                    .align(Alignment.CenterStart)
+                    .padding(start = 8.dp)
             )
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
@@ -235,7 +267,9 @@ fun MenuProfileBody(
             Text(
                 text = "My reviews",
                 fontWeight = FontWeight.SemiBold,
-                modifier = modifier.align(Alignment.CenterStart).padding(start = 8.dp)
+                modifier = modifier
+                    .align(Alignment.CenterStart)
+                    .padding(start = 8.dp)
             )
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,

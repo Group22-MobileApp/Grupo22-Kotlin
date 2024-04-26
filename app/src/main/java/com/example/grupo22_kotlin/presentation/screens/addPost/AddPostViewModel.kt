@@ -14,6 +14,7 @@ import com.example.grupo22_kotlin.domain.model.User
 import com.example.grupo22_kotlin.domain.use_case.auth.AuthUseCases
 import com.example.grupo22_kotlin.domain.use_case.posts.PostUseCases
 import com.example.grupo22_kotlin.domain.use_case.users.UserUseCases
+import com.example.grupo22_kotlin.presentation.screens.mainHome.NetworkConnectivityObserver
 import com.example.grupo22_kotlin.presentation.utils.ComposeFileProvider
 import com.example.grupo22_kotlin.presentation.utils.ResultingActivityHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -31,6 +32,7 @@ class AddPostViewModel @Inject constructor(
 ): ViewModel() {
 
     var state by mutableStateOf(NewPostState())
+    val connectivityObserver = NetworkConnectivityObserver(context.applicationContext)
 
     var name: MutableState<String> = mutableStateOf("")
     var isNameValid: MutableState<Boolean> = mutableStateOf(false)

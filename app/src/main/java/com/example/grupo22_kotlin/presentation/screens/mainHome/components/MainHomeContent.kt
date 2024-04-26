@@ -1,10 +1,14 @@
 package com.example.grupo22_kotlin.presentation.screens.mainHome.components
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -35,6 +39,7 @@ import com.example.grupo22_kotlin.presentation.screens.posts.components.GetPosts
 import com.example.grupo22_kotlin.presentation.screens.posts.components.GetPostsByTaste
 import com.example.grupo22_kotlin.presentation.screens.posts.components.GetPostsCategory
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
@@ -46,39 +51,39 @@ import com.example.grupo22_kotlin.presentation.ui.theme.Raleway
 import com.example.grupo22_kotlin.presentation.ui.theme.amber
 import com.example.grupo22_kotlin.presentation.ui.theme.darkBlue
 
-
 @Composable
 fun MainHomeContent(
     navController: NavHostController,
-    viewModel: MainHomeViewModel = hiltViewModel(),
-    //connectivityObserver: ConnectivityObserver
+    viewModel: MainHomeViewModel = hiltViewModel()
 ) {
-
     val status by viewModel.connectivityObserver.observe().collectAsState(
         initial = ConnectivityObserver.Status.Unavailable
     )
 
     Box(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 20.dp, end = 20.dp, bottom = 20.dp, top = 20.dp)
+            .fillMaxSize()
+            .padding(start = 20.dp, end = 20.dp, bottom = 20.dp, top = 55.dp)
     ) {
         Column(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxSize()
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             if (status.toString() == "Unavailable") {
-                Row {
-                    Text(
-                        modifier = Modifier.padding(15.dp),
-                        text = "Your actual state is $status",
-                        color = Color.Red
-                    )
-                }
-            }
+                Image(
+                    modifier = Modifier.size(64.dp),
+                    painter = painterResource(id = R.drawable.ic_errorconnection),
+                    contentDescription = "error internet connection"
+                )
+                Text(
+                    text = "No Internet connection",
+                    color = Color(0xFFBBBBBB),
+                    fontWeight = FontWeight.SemiBold
+                )
 
+            }
             MainHomeHeader(
                 modifier = Modifier,
                 navController = navController,
@@ -90,6 +95,7 @@ fun MainHomeContent(
             Categories(modifier = Modifier, navController = navController)
 
             New(modifier = Modifier, navController = navController)
+
         }
     }
 }
@@ -102,7 +108,10 @@ fun MainHomeHeader(
     viewModel: MainHomeViewModel,
     userViewModel: ProfileViewModel = hiltViewModel()
 ) {
-    Column(modifier = modifier.fillMaxWidth().padding(top = 16.dp)) {
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+    ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             ProfileImage(
                 modifier = modifier,
