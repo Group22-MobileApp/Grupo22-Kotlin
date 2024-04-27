@@ -11,9 +11,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.grupo22_kotlin.presentation.navigation.RootNavGraph
+import com.example.grupo22_kotlin.presentation.screens.mainHome.ConnectivityObserver
+import com.example.grupo22_kotlin.presentation.screens.mainHome.NetworkConnectivityObserver
 import com.example.grupo22_kotlin.presentation.ui.theme.Grupo22KotlinTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,9 +24,11 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     private lateinit var navController: NavHostController
+    private lateinit var connectivityObserver: ConnectivityObserver
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+        installSplashScreen()
         setContent {
             Grupo22KotlinTheme {
                 // A surface container using the 'background' color from the theme
@@ -31,6 +36,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    connectivityObserver = NetworkConnectivityObserver(applicationContext)
                     navController= rememberNavController()
                     RootNavGraph(navController = navController)
 

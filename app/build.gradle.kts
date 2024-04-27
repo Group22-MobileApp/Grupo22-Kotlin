@@ -84,6 +84,13 @@ dependencies {
 
     implementation("com.google.firebase:firebase-storage")
 
+    //splash screen
+    implementation("androidx.core:core-splashscreen:1.0.0")
+
+    //state
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.4.0-alpha01")
+
+
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))

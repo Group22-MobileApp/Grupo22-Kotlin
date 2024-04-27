@@ -37,7 +37,7 @@ fun ProfileImage(
     profileImageHeight: Dp,
     profileImage: String = "",
     isIconButtonVisible: Boolean = false,
-    icon: ImageVector,
+    icon: ImageVector?,
     onIconButtonClick: () -> Unit = {}
 ) {
     Box(modifier = modifier.size(profileImageWidth + 10.dp)) {
@@ -79,11 +79,13 @@ fun ProfileImage(
             colors = IconButtonDefaults.filledIconButtonColors(containerColor = amber),
             enabled = isIconButtonVisible
         ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = "Forward arrow",
-                modifier = Modifier.size(20.dp)
-            )
+            if (icon != null) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = "Forward arrow",
+                    modifier = Modifier.size(20.dp)
+                )
+            }
         }
     }
 }

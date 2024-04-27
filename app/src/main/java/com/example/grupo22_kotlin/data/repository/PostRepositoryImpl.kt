@@ -92,4 +92,192 @@ class PostRepositoryImpl @Inject constructor(
             Response.Failure(e)
         }
     }
+
+    override fun getPostsByUserId(idUser: String): Flow<Response<List<Post>>> = callbackFlow {
+        val snapshotListener = postsRef.whereEqualTo("idUser", idUser).addSnapshotListener { snapshot, e ->
+
+            val postsResponse = if (snapshot != null) {
+                val posts = snapshot.toObjects(Post::class.java)
+                snapshot.documents.forEachIndexed { index, document ->
+                    posts[index].id = document.id
+                }
+
+                Response.Success(posts)
+            }
+            else {
+                Response.Failure(e)
+            }
+            trySend(postsResponse)
+
+        }
+        awaitClose {
+            snapshotListener.remove()
+        }
+    }
+
+    /*override fun getPostsByUserTaste(userCarrer: String): Flow<Response<List<Post>>> = callbackFlow {
+        val snapshotListener = postsRef.whereEqualTo("userCarrer", userCarrer).addSnapshotListener { snapshot, e ->
+
+            val postsResponse = if (snapshot != null) {
+                val posts = snapshot.toObjects(Post::class.java)
+                snapshot.documents.forEachIndexed { index, document ->
+                    posts[index].id = document.id
+                }
+                Response.Success(posts)
+            }
+            else {
+                Response.Failure(e)
+            }
+            trySend(postsResponse)
+        }
+        awaitClose {
+            snapshotListener.remove()
+        }
+    }*/
+
+    override fun getPostsByUserTaste(userCarrer: String): Flow<Response<List<Post>>> = callbackFlow {
+        val snapshotListener = postsRef.whereEqualTo("userCarrer",userCarrer).addSnapshotListener { snapshot, e ->
+
+            GlobalScope.launch(Dispatchers.IO) {
+                val postsResponse = if (snapshot != null) {
+                    val posts = snapshot.toObjects(Post::class.java)
+
+                    snapshot.documents.forEachIndexed { index, document ->
+                        posts[index].id = document.id
+                    }
+
+                    val idUserArray = ArrayList<String>()
+
+                    posts.forEach { post ->
+                        idUserArray.add(post.idUser)
+                    }
+
+                    val idUserList = idUserArray.toSet().toList() // ELEMENTOS SIN REPETIR
+
+                    idUserList.map { id ->
+                        async {
+                            val user = usersRef.document(id).get().await().toObject(User::class.java)!!
+                            posts.forEach { post ->
+                                if (post.idUser == id) {
+                                    post.user = user
+                                }
+                            }
+
+                            Log.d("PostsRepositoryImpl", "Id: ${id}")
+                        }
+                    }.forEach {
+                        it.await()
+                    }
+
+                    Response.Success(posts)
+                }
+                else {
+                    Response.Failure(e)
+                }
+                trySend(postsResponse)
+            }
+
+        }
+        awaitClose {
+            snapshotListener.remove()
+        }
+    }
+
+    override fun getPostsByCategory(category: String): Flow<Response<List<Post>>> = callbackFlow {
+        val snapshotListener = postsRef.whereEqualTo("category",category).addSnapshotListener { snapshot, e ->
+
+            GlobalScope.launch(Dispatchers.IO) {
+                val postsResponse = if (snapshot != null) {
+                    val posts = snapshot.toObjects(Post::class.java)
+
+                    snapshot.documents.forEachIndexed { index, document ->
+                        posts[index].id = document.id
+                    }
+
+                    val idUserArray = ArrayList<String>()
+
+                    posts.forEach { post ->
+                        idUserArray.add(post.idUser)
+                    }
+
+                    val idUserList = idUserArray.toSet().toList() // ELEMENTOS SIN REPETIR
+
+                    idUserList.map { id ->
+                        async {
+                            val user = usersRef.document(id).get().await().toObject(User::class.java)!!
+                            posts.forEach { post ->
+                                if (post.idUser == id) {
+                                    post.user = user
+                                }
+                            }
+
+                            Log.d("PostsRepositoryImpl", "Id: ${id}")
+                        }
+                    }.forEach {
+                        it.await()
+                    }
+
+                    Response.Success(posts)
+                }
+                else {
+                    Response.Failure(e)
+                }
+                trySend(postsResponse)
+            }
+
+        }
+        awaitClose {
+            snapshotListener.remove()
+        }
+    }
+
+    override suspend fun update(post: Post, file: File?): Response<Boolean> {
+        return try {
+
+            if (file != null) {
+                val fromFile = Uri.fromFile(file)
+                val ref = storagePostsRef.child(file.name)
+                val uploadTask = ref.putFile(fromFile).await()
+                val url = ref.downloadUrl.await()
+                post.image = url.toString()
+            }
+            val map: MutableMap<String, Any> = HashMap()
+            map["name"] = post.name
+            map["description"] = post.description
+            map["image"] = post.image
+            map["category"] = post.category
+            map["condition"] = post.condition
+            map["price"] = post.price
+            map["interchangeable"] = post.interchangeable
+
+            postsRef.document(post.id).update(map).await()
+            Response.Success(true)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Response.Failure(e)
+        }
+    }
+
+    override suspend fun updateViews(idPost: String, newViews: String): Response<Boolean> {
+        return try {
+            val map: MutableMap<String, Any> = HashMap()
+            map["views"] = newViews
+
+            postsRef.document(idPost).update(map).await()
+            Response.Success(true)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Response.Failure(e)
+        }
+    }
+
+    override suspend fun delete(idPost: String): Response<Boolean> {
+        return try {
+            postsRef.document(idPost).delete().await()
+            Response.Success(true)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Response.Failure(e)
+        }
+    }
 }

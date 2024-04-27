@@ -20,19 +20,15 @@ import com.example.grupo22_kotlin.presentation.screens.profile.components.Profil
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun ProfileScreen(navController: NavHostController, viewModel: ProfileViewModel= hiltViewModel()){
+fun ProfileScreen(navController: NavHostController, viewModel: ProfileViewModel = hiltViewModel()) {
 
 
-    Scaffold (
-        topBar={},
-        content={
+    Scaffold(
+        topBar = {},
+        content = {
             Column {
                 ProfileContent(navController)
-
-
-
             }
-            
         }
-        )
+    )
 }

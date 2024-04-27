@@ -28,11 +28,14 @@ import com.example.grupo22_kotlin.presentation.navigation.BottomBarScreen
 fun HomeScreen(navController: NavHostController = rememberNavController()) {
     Scaffold(
         bottomBar = { BottomBar(navController = navController) }
-    ) {innerPadding ->
-        Box(modifier = Modifier.padding(
-            PaddingValues( bottom = innerPadding.calculateBottomPadding()))) {
-                BottomBarNavGraph(navController = navController)
-            }
+    ) { innerPadding ->
+        Box(
+            modifier = Modifier.padding(
+                PaddingValues(bottom = innerPadding.calculateBottomPadding())
+            )
+        ) {
+            BottomBarNavGraph(navController = navController)
+        }
     }
 }
 
@@ -54,7 +57,7 @@ fun BottomBar(navController: NavHostController) {
 
         NavigationBar(
 //            backgroundColor = Red500
-        ){
+        ) {
             screens.forEach { screen ->
                 AddItem(
                     screen = screen,
@@ -76,9 +79,7 @@ fun RowScope.AddItem(
 ) {
 
     NavigationBarItem(
-        label = {
-            Text(text = screen.title)
-        },
+
         icon = {
             Icon(
                 imageVector = screen.icon,

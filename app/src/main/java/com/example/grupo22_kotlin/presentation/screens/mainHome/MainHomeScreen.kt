@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.grupo22_kotlin.presentation.components.DefaultTopBar
@@ -22,9 +23,7 @@ fun MainHomeScreen(navController: NavHostController) {
         topBar = {
         },
         content = {
-            Column(modifier = Modifier.padding(top=55.dp)) {
-                MainHomeContent(navController = navController)
-            }
+            MainHomeContent(navController = navController)
         },
         bottomBar = {}
 
@@ -33,6 +32,6 @@ fun MainHomeScreen(navController: NavHostController) {
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun PreviewMainHomeScreen(){
+fun PreviewMainHomeScreen() {
     MainHomeScreen(rememberNavController())
 }
