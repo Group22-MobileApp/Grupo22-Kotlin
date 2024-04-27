@@ -117,13 +117,9 @@ class SignupViewModel @Inject constructor(
             usernameErrMsg.value = ""
         } else {
             isUsernameValid.value = false
-            if (username.value.trim().length < 5) {
-                usernameErrMsg.value = "At least 5 characters"
-            } else if (username.value.trim().length > maxLength) {
-                usernameErrMsg.value = "Maximum 25 characters"
-            } else {
-                usernameErrMsg.value = "Invalid characters or format"
-            }
+
+            usernameErrMsg.value = "At least 5 characters"
+
         }
 
         enabledLoginButton()
