@@ -14,10 +14,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.grupo22_kotlin.R
+import com.example.grupo22_kotlin.presentation.screens.chat.ChatViewModel
 import com.example.grupo22_kotlin.presentation.screens.signup.SignupViewModel
 
 @Composable
-fun ChatContent(navController: NavHostController, viewModel: SignupViewModel = hiltViewModel()) {
+fun ChatContent(navController: NavHostController, viewModel: ChatViewModel = hiltViewModel()) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
