@@ -76,6 +76,7 @@ class UserRepositoryImpl  @Inject  constructor(
     override suspend fun addContact(idUser: String, idAddContact: String): Response<Boolean> {
         return try {
             usersRef.document(idUser).update("contacts", FieldValue.arrayUnion(idAddContact)).await()
+            usersRef.document(idAddContact).update("contacts", FieldValue.arrayUnion(idUser)).await()
             Response.Success(true)
         } catch (e: Exception) {
             e.printStackTrace()

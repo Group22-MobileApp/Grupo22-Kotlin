@@ -113,7 +113,7 @@ fun PostDetailBody(
             }
             Spacer(modifier = modifier.size(18.dp))
 
-            ImportantButton(modifier = modifier, text = "I want it", onClick = { /*TODO*/ })
+            ImportantButton(modifier = modifier, text = "I want it", onClick = { viewModel.addContact(viewModel.post.user?.id?: "") })
             Spacer(modifier = modifier.size(18.dp))
 
             TitleText(text = "Description", fontSize = 24.sp)
