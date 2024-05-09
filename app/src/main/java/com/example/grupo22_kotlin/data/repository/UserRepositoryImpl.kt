@@ -6,7 +6,9 @@ import com.example.grupo22_kotlin.core.Constants.USERS
 import com.example.grupo22_kotlin.domain.model.Response
 import com.example.grupo22_kotlin.domain.model.User
 import com.example.grupo22_kotlin.domain.repository.UserRepository
+import com.example.grupo22_kotlin.domain.use_case.users.AddContact
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.toObject
 import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.channels.awaitClose
@@ -69,6 +71,16 @@ class UserRepositoryImpl  @Inject  constructor(
 
         }
 
+    }
+
+    override suspend fun addContact(idUser: String, idAddContact: String): Response<Boolean> {
+        return try {
+            usersRef.document(idUser).update("contacts", FieldValue.arrayUnion(idAddContact)).await()
+            Response.Success(true)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Response.Failure(e)
+        }
     }
 
     override fun getUserById(id: String): Flow<User> = callbackFlow {

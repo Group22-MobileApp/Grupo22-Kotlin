@@ -12,5 +12,7 @@ interface UserRepository {
 
     suspend fun saveImage(file: File): Response<String>
 
+    suspend fun addContact(idUser: String, idAddUser: String): Response<Boolean>
+
     fun getUserById(id: String): Flow<User>
 }
