@@ -26,14 +26,15 @@ class ChatViewModel @Inject constructor(
 
     val currentUser = authUseCases.getCurrentUser()
 
-    var contactsResponse by mutableStateOf<Response<ArrayList<User>>?>(null)
+    var contactsResponse by mutableStateOf<Response<List<User>>?>(null)
 
     var addContactResponse by mutableStateOf<Response<Boolean>?>(null)
     var userData by mutableStateOf(User())
         private set
 
     init {
-        getContacts()
+        //getContacts()
+        getContacts2()
     }
     fun addContact(idAddContact: String) = viewModelScope.launch {
         addContactResponse = Response.Loading
@@ -41,7 +42,7 @@ class ChatViewModel @Inject constructor(
         addContactResponse = result
     }
 
-    fun getContacts() = viewModelScope.launch {
+    /*fun getContacts() = viewModelScope.launch {
         contactsResponse = Response.Loading
         userUseCases.getUserById(currentUser!!.uid).collect(){
             userData = it
@@ -58,6 +59,13 @@ class ChatViewModel @Inject constructor(
                     //the program never loads
                 }
             }
+        }
+    }*/
+
+    fun getContacts2() = viewModelScope.launch {
+        contactsResponse = Response.Loading
+        userUseCases.getUserContacts().collect(){response ->
+            contactsResponse = response
         }
     }
 }

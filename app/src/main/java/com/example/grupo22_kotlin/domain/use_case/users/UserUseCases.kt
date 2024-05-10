@@ -5,5 +5,6 @@ data class UserUseCases (
     val getUserById: GetUserById,
     val update: Update,
     val saveImage: SaveImage,
-    val addContact: AddContact
+    val addContact: AddContact,
+    val getUserContacts: GetUserContacts
     )

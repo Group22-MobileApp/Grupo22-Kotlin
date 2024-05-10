@@ -1,5 +1,6 @@
 package com.example.grupo22_kotlin.domain.repository
 
+import com.example.grupo22_kotlin.domain.model.Post
 import com.example.grupo22_kotlin.domain.model.Response
 import com.example.grupo22_kotlin.domain.model.User
 import kotlinx.coroutines.flow.Flow
@@ -13,6 +14,8 @@ interface UserRepository {
     suspend fun saveImage(file: File): Response<String>
 
     suspend fun addContact(idUser: String, idAddUser: String): Response<Boolean>
+
+    fun getUserContacts(): Flow<Response<List<User>>>
 
     fun getUserById(id: String): Flow<User>
 }
