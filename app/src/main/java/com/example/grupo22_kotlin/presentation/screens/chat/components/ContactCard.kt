@@ -28,12 +28,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.grupo22_kotlin.domain.model.Post
+import com.example.grupo22_kotlin.domain.model.User
 import com.example.grupo22_kotlin.presentation.components.InformationCard
 import com.example.grupo22_kotlin.presentation.navigation.DetailsScreen
 import com.example.grupo22_kotlin.presentation.screens.chat.ChatViewModel
 
 @Composable
-fun ContactCard(contact: String, navController: NavHostController, viewModel: ChatViewModel = hiltViewModel()) {
+fun ContactCard(user: User, navController: NavHostController, viewModel: ChatViewModel = hiltViewModel()) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -48,22 +49,22 @@ fun ContactCard(contact: String, navController: NavHostController, viewModel: Ch
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         Row() {
-            /*AsyncImage(
+            AsyncImage(
                 modifier = Modifier
                     .fillMaxHeight()
                     .width(150.dp)
                     .padding(5.dp)
                     .clip(RoundedCornerShape(5.dp)),
-                model = post.image,
+                model = user.image,
                 contentDescription = "",
                 contentScale = ContentScale.FillHeight
-            )*/
+            )
             Column(modifier = Modifier.padding(vertical = 8.dp)) {
                 Text(
                     modifier = Modifier
                         .padding(start = 8.dp, end = 8.dp)
                         .weight(1.5f),
-                    text = contact,
+                    text = user.username,
                     fontWeight = FontWeight.Bold,
                     fontSize = 18.sp,
                     maxLines = 2,
