@@ -8,6 +8,7 @@ import com.example.grupo22_kotlin.presentation.screens.myPosts.MyPostsScreen
 import com.example.grupo22_kotlin.presentation.screens.postDetail.PostDetailScreen
 import com.example.grupo22_kotlin.presentation.screens.postUpdate.PostUpdateScreen
 import com.example.grupo22_kotlin.presentation.screens.postsFetch.PostsFetchScreen
+import com.example.grupo22_kotlin.presentation.screens.profileDetail.ProfileDetailScreen
 import com.example.grupo22_kotlin.presentation.screens.profile_edit.ProfileEditScreen
 
 fun NavGraphBuilder.detailsNavGraph(navController: NavHostController) {
@@ -30,6 +31,17 @@ fun NavGraphBuilder.detailsNavGraph(navController: NavHostController) {
         ) {
             it.arguments?.getString("user")?.let {
                 ProfileEditScreen(navController, user = it)
+            }
+        }
+
+        composable(
+            route = DetailsScreen.ProfileDetail.route,
+            arguments = listOf(navArgument("user"){
+                type = NavType.StringType
+            })
+        ) {
+            it.arguments?.getString("user")?.let {
+                ProfileDetailScreen(navController, user = it)
             }
         }
 
@@ -78,6 +90,9 @@ sealed class DetailsScreen(val route: String) {
 
     object ProfileUpdate: DetailsScreen("profile/update/{user}") {
         fun passUser(user: String) = "profile/update/$user"
+    }
+    object ProfileDetail: DetailsScreen("profile/detail/{user}") {
+        fun passUser(user: String) = "profile/detail/$user"
     }
 
     object PostDetail: DetailsScreen("home/detail/{post}") {

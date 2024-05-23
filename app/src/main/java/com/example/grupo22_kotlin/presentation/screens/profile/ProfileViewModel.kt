@@ -16,7 +16,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ProfileViewModel @Inject constructor(private val authUseCases: AuthUseCases, private val userUseCases: UserUseCases, @ApplicationContext private val context: Context): ViewModel() {
+class ProfileViewModel @Inject constructor(
+    private val authUseCases: AuthUseCases,
+    private val userUseCases: UserUseCases,
+    @ApplicationContext private val context: Context
+) : ViewModel() {
 
     val connectivityObserver = NetworkConnectivityObserver(context.applicationContext)
 
@@ -25,16 +29,17 @@ class ProfileViewModel @Inject constructor(private val authUseCases: AuthUseCase
         private set
 
 
-
     init {
         getUserById()
     }
-    private fun getUserById()= viewModelScope.launch {
-        userUseCases.getUserById(currentUser!!.uid).collect(){
+
+    private fun getUserById() = viewModelScope.launch {
+        userUseCases.getUserById(currentUser!!.uid).collect() {
             userData = it
         }
     }
-    fun logout(){
+
+    fun logout() {
         authUseCases.logOut()
     }
 
