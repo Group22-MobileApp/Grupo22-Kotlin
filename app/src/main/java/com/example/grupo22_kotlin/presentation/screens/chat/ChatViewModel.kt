@@ -33,8 +33,8 @@ class ChatViewModel @Inject constructor(
         private set
 
     init {
-        //getContacts()
-        getContacts2()
+        getContacts()
+        //getContacts2()
     }
     fun addContact(idAddContact: String) = viewModelScope.launch {
         addContactResponse = Response.Loading
@@ -42,7 +42,7 @@ class ChatViewModel @Inject constructor(
         addContactResponse = result
     }
 
-    /*fun getContacts() = viewModelScope.launch {
+    fun getContacts() = viewModelScope.launch {
         contactsResponse = Response.Loading
         userUseCases.getUserById(currentUser!!.uid).collect(){
             userData = it
@@ -60,12 +60,12 @@ class ChatViewModel @Inject constructor(
                 }
             }
         }
-    }*/
+    }
 
-    fun getContacts2() = viewModelScope.launch {
+   /* fun getContacts2() = viewModelScope.launch {
         contactsResponse = Response.Loading
         userUseCases.getUserContacts().collect(){response ->
             contactsResponse = response
         }
-    }
+    }*/
 }

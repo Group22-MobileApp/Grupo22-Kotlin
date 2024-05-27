@@ -33,5 +33,5 @@ fun ChatContent(navController: NavHostController, viewModel: ChatViewModel = hil
             text = "List of your chats"
         )
     }
-    GetContacts(navController)
+    //GetContacts(navController)
 }
