@@ -35,7 +35,6 @@ fun NavGraphBuilder.detailsNavGraph(navController: NavHostController) {
         }
 
         composable(
-<<<<<<< HEAD
             route = DetailsScreen.ProfileDetail.route,
             arguments = listOf(navArgument("user"){
                 type = NavType.StringType
@@ -43,7 +42,10 @@ fun NavGraphBuilder.detailsNavGraph(navController: NavHostController) {
         ) {
             it.arguments?.getString("user")?.let {
                 ProfileDetailScreen(navController, user = it)
-=======
+            }
+        }
+
+        composable(
             route = DetailsScreen.PostDetail.route,
             arguments = listOf(navArgument("post"){
                 type = NavType.StringType
@@ -51,31 +53,10 @@ fun NavGraphBuilder.detailsNavGraph(navController: NavHostController) {
         ) {
             it.arguments?.getString("post")?.let {
                 PostDetailScreen(navController, post = it)
->>>>>>> main
             }
         }
 
         composable(
-<<<<<<< HEAD
-            route = DetailsScreen.PostDetail.route,
-=======
-            route = DetailsScreen.PostUpdate.route,
->>>>>>> main
-            arguments = listOf(navArgument("post"){
-                type = NavType.StringType
-            })
-        ) {
-            it.arguments?.getString("post")?.let {
-<<<<<<< HEAD
-                PostDetailScreen(navController, post = it)
-=======
-                PostUpdateScreen(navController, post = it)
->>>>>>> main
-            }
-        }
-
-        composable(
-<<<<<<< HEAD
             route = DetailsScreen.PostUpdate.route,
             arguments = listOf(navArgument("post"){
                 type = NavType.StringType
@@ -87,8 +68,6 @@ fun NavGraphBuilder.detailsNavGraph(navController: NavHostController) {
         }
 
         composable(
-=======
->>>>>>> main
             route = DetailsScreen.PostType.route,
             arguments = listOf(navArgument("postType"){
                 type = NavType.StringType
@@ -124,17 +103,6 @@ sealed class DetailsScreen(val route: String) {
         fun passPost(post: String) = "profile/myPosts/$post"
     }
 
-<<<<<<< HEAD
-=======
-    object PostDetail: DetailsScreen("home/detail/{post}") {
-        fun passPost(post: String) = "home/detail/$post"
-    }
-
-    object PostUpdate: DetailsScreen("profile/myPosts/{post}") {
-        fun passPost(post: String) = "profile/myPosts/$post"
-    }
-
->>>>>>> main
     object PostType: DetailsScreen("home/type/{postType}") {
         fun passPostType(postType: String) = "home/type/$postType"
     }
