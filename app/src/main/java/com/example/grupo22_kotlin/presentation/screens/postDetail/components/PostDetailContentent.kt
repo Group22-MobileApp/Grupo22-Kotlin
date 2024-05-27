@@ -37,6 +37,7 @@ import com.example.grupo22_kotlin.presentation.components.ImportantButton
 import com.example.grupo22_kotlin.presentation.components.InformationCard
 import com.example.grupo22_kotlin.presentation.components.ProfileImage
 import com.example.grupo22_kotlin.presentation.components.TitleText
+import com.example.grupo22_kotlin.presentation.navigation.DetailsScreen
 import com.example.grupo22_kotlin.presentation.screens.postDetail.PostDetailViewModel
 import com.example.grupo22_kotlin.presentation.ui.theme.Montserrat
 import com.example.grupo22_kotlin.presentation.ui.theme.amber
@@ -144,12 +145,22 @@ fun PostDetailBody(
                         Text(text = text, fontSize = 14.sp)
                     }
 
-                    Icon(imageVector = Icons.Default.Star, contentDescription = "Star", tint = amber)
+                    Icon(
+                        imageVector = Icons.Default.Star,
+                        contentDescription = "Star",
+                        tint = amber
+                    )
                 }
                 Spacer(Modifier.weight(1f))
 
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = {
+                        viewModel.post.user?.let {
+                            DetailsScreen.ProfileDetail.passUser(
+                                it.toJson()
+                            )
+                        }?.let { navController.navigate(route = it) }
+                    },
                     colors = ButtonDefaults.buttonColors(
                         contentColor = darkBlue
                     )
