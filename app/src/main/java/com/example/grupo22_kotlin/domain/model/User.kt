@@ -11,8 +11,8 @@ data class User(
     var password: String ="",
     var number: String ="",
     var career: String ="",
-    var image: String =""
-
+    var image: String ="",
+    var contacts: ArrayList<String> = ArrayList()
 
 ) {
     fun  toJson(): String = Gson().toJson(User(
@@ -22,8 +22,8 @@ data class User(
         password,
         number,
         career,
-        if(image != "")URLEncoder.encode(image, StandardCharsets.UTF_8.toString()) else ""
-
+        if(image != "")URLEncoder.encode(image, StandardCharsets.UTF_8.toString()) else "",
+        contacts
     ))
 
     companion object{
