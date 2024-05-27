@@ -12,6 +12,10 @@ import com.example.grupo22_kotlin.presentation.screens.profile.components.Profil
 @Composable
 fun ProfileScreen(navController: NavHostController, viewModel: ProfileViewModel = hiltViewModel()) {
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
     Scaffold(
         topBar = {},
         content = {

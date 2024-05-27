@@ -6,6 +6,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
+<<<<<<< HEAD
+=======
+import androidx.compose.runtime.LaunchedEffect
+>>>>>>> main
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -13,6 +17,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.grupo22_kotlin.domain.model.Response
+import com.example.grupo22_kotlin.presentation.navigation.Graph
+import com.example.grupo22_kotlin.presentation.screens.mainHome.components.MainHomeContent
 import com.example.grupo22_kotlin.presentation.screens.posts.PostViewModel
 
 @Composable
