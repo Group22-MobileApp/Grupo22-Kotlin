@@ -19,7 +19,6 @@ import androidx.navigation.NavHostController
 import com.example.grupo22_kotlin.domain.model.Response
 import com.example.grupo22_kotlin.presentation.components.TitleText
 import com.example.grupo22_kotlin.presentation.screens.posts.PostViewModel
-import com.example.grupo22_kotlin.presentation.screens.posts.components.PostContent
 import com.example.grupo22_kotlin.presentation.screens.posts.components.PostContentWider
 
 @Composable
