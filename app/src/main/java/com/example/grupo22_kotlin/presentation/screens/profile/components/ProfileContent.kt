@@ -142,7 +142,9 @@ fun MenuProfileBody(
             modifier = modifier
                 .fillMaxWidth()
                 .height(70.dp)
-                .clickable { }
+                .clickable {  navController.navigate(
+                    route = DetailsScreen.ProfileDetail.passUser(viewModel.userData.toJson())
+                )}
         ) {
             Text(
                 text = "Profile",
