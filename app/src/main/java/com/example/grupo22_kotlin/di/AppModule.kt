@@ -23,8 +23,10 @@ import com.example.grupo22_kotlin.domain.use_case.posts.GetPostsByUserTaste
 import com.example.grupo22_kotlin.domain.use_case.posts.PostUseCases
 import com.example.grupo22_kotlin.domain.use_case.posts.UpdatePost
 import com.example.grupo22_kotlin.domain.use_case.posts.UpdateViews
+import com.example.grupo22_kotlin.domain.use_case.users.AddContact
 import com.example.grupo22_kotlin.domain.use_case.users.Create
 import com.example.grupo22_kotlin.domain.use_case.users.GetUserById
+import com.example.grupo22_kotlin.domain.use_case.users.GetUserContacts
 import com.example.grupo22_kotlin.domain.use_case.users.SaveImage
 import com.example.grupo22_kotlin.domain.use_case.users.Update
 import com.example.grupo22_kotlin.domain.use_case.users.UserUseCases
@@ -91,7 +93,9 @@ object AppModule {
         create = Create(repository),
         getUserById = GetUserById(repository),
         update = Update(repository),
-        saveImage = SaveImage(repository)
+        saveImage = SaveImage(repository),
+        addContact = AddContact(repository),
+        getUserContacts = GetUserContacts(repository)
     )
 
     @Provides

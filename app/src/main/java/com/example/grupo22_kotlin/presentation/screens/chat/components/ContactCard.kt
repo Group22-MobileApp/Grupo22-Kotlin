@@ -1,4 +1,4 @@
-package com.example.grupo22_kotlin.presentation.screens.posts.components
+package com.example.grupo22_kotlin.presentation.screens.chat.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -24,21 +24,25 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.grupo22_kotlin.domain.model.Post
+import com.example.grupo22_kotlin.domain.model.User
 import com.example.grupo22_kotlin.presentation.components.InformationCard
 import com.example.grupo22_kotlin.presentation.navigation.DetailsScreen
+import com.example.grupo22_kotlin.presentation.screens.chat.ChatViewModel
 
 @Composable
-fun PostCardWider(post: Post, navController: NavHostController) {
+fun ContactCard(user: User, navController: NavHostController, viewModel: ChatViewModel = hiltViewModel()) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(bottom = 15.dp)
             .height(150.dp)
             .clickable {
-                navController.navigate(route = DetailsScreen.PostDetail.passPost(post.toJson()))
+                /*navController.navigate(route = DetailsScreen.PostDetail.passPost(post.toJson()))*/
+                /*TODO*/
             },
         shape = RoundedCornerShape(5.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
@@ -51,7 +55,7 @@ fun PostCardWider(post: Post, navController: NavHostController) {
                     .width(150.dp)
                     .padding(5.dp)
                     .clip(RoundedCornerShape(5.dp)),
-                model = post.image,
+                model = user.image,
                 contentDescription = "",
                 contentScale = ContentScale.FillHeight
             )
@@ -60,33 +64,20 @@ fun PostCardWider(post: Post, navController: NavHostController) {
                     modifier = Modifier
                         .padding(start = 8.dp, end = 8.dp)
                         .weight(1.5f),
-                    text = post.name,
+                    text = user.username,
                     fontWeight = FontWeight.Bold,
                     fontSize = 18.sp,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
-                Text(
+                /*Text(
                     modifier = Modifier
                         .padding(start = 8.dp, end = 8.dp)
                         .weight(1f),
-                    text = "$ " + post.price,
+                    text = "$ " + contact,
                     fontWeight = FontWeight.Normal,
                     fontSize = 22.sp
-                )
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    InformationCard(info = post.condition)
-                    if (post.interchangeable.lowercase() == "yes") {
-                        Spacer(modifier = Modifier.size(8.dp))
-                        InformationCard(info = "", iconVisible = true)
-                    }
-                }
+                )*/
             }
         }
     }
