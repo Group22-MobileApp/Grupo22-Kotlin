@@ -4,18 +4,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-<<<<<<< HEAD
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSizeIn
 import androidx.compose.foundation.layout.size
-=======
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredSizeIn
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
->>>>>>> main
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material3.DropdownMenu
@@ -32,17 +23,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-<<<<<<< HEAD
 import com.example.grupo22_kotlin.presentation.components.DefaultTextField
 import com.example.grupo22_kotlin.presentation.components.TitleText
 import com.example.grupo22_kotlin.presentation.screens.addPost.components.Categories
-=======
-import com.example.grupo22_kotlin.domain.model.Post
-import com.example.grupo22_kotlin.presentation.components.DefaultTextField
-import com.example.grupo22_kotlin.presentation.components.TitleText
-import com.example.grupo22_kotlin.presentation.screens.addPost.components.Categories
-import com.example.grupo22_kotlin.presentation.screens.posts.components.PostCard
->>>>>>> main
 import com.example.grupo22_kotlin.presentation.screens.postsFetch.PostsFetchViewModel
 import com.example.grupo22_kotlin.presentation.ui.theme.Montserrat
 

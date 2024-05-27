@@ -1,6 +1,5 @@
 package com.example.grupo22_kotlin.presentation.screens.postDetail
 
-<<<<<<< HEAD
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -15,28 +14,17 @@ import com.example.grupo22_kotlin.domain.use_case.users.AddContact
 import com.example.grupo22_kotlin.domain.use_case.users.UserUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-=======
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
-import com.example.grupo22_kotlin.domain.model.Post
-import dagger.hilt.android.lifecycle.HiltViewModel
->>>>>>> main
 import javax.inject.Inject
 
 @HiltViewModel
 class PostDetailViewModel @Inject constructor(
-<<<<<<< HEAD
     private val savedStateHandle: SavedStateHandle,
     private val userUseCases: UserUseCases,
     private val authUseCases: AuthUseCases
-=======
-    private val savedStateHandle: SavedStateHandle
->>>>>>> main
 ): ViewModel() {
 
     val data = savedStateHandle.get<String>("post")
     val post = Post.fromJson(data!!)
-<<<<<<< HEAD
     val currentUser = authUseCases.getCurrentUser()
 
     var addContactResponse by mutableStateOf<Response<Boolean>?>(null)
@@ -46,7 +34,4 @@ class PostDetailViewModel @Inject constructor(
         val result = userUseCases.addContact(currentUser?.uid?: "", idAddContact)
         addContactResponse = result
     }
-=======
-
->>>>>>> main
 }

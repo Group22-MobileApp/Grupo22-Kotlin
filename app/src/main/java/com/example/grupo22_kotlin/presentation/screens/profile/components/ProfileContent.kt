@@ -212,7 +212,6 @@ fun MenuProfileBody(
                 modifier = modifier
                     .align(Alignment.CenterStart)
                     .padding(start = 8.dp)
-<<<<<<< HEAD
             )
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
@@ -244,8 +243,6 @@ fun MenuProfileBody(
                 modifier = modifier
                     .align(Alignment.CenterStart)
                     .padding(start = 8.dp)
-=======
->>>>>>> main
             )
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
@@ -263,40 +260,6 @@ fun MenuProfileBody(
             )
         }
 
-<<<<<<< HEAD
-=======
-        Box(
-            modifier = modifier
-                .fillMaxWidth()
-                .height(70.dp)
-                .clickable {
-                    navController.navigate(DetailsScreen.MyPosts.route)
-                }
-        ) {
-            Text(
-                text = "My posts",
-                fontWeight = FontWeight.SemiBold,
-                modifier = modifier
-                    .align(Alignment.CenterStart)
-                    .padding(start = 8.dp)
-            )
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                contentDescription = "Next",
-                modifier
-                    .align(Alignment.CenterEnd)
-                    .size(30.dp)
-            )
-            Spacer(
-                modifier = modifier
-                    .height(1.dp)
-                    .background(Color.LightGray)
-                    .align(Alignment.BottomStart)
-                    .fillMaxWidth()
-            )
-        }
-
->>>>>>> main
         Box(
             modifier = modifier
                 .fillMaxWidth()

@@ -37,10 +37,7 @@ import com.example.grupo22_kotlin.presentation.components.ImportantButton
 import com.example.grupo22_kotlin.presentation.components.InformationCard
 import com.example.grupo22_kotlin.presentation.components.ProfileImage
 import com.example.grupo22_kotlin.presentation.components.TitleText
-<<<<<<< HEAD
 import com.example.grupo22_kotlin.presentation.navigation.DetailsScreen
-=======
->>>>>>> main
 import com.example.grupo22_kotlin.presentation.screens.postDetail.PostDetailViewModel
 import com.example.grupo22_kotlin.presentation.ui.theme.Montserrat
 import com.example.grupo22_kotlin.presentation.ui.theme.amber
@@ -117,11 +114,7 @@ fun PostDetailBody(
             }
             Spacer(modifier = modifier.size(18.dp))
 
-<<<<<<< HEAD
             ImportantButton(modifier = modifier, text = "I want it", onClick = { viewModel.addContact(viewModel.post.user?.id?: "") })
-=======
-            ImportantButton(modifier = modifier, text = "I want it", onClick = { /*TODO*/ })
->>>>>>> main
             Spacer(modifier = modifier.size(18.dp))
 
             TitleText(text = "Description", fontSize = 24.sp)
@@ -152,20 +145,15 @@ fun PostDetailBody(
                         Text(text = text, fontSize = 14.sp)
                     }
 
-<<<<<<< HEAD
                     Icon(
                         imageVector = Icons.Default.Star,
                         contentDescription = "Star",
                         tint = amber
                     )
-=======
-                    Icon(imageVector = Icons.Default.Star, contentDescription = "Star", tint = amber)
->>>>>>> main
                 }
                 Spacer(Modifier.weight(1f))
 
                 Button(
-<<<<<<< HEAD
                     onClick = {
                         viewModel.post.user?.let {
                             DetailsScreen.ProfileDetail.passUser(
@@ -173,9 +161,6 @@ fun PostDetailBody(
                             )
                         }?.let { navController.navigate(route = it) }
                     },
-=======
-                    onClick = { /*TODO*/ },
->>>>>>> main
                     colors = ButtonDefaults.buttonColors(
                         contentColor = darkBlue
                     )

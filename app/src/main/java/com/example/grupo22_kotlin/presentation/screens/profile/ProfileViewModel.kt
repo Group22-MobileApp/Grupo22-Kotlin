@@ -16,15 +16,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-<<<<<<< HEAD
 class ProfileViewModel @Inject constructor(
     private val authUseCases: AuthUseCases,
     private val userUseCases: UserUseCases,
     @ApplicationContext private val context: Context
 ) : ViewModel() {
-=======
-class ProfileViewModel @Inject constructor(private val authUseCases: AuthUseCases, private val userUseCases: UserUseCases, @ApplicationContext private val context: Context): ViewModel() {
->>>>>>> main
 
     val connectivityObserver = NetworkConnectivityObserver(context.applicationContext)
 

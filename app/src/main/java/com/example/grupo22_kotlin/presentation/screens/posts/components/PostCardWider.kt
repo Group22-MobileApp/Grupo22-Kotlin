@@ -27,10 +27,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.grupo22_kotlin.domain.model.Post
-<<<<<<< HEAD
-=======
-import com.example.grupo22_kotlin.presentation.components.FavButton
->>>>>>> main
 import com.example.grupo22_kotlin.presentation.components.InformationCard
 import com.example.grupo22_kotlin.presentation.navigation.DetailsScreen
 

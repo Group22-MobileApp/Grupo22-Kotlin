@@ -1,19 +1,9 @@
 package com.example.grupo22_kotlin.presentation.screens.posts.components
 
-<<<<<<< HEAD
-
-=======
-import androidx.compose.foundation.layout.Arrangement
->>>>>>> main
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-<<<<<<< HEAD
-=======
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
->>>>>>> main
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp

@@ -51,10 +51,6 @@ class PostsFetchViewModel @Inject constructor(
         postsCategoryResponse = Response.Loading
         postsUseCases.getPostsByCategory(category).collect() { response ->
             postsCategoryResponse = response
-<<<<<<< HEAD
-=======
-
->>>>>>> main
         }
     }
 

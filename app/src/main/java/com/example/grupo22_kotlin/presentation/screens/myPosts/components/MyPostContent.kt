@@ -8,10 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
-<<<<<<< HEAD
-=======
-import androidx.navigation.NavController
->>>>>>> main
 import androidx.navigation.NavHostController
 import com.example.grupo22_kotlin.domain.model.Post
 

@@ -10,20 +10,12 @@
               <deviceKey>
                 <Key>
                   <type value="VIRTUAL_DEVICE_PATH" />
-<<<<<<< HEAD
                   <value value="C:\Users\juank\.android\avd\Pixel_8_API_30.avd" />
-=======
-                  <value value="C:\Users\dcami\.android\avd\Pixel_8_Pro_API_30.avd" />
->>>>>>> main
                 </Key>
               </deviceKey>
             </Target>
           </targetSelectedWithDropDown>
-<<<<<<< HEAD
           <timeTargetWasSelectedWithDropDown value="2024-05-10T01:46:33.900203300Z" />
-=======
-          <timeTargetWasSelectedWithDropDown value="2024-04-26T23:34:28.150264600Z" />
->>>>>>> main
         </State>
       </entry>
     </value>

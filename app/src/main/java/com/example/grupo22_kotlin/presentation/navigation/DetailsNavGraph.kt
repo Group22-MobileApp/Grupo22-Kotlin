@@ -8,10 +8,7 @@ import com.example.grupo22_kotlin.presentation.screens.myPosts.MyPostsScreen
 import com.example.grupo22_kotlin.presentation.screens.postDetail.PostDetailScreen
 import com.example.grupo22_kotlin.presentation.screens.postUpdate.PostUpdateScreen
 import com.example.grupo22_kotlin.presentation.screens.postsFetch.PostsFetchScreen
-<<<<<<< HEAD
 import com.example.grupo22_kotlin.presentation.screens.profileDetail.ProfileDetailScreen
-=======
->>>>>>> main
 import com.example.grupo22_kotlin.presentation.screens.profile_edit.ProfileEditScreen
 
 fun NavGraphBuilder.detailsNavGraph(navController: NavHostController) {

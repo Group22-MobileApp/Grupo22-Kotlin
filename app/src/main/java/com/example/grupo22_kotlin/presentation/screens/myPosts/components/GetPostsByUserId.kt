@@ -1,9 +1,5 @@
 package com.example.grupo22_kotlin.presentation.screens.myPosts.components
 
-<<<<<<< HEAD
-=======
-import android.widget.ProgressBar
->>>>>>> main
 import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
