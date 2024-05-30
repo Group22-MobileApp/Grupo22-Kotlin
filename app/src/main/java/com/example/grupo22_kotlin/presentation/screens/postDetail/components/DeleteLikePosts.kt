@@ -1,5 +1,6 @@
 package com.example.grupo22_kotlin.presentation.screens.postDetail.components
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
@@ -13,10 +14,11 @@ fun DeleteLikePost( viewModel: PostDetailViewModel = hiltViewModel()) {
     when(val response = viewModel.deleteLikePostResponse) {
         // MOSTRAR QUE SE ESTA REALIZANDO LA PETICION Y TODAVIA ESTA EN PROCESO
         Response.Loading -> {
+            Log.d("DeleteLikePost", "se esta realizando")
 
         }
         is Response.Success -> {
-
+            Log.d("DeleteLikePost", "se Logro")
         }
 
         is Response.Failure -> {

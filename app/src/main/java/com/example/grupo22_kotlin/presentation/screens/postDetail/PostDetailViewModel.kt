@@ -1,5 +1,6 @@
 package com.example.grupo22_kotlin.presentation.screens.postDetail
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -45,9 +46,16 @@ class PostDetailViewModel @Inject constructor(
         likePostResponse = result
     }
 
-    fun deletelike(idPost: String , idUser: String ) = viewModelScope.launch {
+    fun deletelike(idPost: String, idUser: String) = viewModelScope.launch {
+        Log.d("PostDetailViewModel", "deletelike called with idPost: $idPost, idUser: $idUser")
         deleteLikePostResponse = Response.Loading
-        val result = postUseCases.deleteLikePost(idPost, idUser)
-        deleteLikePostResponse = result
+        try {
+            val result = postUseCases.deleteLikePost(post.id, idUser)
+            deleteLikePostResponse = result
+            Log.d("PostDetailViewModel", "deletelike result: $result")
+        } catch (e: Exception) {
+            deleteLikePostResponse = Response.Failure(e)
+            Log.e("PostDetailViewModel", "deletelike error: ${e.message}")
+        }
     }
 }
