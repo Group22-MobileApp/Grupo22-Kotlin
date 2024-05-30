@@ -18,6 +18,8 @@ interface PostRepository {
 
     fun getPosts(): Flow<Response<List<Post>>>
     fun getPostsByUserId(idUser: String): Flow<Response<List<Post>>>
+
+    fun getPostThatILiked(idUser: String): Flow<Response<List<Post>>>
     fun getPostsByUserTaste(userCarrer: String): Flow<Response<List<Post>>>
     fun getPostsByCategory(category: String): Flow<Response<List<Post>>>
     suspend fun updateViews(idPost: String, newViews: String) : Response<Boolean>

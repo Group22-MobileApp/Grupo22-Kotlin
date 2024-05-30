@@ -116,6 +116,29 @@ class PostRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun getPostThatILiked(userId: String): Flow<Response<List<Post>>> = callbackFlow {
+        val snapshotListener = postsRef.addSnapshotListener { snapshot, e ->
+            val postsResponse = if (snapshot != null) {
+                val posts = snapshot.toObjects(Post::class.java)
+                val likedPosts = posts.filter { post ->
+                    post.likes.contains(userId)
+                }.mapIndexed { index, post ->
+                    post.id = snapshot.documents[index].id
+                    post
+                }
+
+                Response.Success(likedPosts)
+            } else {
+                Response.Failure(e)
+            }
+            trySend(postsResponse).isSuccess
+        }
+
+        awaitClose {
+            snapshotListener.remove()
+        }
+    }
+
     /*override fun getPostsByUserTaste(userCarrer: String): Flow<Response<List<Post>>> = callbackFlow {
         val snapshotListener = postsRef.whereEqualTo("userCarrer", userCarrer).addSnapshotListener { snapshot, e ->
 

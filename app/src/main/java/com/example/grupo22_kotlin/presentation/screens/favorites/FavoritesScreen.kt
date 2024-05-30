@@ -10,8 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.grupo22_kotlin.presentation.screens.favorites.components.FavoritesContent
-import com.example.grupo22_kotlin.presentation.screens.mainHome.components.MainHomeContent
+import com.example.grupo22_kotlin.presentation.screens.favorites.components.GetPostsLiked
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -21,12 +20,13 @@ fun FavoritesScreen(navController: NavHostController) {
         },
         content = {
             Column(modifier = Modifier.padding(top=55.dp)) {
-                FavoritesContent(navController = navController)
+                GetPostsLiked(navController = navController)
             }
         },
         bottomBar = {}
 
     )
+
 }
 
 @Preview(showBackground = true, showSystemUi = true)

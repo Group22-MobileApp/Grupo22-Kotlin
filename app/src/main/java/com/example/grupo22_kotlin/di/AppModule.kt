@@ -16,6 +16,7 @@ import com.example.grupo22_kotlin.domain.use_case.auth.Signup
 import com.example.grupo22_kotlin.domain.use_case.posts.CreatePost
 import com.example.grupo22_kotlin.domain.use_case.posts.DeleteLikePost
 import com.example.grupo22_kotlin.domain.use_case.posts.DeletePost
+import com.example.grupo22_kotlin.domain.use_case.posts.GetPostThatILiked
 import com.example.grupo22_kotlin.domain.use_case.posts.GetPosts
 import com.example.grupo22_kotlin.domain.use_case.posts.GetPostsByCategory
 import com.example.grupo22_kotlin.domain.use_case.posts.GetPostsByUserId
@@ -110,6 +111,7 @@ object AppModule {
         updatePost = UpdatePost(repository),
         updateViews = UpdateViews(repository),
         likePost = LikePost(repository),
-        deleteLikePost = DeleteLikePost(repository)
+        deleteLikePost = DeleteLikePost(repository),
+        getPostThatILiked = GetPostThatILiked(repository)
     )
 }
