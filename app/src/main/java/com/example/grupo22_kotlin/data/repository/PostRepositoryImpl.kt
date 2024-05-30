@@ -9,6 +9,7 @@ import com.example.grupo22_kotlin.domain.model.Response
 import com.example.grupo22_kotlin.domain.model.User
 import com.example.grupo22_kotlin.domain.repository.PostRepository
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -274,6 +275,26 @@ class PostRepositoryImpl @Inject constructor(
     override suspend fun delete(idPost: String): Response<Boolean> {
         return try {
             postsRef.document(idPost).delete().await()
+            Response.Success(true)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Response.Failure(e)
+        }
+    }
+
+    override suspend fun like(idPost: String, idUser: String): Response<Boolean> {
+        return try {
+            postsRef.document(idPost).update("likes", FieldValue.arrayUnion(idUser)).await()
+            Response.Success(true)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Response.Failure(e)
+        }
+    }
+
+    override suspend fun deleteLike(idPost: String, idUser: String): Response<Boolean> {
+        return try {
+            postsRef.document(idPost).update("likes", FieldValue.arrayRemove(idUser)).await()
             Response.Success(true)
         } catch (e: Exception) {
             e.printStackTrace()
