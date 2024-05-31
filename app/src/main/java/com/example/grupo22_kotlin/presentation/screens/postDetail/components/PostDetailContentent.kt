@@ -1,5 +1,6 @@
 package com.example.grupo22_kotlin.presentation.screens.postDetail.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,17 +11,23 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedIconButton
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,7 +39,6 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
-import com.example.grupo22_kotlin.presentation.components.FavButton
 import com.example.grupo22_kotlin.presentation.components.ImportantButton
 import com.example.grupo22_kotlin.presentation.components.InformationCard
 import com.example.grupo22_kotlin.presentation.components.ProfileImage
@@ -110,7 +116,44 @@ fun PostDetailBody(
                     InformationCard(info = "Interchangeable", iconVisible = true)
                 }
                 Spacer(Modifier.weight(1f))
-                FavButton(modifier = modifier)
+
+
+                val currentUserUid = viewModel.currentUser?.uid ?: ""
+
+                var isFav by remember { mutableStateOf(viewModel.post.likes.contains(currentUserUid)) }
+                var totalLikes by remember { mutableStateOf(viewModel.post.likes.size) }
+
+                Surface(
+                    modifier = modifier,
+                    shape = CircleShape,
+                    shadowElevation = 6.dp
+                ) {
+                    OutlinedIconButton(
+                        onClick = {
+                            if (isFav) {
+                                viewModel.deletelike(viewModel.post.id, currentUserUid)
+                                totalLikes -= 1
+                            } else {
+                                viewModel.like(viewModel.post.id, currentUserUid)
+                                totalLikes += 1
+                            }
+                            isFav = !isFav
+                        },
+                        border = BorderStroke(0.dp, Color.White),
+                        modifier = modifier.size(52.dp)
+                    ) {
+                        Icon(
+                            imageVector = if (isFav) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                            contentDescription = "Favorite icon",
+                            modifier = modifier.size(32.dp),
+                            tint = darkBlue
+                        )
+                    }
+                }
+
+                Text(text = totalLikes.toString())
+
+
             }
             Spacer(modifier = modifier.size(18.dp))
 
