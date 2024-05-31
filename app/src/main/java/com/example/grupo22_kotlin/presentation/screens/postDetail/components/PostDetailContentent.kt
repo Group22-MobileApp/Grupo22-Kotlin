@@ -23,6 +23,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -215,7 +216,53 @@ fun PostDetailBody(
                         fontWeight = FontWeight.Normal
                     )
                 }
+
+
+
             }
+            var reviewText by remember { mutableStateOf("") }
+
+            TitleText(text = "Reviews", fontSize = 24.sp)
+
+            GetReviewsByPost()
+
+            val currentUserUid = viewModel.currentUser?.uid ?: ""
+            if (viewModel.post.user?.id != currentUserUid){
+                TitleText(text = " Write a Reviews", fontSize = 24.sp)
+                Spacer(modifier = modifier.size(8.dp))
+
+                Column(modifier = modifier.fillMaxWidth()) {
+
+
+
+                    TextField(
+                        value = reviewText,
+                        onValueChange = { reviewText = it },
+                        label = { Text("Write a review") },
+                        modifier = modifier.fillMaxWidth()
+                    )
+                    Spacer(modifier = modifier.size(8.dp))
+
+                    Button(
+                        onClick = {
+                            viewModel.addReview(viewModel.post.id, reviewText)
+                            reviewText = ""
+                        },
+                        enabled = reviewText.isNotBlank(),
+                        colors = ButtonDefaults.buttonColors(
+
+                        ),
+                        modifier = modifier.fillMaxWidth()
+                    ) {
+                        Text("Submit Review")
+                    }
+
+
+                }
+
+            }
+
+
 
         }
     }

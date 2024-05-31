@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import com.example.grupo22_kotlin.presentation.screens.postDetail.components.AddReviewPost
 import com.example.grupo22_kotlin.presentation.screens.postDetail.components.DeleteLikePost
 import com.example.grupo22_kotlin.presentation.screens.postDetail.components.LikePost
 import com.example.grupo22_kotlin.presentation.screens.postDetail.components.PostDetailContent
@@ -23,4 +24,5 @@ fun PostDetailScreen(navController: NavHostController, post: String) {
     )
     LikePost()
     DeleteLikePost()
+    AddReviewPost()
 }

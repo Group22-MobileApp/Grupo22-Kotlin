@@ -14,6 +14,8 @@ interface PostRepository {
     suspend fun like(idPost: String, idUser: String): Response<Boolean>
     suspend fun deleteLike(idPost: String, idUser: String): Response<Boolean>
 
+    suspend fun  addReview(idPost: String, review: String): Response<Boolean>
+
 
 
     fun getPosts(): Flow<Response<List<Post>>>
@@ -23,4 +25,6 @@ interface PostRepository {
     fun getPostsByUserTaste(userCarrer: String): Flow<Response<List<Post>>>
     fun getPostsByCategory(category: String): Flow<Response<List<Post>>>
     suspend fun updateViews(idPost: String, newViews: String) : Response<Boolean>
+
+    fun getReviewsByPost(idPost: String): Flow<Response<List<String>>>
 }
