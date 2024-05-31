@@ -15,7 +15,7 @@ interface UserRepository {
 
     suspend fun addContact(idUser: String, idAddUser: String): Response<Boolean>
 
-    fun getUserContacts(): Flow<Response<List<User>>>
+    fun getUserContacts(userId: String): Flow<Response<List<User>>>
 
     fun getUserById(id: String): Flow<User>
 }

@@ -1,6 +1,7 @@
 package com.example.grupo22_kotlin.data.repository
 
 import android.net.Uri
+import android.util.Log
 import androidx.compose.runtime.snapshotFlow
 import com.example.grupo22_kotlin.core.Constants.USERS
 import com.example.grupo22_kotlin.domain.model.Response
@@ -98,30 +99,25 @@ class UserRepositoryImpl  @Inject  constructor(
         }
     }
 
-    override fun getUserContacts(): Flow<Response<List<User>>> = callbackFlow {
-        val snapshotListener = usersRef.addSnapshotListener { snapshot, e ->
-            GlobalScope.launch(Dispatchers.IO) {
-                val usersResponse = if (snapshot != null) {
-                    val usersMap = mutableMapOf<String, User>()
-
-                    // Populate usersMap with User objects retrieved from Firestore
-                    snapshot.documents.forEach { document ->
-                        val user = document.toObject(User::class.java)
-                        usersMap[user?.id?:""] = user!!
-                    }
-
-                    // Get the IDs of all users
-                    val userIds = usersMap.keys
-
-                    // Filter out the contacts of each user and map them to User objects
-                    val contactsUsers = userIds.flatMap { userId ->
-                        val user = usersMap[userId]!!
-                        user.contacts.mapNotNull { contactId ->
-                            usersMap[contactId]
+    override fun getUserContacts(userId: String): Flow<Response<List<User>>> = callbackFlow {
+        val snapshotListener = usersRef.document(userId).addSnapshotListener { snapshot, e ->
+            launch(Dispatchers.IO) {
+                val usersResponse = if (snapshot != null && snapshot.exists()) {
+                    val user = snapshot.toObject(User::class.java)
+                    if (user != null) {
+                        val contacts = user.contacts.mapNotNull { contactId ->
+                            try {
+                                val contactSnapshot = usersRef.document(contactId).get().await()
+                                contactSnapshot.toObject(User::class.java)
+                            } catch (ex: Exception) {
+                                Log.e("Firestore", "Error fetching contact $contactId", ex)
+                                null
+                            }
                         }
-                    }.distinct()
-
-                    Response.Success(contactsUsers)
+                        Response.Success(contacts)
+                    } else {
+                        Response.Failure(NullPointerException("User not found"))
+                    }
                 } else {
                     Response.Failure(e)
                 }
