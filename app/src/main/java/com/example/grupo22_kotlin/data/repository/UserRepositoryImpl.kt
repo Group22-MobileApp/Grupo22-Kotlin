@@ -105,7 +105,6 @@ class UserRepositoryImpl  @Inject  constructor(
                 val usersResponse = if (snapshot != null && snapshot.exists()) {
                     val user = snapshot.toObject(User::class.java)
                     if (user != null) {
-                        // Fetch the contacts of the user
                         val contacts = user.contacts.mapNotNull { contactId ->
                             try {
                                 val contactSnapshot = usersRef.document(contactId).get().await()
