@@ -6,6 +6,6 @@ import javax.inject.Inject
 
 class GetUserContacts @Inject constructor(private val repository: UserRepository) {
 
-    operator fun invoke() = repository.getUserContacts()
+    operator fun invoke(userId: String) = repository.getUserContacts(userId)
 
 }
