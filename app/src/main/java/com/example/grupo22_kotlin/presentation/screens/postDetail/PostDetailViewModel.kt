@@ -30,9 +30,15 @@ class PostDetailViewModel @Inject constructor(
     val post = Post.fromJson(data!!)
     val currentUser = authUseCases.getCurrentUser()
 
+    var postreviewsResponse by mutableStateOf<Response<List<String>>?>(null)
+
     var addContactResponse by mutableStateOf<Response<Boolean>?>(null)
     var likePostResponse by mutableStateOf<Response<Boolean>?>(null)
     var deleteLikePostResponse by mutableStateOf<Response<Boolean>?>(null)
+
+    var addReviewResponse by mutableStateOf<Response<Boolean>?>(null)
+
+    var getReviewsByPostResponse by mutableStateOf<Response<Boolean>?>(null)
 
     fun addContact(idAddContact: String) = viewModelScope.launch {
         addContactResponse = Response.Loading
@@ -45,6 +51,26 @@ class PostDetailViewModel @Inject constructor(
         val result = postUseCases.likePost(idPost, idUser)
         likePostResponse = result
     }
+
+    fun addReview(idPost: String, review:String)= viewModelScope.launch {
+        addReviewResponse = Response.Loading
+        val result = postUseCases.addReviewPost(idPost, review)
+        addReviewResponse = result
+    }
+
+    init {
+        getReviewsByPost(post.id)
+    }
+
+
+    fun getReviewsByPost(idPost: String)  = viewModelScope.launch {
+        postreviewsResponse = Response.Loading
+        postUseCases.getReviewsByPost(idPost).collect() { response ->
+            postreviewsResponse = response
+        }
+    }
+
+
 
     fun deletelike(idPost: String, idUser: String) = viewModelScope.launch {
         Log.d("PostDetailViewModel", "deletelike called with idPost: $idPost, idUser: $idUser")

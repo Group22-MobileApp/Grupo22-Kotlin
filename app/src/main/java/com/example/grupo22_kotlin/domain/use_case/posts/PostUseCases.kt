@@ -11,6 +11,8 @@ data class PostUseCases (
     val updateViews: UpdateViews,
     val likePost: LikePost,
     val deleteLikePost: DeleteLikePost,
-    val getPostThatILiked: GetPostThatILiked
+    val getPostThatILiked: GetPostThatILiked,
+    val addReviewPost: AddReviewPost,
+    val getReviewsByPost: GetReviewsByPost
 
 )

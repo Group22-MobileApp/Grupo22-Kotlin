@@ -13,6 +13,7 @@ import com.example.grupo22_kotlin.domain.use_case.auth.GetCurrentUser
 import com.example.grupo22_kotlin.domain.use_case.auth.LogOut
 import com.example.grupo22_kotlin.domain.use_case.auth.Login
 import com.example.grupo22_kotlin.domain.use_case.auth.Signup
+import com.example.grupo22_kotlin.domain.use_case.posts.AddReviewPost
 import com.example.grupo22_kotlin.domain.use_case.posts.CreatePost
 import com.example.grupo22_kotlin.domain.use_case.posts.DeleteLikePost
 import com.example.grupo22_kotlin.domain.use_case.posts.DeletePost
@@ -21,6 +22,7 @@ import com.example.grupo22_kotlin.domain.use_case.posts.GetPosts
 import com.example.grupo22_kotlin.domain.use_case.posts.GetPostsByCategory
 import com.example.grupo22_kotlin.domain.use_case.posts.GetPostsByUserId
 import com.example.grupo22_kotlin.domain.use_case.posts.GetPostsByUserTaste
+import com.example.grupo22_kotlin.domain.use_case.posts.GetReviewsByPost
 import com.example.grupo22_kotlin.domain.use_case.posts.LikePost
 import com.example.grupo22_kotlin.domain.use_case.posts.PostUseCases
 import com.example.grupo22_kotlin.domain.use_case.posts.UpdatePost
@@ -112,6 +114,8 @@ object AppModule {
         updateViews = UpdateViews(repository),
         likePost = LikePost(repository),
         deleteLikePost = DeleteLikePost(repository),
-        getPostThatILiked = GetPostThatILiked(repository)
+        getPostThatILiked = GetPostThatILiked(repository),
+        addReviewPost = AddReviewPost(repository),
+        getReviewsByPost = GetReviewsByPost(repository)
     )
 }

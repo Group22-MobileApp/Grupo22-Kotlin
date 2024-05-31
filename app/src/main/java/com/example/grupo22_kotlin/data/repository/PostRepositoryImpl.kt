@@ -313,6 +313,22 @@ class PostRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun getReviewsByPost(idPost: String): Flow<Response<List<String>>> = callbackFlow {
+        val snapshotListener = postsRef.document(idPost).addSnapshotListener { snapshot, e ->
+            launch(Dispatchers.IO) {
+                val reviewsResponse = if (snapshot != null && snapshot.exists()) {
+                    val reviews = snapshot.get("reviews") as? List<String> ?: emptyList()
+                    Response.Success(reviews)
+                } else {
+                    Response.Failure(e ?: Exception("Post not found"))
+                }
+                trySend(reviewsResponse).isSuccess
+            }
+        }
+        awaitClose { snapshotListener.remove() }
+    }
+
+
     override suspend fun delete(idPost: String): Response<Boolean> {
         return try {
 
@@ -337,6 +353,16 @@ class PostRepositoryImpl @Inject constructor(
     override suspend fun deleteLike(idPost: String, idUser: String): Response<Boolean> {
         return try {
             postsRef.document(idPost).update("likes", FieldValue.arrayRemove(idUser)).await()
+            Response.Success(true)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Response.Failure(e)
+        }
+    }
+
+    override suspend fun addReview(idPost: String, review: String): Response<Boolean> {
+        return try {
+            postsRef.document(idPost).update("reviews", FieldValue.arrayUnion(review)).await()
             Response.Success(true)
         } catch (e: Exception) {
             e.printStackTrace()
