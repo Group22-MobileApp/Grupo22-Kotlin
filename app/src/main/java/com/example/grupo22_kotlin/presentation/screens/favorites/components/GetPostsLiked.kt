@@ -1,4 +1,4 @@
-package com.example.grupo22_kotlin.presentation.screens.posts.components
+package com.example.grupo22_kotlin.presentation.screens.favorites.components
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Box
@@ -13,12 +13,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.grupo22_kotlin.domain.model.Response
-import com.example.grupo22_kotlin.presentation.navigation.Graph
-import com.example.grupo22_kotlin.presentation.screens.mainHome.components.MainHomeContent
-import com.example.grupo22_kotlin.presentation.screens.posts.PostViewModel
+import com.example.grupo22_kotlin.presentation.screens.favorites.FavoritesViewModel
 
 @Composable
-fun GetPosts(navController: NavHostController, viewModel: PostViewModel = hiltViewModel()) {
+fun GetPostsLiked(navController: NavHostController, viewModel: FavoritesViewModel = hiltViewModel()) {
 
     when(val response = viewModel.postsResponse) {
         // MOSTRAR QUE SE ESTA REALIZANDO LA PETICION Y TODAVIA ESTA EN PROCESO
@@ -28,15 +26,15 @@ fun GetPosts(navController: NavHostController, viewModel: PostViewModel = hiltVi
             }
         }
         is Response.Success -> {
-            PostContent(posts = response.data.take(4), navController)
+            FavoritesContent(posts = response.data, viewModel, navController)
         }
-
         is Response.Failure -> {
             Toast.makeText(LocalContext.current,
                 response.exception?.message ?: "Somethings wrong",
                 Toast.LENGTH_LONG).show()
         }
         else -> {}
+
     }
 
 }

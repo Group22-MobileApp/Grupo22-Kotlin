@@ -9,10 +9,12 @@ import com.example.grupo22_kotlin.domain.model.Response
 import com.example.grupo22_kotlin.domain.model.User
 import com.example.grupo22_kotlin.domain.repository.PostRepository
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -114,6 +116,46 @@ class PostRepositoryImpl @Inject constructor(
             snapshotListener.remove()
         }
     }
+
+    override fun getPostThatILiked(userId: String): Flow<Response<List<Post>>> = callbackFlow {
+        val snapshotListener = postsRef.addSnapshotListener { snapshot, e ->
+            launch(Dispatchers.IO) {
+                val postsResponse = if (snapshot != null) {
+                    val posts = snapshot.toObjects(Post::class.java)
+                        .mapIndexed { index, post ->
+                            post.apply { id = snapshot.documents[index].id }
+                        }
+                        .filter { post -> post.likes.contains(userId) }
+
+
+                    // Get unique user IDs
+                    val uniqueUserIds = posts.map { it.idUser }.toSet()
+
+                    // Fetch user data concurrently
+                    uniqueUserIds.map { id ->
+                        async {
+                            val user = usersRef.document(id).get().await().toObject(User::class.java)
+                            user?.let { fetchedUser ->
+                                posts.forEach { post ->
+                                    if (post.idUser == id) {
+                                        post.user = fetchedUser
+                                    }
+                                }
+                            }
+                        }
+                    }.awaitAll()
+
+                    Response.Success(posts)
+                } else {
+                    Response.Failure(e)
+                }
+                trySend(postsResponse).isSuccess
+            }
+        }
+        awaitClose { snapshotListener.remove() }
+    }
+
+
 
     /*override fun getPostsByUserTaste(userCarrer: String): Flow<Response<List<Post>>> = callbackFlow {
         val snapshotListener = postsRef.whereEqualTo("userCarrer", userCarrer).addSnapshotListener { snapshot, e ->
@@ -273,7 +315,28 @@ class PostRepositoryImpl @Inject constructor(
 
     override suspend fun delete(idPost: String): Response<Boolean> {
         return try {
+
             postsRef.document(idPost).delete().await()
+            Response.Success(true)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Response.Failure(e)
+        }
+    }
+
+    override suspend fun like(idPost: String, idUser: String): Response<Boolean> {
+        return try {
+            postsRef.document(idPost).update("likes", FieldValue.arrayUnion(idUser)).await()
+            Response.Success(true)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Response.Failure(e)
+        }
+    }
+
+    override suspend fun deleteLike(idPost: String, idUser: String): Response<Boolean> {
+        return try {
+            postsRef.document(idPost).update("likes", FieldValue.arrayRemove(idUser)).await()
             Response.Success(true)
         } catch (e: Exception) {
             e.printStackTrace()

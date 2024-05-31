@@ -5,7 +5,6 @@ import com.example.grupo22_kotlin.core.Constants.USERS
 import com.example.grupo22_kotlin.data.repository.AuthRepositoryImpl
 import com.example.grupo22_kotlin.data.repository.PostRepositoryImpl
 import com.example.grupo22_kotlin.data.repository.UserRepositoryImpl
-import com.example.grupo22_kotlin.domain.model.User
 import com.example.grupo22_kotlin.domain.repository.AuthRepository
 import com.example.grupo22_kotlin.domain.repository.PostRepository
 import com.example.grupo22_kotlin.domain.repository.UserRepository
@@ -15,11 +14,14 @@ import com.example.grupo22_kotlin.domain.use_case.auth.LogOut
 import com.example.grupo22_kotlin.domain.use_case.auth.Login
 import com.example.grupo22_kotlin.domain.use_case.auth.Signup
 import com.example.grupo22_kotlin.domain.use_case.posts.CreatePost
+import com.example.grupo22_kotlin.domain.use_case.posts.DeleteLikePost
 import com.example.grupo22_kotlin.domain.use_case.posts.DeletePost
+import com.example.grupo22_kotlin.domain.use_case.posts.GetPostThatILiked
 import com.example.grupo22_kotlin.domain.use_case.posts.GetPosts
 import com.example.grupo22_kotlin.domain.use_case.posts.GetPostsByCategory
 import com.example.grupo22_kotlin.domain.use_case.posts.GetPostsByUserId
 import com.example.grupo22_kotlin.domain.use_case.posts.GetPostsByUserTaste
+import com.example.grupo22_kotlin.domain.use_case.posts.LikePost
 import com.example.grupo22_kotlin.domain.use_case.posts.PostUseCases
 import com.example.grupo22_kotlin.domain.use_case.posts.UpdatePost
 import com.example.grupo22_kotlin.domain.use_case.posts.UpdateViews
@@ -107,6 +109,9 @@ object AppModule {
         getPostsByUserTaste = GetPostsByUserTaste(repository),
         getPostsByCategory = GetPostsByCategory(repository),
         updatePost = UpdatePost(repository),
-        updateViews = UpdateViews(repository)
+        updateViews = UpdateViews(repository),
+        likePost = LikePost(repository),
+        deleteLikePost = DeleteLikePost(repository),
+        getPostThatILiked = GetPostThatILiked(repository)
     )
 }

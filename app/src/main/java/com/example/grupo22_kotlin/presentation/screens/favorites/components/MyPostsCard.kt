@@ -1,4 +1,5 @@
-package com.example.grupo22_kotlin.presentation.screens.posts.components
+package com.example.grupo22_kotlin.presentation.screens.favorites.components
+
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -26,7 +27,7 @@ import com.example.grupo22_kotlin.presentation.navigation.DetailsScreen
 import com.example.grupo22_kotlin.presentation.screens.posts.PostViewModel
 
 @Composable
-fun PostCard (post: Post, navController: NavHostController, viewModel: PostViewModel = hiltViewModel()){
+fun MyPostsCard (post: Post, navController: NavHostController, viewModel: PostViewModel = hiltViewModel()){
     Column(
         modifier = Modifier
             .padding(bottom = 15.dp)
